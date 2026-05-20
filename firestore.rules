@@ -1,0 +1,146 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function currentUser() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isKnownRestaurant(restaurantId) {
+      return restaurantId in [
+        "burger-and-co-bamako",
+        "brooklyn-burger-bamako",
+        "sigma-burgers-bamako",
+        "nice-cream-bamako",
+        "da-guido-pizza-bamako"
+      ];
+    }
+
+    function isRestaurantOwner(restaurantId) {
+      return signedIn()
+        && currentUser().role == "restaurant"
+        && currentUser().restaurantId == restaurantId;
+    }
+
+    function isAdmin() {
+      return signedIn() && currentUser().role == "admin";
+    }
+
+    function validStatus(status) {
+      return status in [
+        "pending",
+        "accepted",
+        "preparing",
+        "ready",
+        "delivering",
+        "completed",
+        "cancelled",
+        "refused"
+      ];
+    }
+
+    function validOrder(data) {
+      return data.keys().hasAll([
+          "clientId",
+          "restaurantId",
+          "items",
+          "total",
+          "status",
+          "createdAt",
+          "deliveryAddress"
+        ])
+        && data.clientId is string
+        && data.restaurantId is string
+        && isKnownRestaurant(data.restaurantId)
+        && data.items is list
+        && data.total is number
+        && validStatus(data.status)
+        && data.deliveryAddress is string;
+    }
+
+    match /users/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.uid == uid
+        && (
+          request.resource.data.role == "client"
+          || (
+            request.resource.data.role == "restaurant"
+            && isKnownRestaurant(request.resource.data.restaurantId)
+          )
+        );
+      allow update, delete: if isAdmin()
+        || (
+          signedIn()
+          && request.auth.uid == uid
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.role == resource.data.role
+          && request.resource.data.restaurantId == resource.data.restaurantId
+        );
+    }
+
+    match /restaurants/{restaurantId} {
+      allow read: if isAdmin() || signedIn();
+      allow create: if isAdmin()
+        || (
+          signedIn()
+          && isKnownRestaurant(restaurantId)
+          && request.resource.data.ownerUid == request.auth.uid
+        );
+      allow update, delete: if isAdmin() || isRestaurantOwner(restaurantId);
+    }
+
+    match /menuItems/{itemId} {
+      allow read: if isAdmin() || signedIn();
+      allow create: if isAdmin() || isRestaurantOwner(request.resource.data.restaurantId);
+      allow update, delete: if isAdmin() || isRestaurantOwner(resource.data.restaurantId);
+    }
+
+    match /orders/{orderId} {
+      allow create: if isAdmin()
+        || (
+          signedIn()
+          && validOrder(request.resource.data)
+          && request.resource.data.clientId == request.auth.uid
+          && request.resource.data.status == "pending"
+        );
+
+      allow read: if isAdmin()
+        || isRestaurantOwner(resource.data.restaurantId)
+        || (signedIn() && resource.data.clientId == request.auth.uid);
+
+      allow update: if isAdmin()
+        || (
+          validOrder(request.resource.data)
+        && (
+          (
+            isRestaurantOwner(resource.data.restaurantId)
+            && request.resource.data.restaurantId == resource.data.restaurantId
+            && request.resource.data.clientId == resource.data.clientId
+            && request.resource.data.diff(resource.data).changedKeys().hasOnly(["status", "updatedAt"])
+            && validStatus(request.resource.data.status)
+          )
+          || (
+            signedIn()
+            && resource.data.clientId == request.auth.uid
+            && request.resource.data.diff(resource.data).changedKeys().hasOnly(["status", "updatedAt", "deliveryLocation"])
+            && (
+              request.resource.data.status == "cancelled"
+              || request.resource.data.status == resource.data.status
+            )
+          )
+        ));
+
+      allow delete: if isAdmin();
+    }
+
+    match /wallets/{walletId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
