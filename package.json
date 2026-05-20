@@ -1,0 +1,12 @@
+{
+  "name": "bko-eats",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bko Eats web app",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "stripe": "^19.3.1"
+  }
+}

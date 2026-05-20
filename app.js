@@ -740,6 +740,7 @@ const appShell = document.querySelector(".app-shell");
 const STORAGE_KEY = "bko-eats-state-v1";
 const RESTAURANT_ORDERS_KEY = "bko-eats-restaurant-orders-v1";
 const RESTAURANT_ORDER_CHANNEL = "bko-eats-restaurant-orders";
+const STRIPE_PENDING_ORDER_KEY = "bko-eats-stripe-pending-order-v1";
 const PLATFORM_COMMISSION_RATE = 0.2;
 const WALLET_RESET_ONCE_KEY = "bko-eats-wallet-reset-2026-05-19-v1";
 const restaurantOrderChannel =
@@ -3498,6 +3499,149 @@ function clearCartNotice() {
   cartNotice.classList.remove("show");
 }
 
+function resetCheckoutButton() {
+  checkoutButton.disabled = false;
+  checkoutButton.textContent = "Valider la commande";
+  delete checkoutButton.dataset.processing;
+}
+
+function getPaymentLabels() {
+  return {
+    cash: "Paiement a la livraison",
+    "orange-money": "Orange Money",
+    wave: "Wave",
+    card: "Carte bancaire",
+  };
+}
+
+function buildCheckoutOrder(items, totalValue, estimate) {
+  const paymentLabels = getPaymentLabels();
+
+  return {
+    reference: `BKO-${Date.now().toString().slice(-6)}`,
+    createdAt: Date.now(),
+    date: new Date().toLocaleString("fr-FR"),
+    customer: state.currentUser,
+    clientId: state.currentUser.uid || "local-client",
+    delivery: { ...state.payment, location: state.userLocation ? { ...state.userLocation } : null },
+    deliveryAddress: state.payment.address,
+    deliveryLocation: state.userLocation ? { ...state.userLocation } : null,
+    paymentLabel: paymentLabels[state.payment.method] || "Paiement a la livraison",
+    paymentMethod: state.payment.method,
+    paymentStatus: state.payment.method === "card" ? "pending" : "cod",
+    items: items.map((item) => ({ ...item })),
+    total: totalValue,
+    estimate,
+    status: "pending",
+  };
+}
+
+async function finalizeConfirmedOrder(order, paymentDetails = {}) {
+  const confirmedOrder = {
+    ...order,
+    ...paymentDetails,
+    status: order.status || "pending",
+    updatedAt: Date.now(),
+  };
+
+  await requestClientNotificationPermission({ quiet: true });
+  state.orders = state.orders.filter((savedOrder) => savedOrder.reference !== confirmedOrder.reference);
+  state.orders.unshift(confirmedOrder);
+  saveOrderToLocalRestaurantInbox(confirmedOrder);
+  const firestoreSave = saveOrderToFirestore(confirmedOrder);
+  state.cart = {};
+  clearCartNotice();
+  saveState();
+  renderCart();
+  renderAccount();
+  cartPanel.classList.remove("open");
+  renderOrderModal(confirmedOrder);
+  orderModal.classList.add("open");
+  notifyClientOrderStatus(confirmedOrder, "pending");
+  void firestoreSave;
+}
+
+async function startStripeCheckout(order) {
+  localStorage.setItem(STRIPE_PENDING_ORDER_KEY, JSON.stringify(order));
+  saveState();
+  showCartNotice("Ouverture du paiement securise Stripe...");
+
+  const response = await fetch("/api/stripe-create-checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ order }),
+  });
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok || !payload.url) {
+    localStorage.removeItem(STRIPE_PENDING_ORDER_KEY);
+    const message =
+      payload.error === "stripe_not_configured"
+        ? "Stripe n'est pas encore configure dans Vercel."
+        : payload.message || "Paiement par carte indisponible pour le moment.";
+    throw new Error(message);
+  }
+
+  window.location.href = payload.url;
+}
+
+async function verifyStripeSession(sessionId) {
+  const response = await fetch(`/api/stripe-session?session_id=${encodeURIComponent(sessionId)}`);
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(payload.message || "Verification du paiement impossible.");
+  }
+
+  return payload;
+}
+
+async function handleStripeReturn() {
+  const params = new URLSearchParams(window.location.search);
+  const paymentStatus = params.get("payment");
+  if (!paymentStatus?.startsWith("stripe-")) return;
+
+  const cleanUrl = `${window.location.pathname}${window.location.hash || ""}`;
+
+  if (paymentStatus === "stripe-cancel") {
+    window.history.replaceState({}, "", cleanUrl);
+    cartPanel.classList.add("open");
+    showCartNotice("Paiement par carte annule. Ton panier est toujours la.");
+    return;
+  }
+
+  const sessionId = params.get("session_id");
+  const pendingOrder = JSON.parse(localStorage.getItem(STRIPE_PENDING_ORDER_KEY) || "null");
+  window.history.replaceState({}, "", cleanUrl);
+
+  if (!sessionId || !pendingOrder) {
+    cartPanel.classList.add("open");
+    showCartNotice("Paiement recu, mais commande locale introuvable. Contacte le support Bko Eats.");
+    return;
+  }
+
+  try {
+    showCartNotice("Verification du paiement carte...");
+    const session = await verifyStripeSession(sessionId);
+    if (session.payment_status !== "paid") {
+      cartPanel.classList.add("open");
+      showCartNotice("Paiement carte non confirme. Reessaie ou choisis un autre moyen de paiement.");
+      return;
+    }
+
+    localStorage.removeItem(STRIPE_PENDING_ORDER_KEY);
+    await finalizeConfirmedOrder(pendingOrder, {
+      paymentStatus: "paid",
+      stripeSessionId: session.id,
+      stripeAmountTotal: session.amount_total,
+      stripeCurrency: session.currency,
+    });
+  } catch (error) {
+    cartPanel.classList.add("open");
+    showCartNotice(error.message || "Verification Stripe impossible pour le moment.");
+  }
+}
+
 function getAllItems() {
   return restaurants.flatMap((restaurant) =>
     restaurant.menu.map((item) => ({
@@ -3940,23 +4084,28 @@ function createRestaurantOrdersFromCheckout(order) {
     return normalizeLocalRestaurantOrder({
       id: `${order.reference}-${restaurantId}`,
       restaurantId,
-      clientId: state.currentUser?.uid || "local-client",
-      clientName: state.currentUser?.role === "restaurant" ? "Client test" : state.currentUser?.name || "Client Bko Eats",
-      clientPhone: order.delivery?.phone || state.currentUser?.phone || "",
-      clientAddress: order.delivery?.address || state.currentUser?.address || "",
-      deliveryAddress: order.deliveryAddress || order.delivery?.address || state.currentUser?.address || "",
+      clientId: order.clientId || state.currentUser?.uid || "local-client",
+      clientName:
+        state.currentUser?.role === "restaurant"
+          ? "Client test"
+          : order.customer?.name || state.currentUser?.name || "Client Bko Eats",
+      clientPhone: order.delivery?.phone || order.customer?.phone || state.currentUser?.phone || "",
+      clientAddress: order.delivery?.address || order.customer?.address || state.currentUser?.address || "",
+      deliveryAddress: order.deliveryAddress || order.delivery?.address || order.customer?.address || state.currentUser?.address || "",
       deliveryLocation: order.deliveryLocation || order.delivery?.location || null,
       items: items.map((item) => ({
         id: item.id,
         name: item.name,
         price: Number(item.price || 0),
-          quantity: Number(item.quantity || 1),
-        })),
+        quantity: Number(item.quantity || 1),
+      })),
       total: subtotalValue + DEFAULT_DELIVERY_FEE,
       ...financials,
       status: "pending",
       reference: order.reference,
       paymentLabel: order.paymentLabel,
+      paymentStatus: order.paymentStatus || "cod",
+      stripeSessionId: order.stripeSessionId || "",
       createdAt: order.createdAt || Date.now(),
       createdAtText: order.date,
     });
@@ -4085,11 +4234,11 @@ async function saveOrderToFirestore(order) {
         const financials = buildOrderFinancials(subtotalValue, DEFAULT_DELIVERY_FEE);
         const restaurantOrder = {
           restaurantId,
-          clientId: client.auth.currentUser?.uid || state.currentUser?.uid || "local-client",
-          clientName: state.currentUser?.name || "Client Bko Eats",
-          clientPhone: order.delivery?.phone || state.currentUser?.phone || "",
-          clientAddress: order.delivery?.address || state.currentUser?.address || "",
-          deliveryAddress: order.deliveryAddress || order.delivery?.address || state.currentUser?.address || "",
+          clientId: order.clientId || client.auth.currentUser?.uid || state.currentUser?.uid || "local-client",
+          clientName: order.customer?.name || state.currentUser?.name || "Client Bko Eats",
+          clientPhone: order.delivery?.phone || order.customer?.phone || state.currentUser?.phone || "",
+          clientAddress: order.delivery?.address || order.customer?.address || state.currentUser?.address || "",
+          deliveryAddress: order.deliveryAddress || order.delivery?.address || order.customer?.address || state.currentUser?.address || "",
           deliveryLocation: order.deliveryLocation || order.delivery?.location || null,
           items: items.map((item) => ({
             id: item.id,
@@ -4102,6 +4251,8 @@ async function saveOrderToFirestore(order) {
           status: "pending",
           reference: order.reference,
           paymentLabel: order.paymentLabel,
+          paymentStatus: order.paymentStatus || "cod",
+          stripeSessionId: order.stripeSessionId || "",
           createdAt: client.serverTimestamp(),
           createdAtText: order.date,
         };
@@ -4514,44 +4665,20 @@ checkoutButton.addEventListener("click", async () => {
   checkoutButton.textContent = "Validation...";
   showCartNotice("Validation de ta commande...");
 
-  const paymentLabels = {
-    cash: "Paiement a la livraison",
-    "orange-money": "Orange Money",
-    wave: "Wave",
-    card: "Carte bancaire",
-  };
-  const order = {
-    reference: `BKO-${Date.now().toString().slice(-6)}`,
-    createdAt: Date.now(),
-    date: new Date().toLocaleString("fr-FR"),
-    customer: state.currentUser,
-    clientId: state.currentUser.uid || "local-client",
-    delivery: { ...state.payment, location: state.userLocation ? { ...state.userLocation } : null },
-    deliveryAddress: state.payment.address,
-    deliveryLocation: state.userLocation ? { ...state.userLocation } : null,
-    paymentLabel: paymentLabels[state.payment.method] || "Paiement a la livraison",
-    items: items.map((item) => ({ ...item })),
-    total: totalValue,
-    estimate,
-    status: "pending",
-  };
+  const order = buildCheckoutOrder(items, totalValue, estimate);
 
-  await requestClientNotificationPermission({ quiet: true });
-  state.orders.unshift(order);
-  saveOrderToLocalRestaurantInbox(order);
-  const firestoreSave = saveOrderToFirestore(order);
-  state.cart = {};
-  clearCartNotice();
-  saveState();
-  renderCart();
-  renderAccount();
-  cartPanel.classList.remove("open");
-  renderOrderModal(order);
-  orderModal.classList.add("open");
-  notifyClientOrderStatus(order, "pending");
-  checkoutButton.textContent = "Valider la commande";
-  delete checkoutButton.dataset.processing;
-  void firestoreSave;
+  try {
+    if (state.payment.method === "card") {
+      await startStripeCheckout(order);
+      return;
+    }
+
+    await finalizeConfirmedOrder(order);
+    resetCheckoutButton();
+  } catch (error) {
+    showCartNotice(error.message || "Impossible de valider la commande pour le moment.");
+    resetCheckoutButton();
+  }
 });
 
 closeModal.addEventListener("click", () => {
@@ -4601,7 +4728,9 @@ if (isAdminRoute()) {
   resumeSavedRestaurantSession();
   requestLocationOnStartup();
 }
-initFirebaseGoogleAuth();
+void initFirebaseGoogleAuth().finally(() => {
+  void handleStripeReturn();
+});
 
 setInterval(() => {
   if (state.activeOrder && orderModal.classList.contains("open")) {
