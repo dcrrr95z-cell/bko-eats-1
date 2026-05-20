@@ -1122,6 +1122,7 @@ async function loadFirebaseAuthClient() {
   const auth = authModule.getAuth(app);
   const db = firestoreModule.getFirestore(app);
   auth.useDeviceLanguage();
+  await authModule.setPersistence(auth, authModule.browserLocalPersistence);
 
   const googleProvider = new authModule.GoogleAuthProvider();
   googleProvider.setCustomParameters({ prompt: "select_account" });
@@ -1140,6 +1141,7 @@ async function loadFirebaseAuthClient() {
     onSnapshot: firestoreModule.onSnapshot,
     onAuthStateChanged: authModule.onAuthStateChanged,
     createUserWithEmailAndPassword: authModule.createUserWithEmailAndPassword,
+    browserPopupRedirectResolver: authModule.browserPopupRedirectResolver,
     query: firestoreModule.query,
     serverTimestamp: firestoreModule.serverTimestamp,
     setDoc: firestoreModule.setDoc,
@@ -1158,12 +1160,39 @@ function isMobileBrowser() {
   return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
 }
 
+function isEmbeddedAppBrowser() {
+  const ua = navigator.userAgent || "";
+  return Boolean(window.BKO_EATS_EXPO_GO || window.ReactNativeWebView) || /\bwv\b|WebView|Expo|FBAN|FBAV|Instagram/i.test(ua);
+}
+
+function openGoogleLoginInSystemBrowser() {
+  const loginUrl = `${window.location.origin}${window.location.pathname}?login=google`;
+
+  if (window.ReactNativeWebView?.postMessage) {
+    window.ReactNativeWebView.postMessage(
+      JSON.stringify({
+        type: "open-external-auth",
+        url: loginUrl,
+      }),
+    );
+    return true;
+  }
+
+  window.open(loginUrl, "_blank", "noopener,noreferrer");
+  return true;
+}
+
 function getGoogleAuthErrorMessage(error) {
   if (error?.message === "firebase-config-missing") {
     return "Google n'est pas encore configure. Ajoute tes cles Firebase dans firebase-config.js.";
   }
 
   const hostname = window.location.hostname;
+  const rawMessage = `${error?.code || ""} ${error?.message || ""}`;
+  if (/disallowed_useragent|webview|embedded/i.test(rawMessage)) {
+    return "Google bloque la connexion dans Expo Go/WebView. Ouvre Bko Eats dans Safari/Chrome ou utilise la connexion email.";
+  }
+
   const errorMessages = {
     "auth/unauthorized-domain": `Domaine non autorise dans Firebase. Ajoute ${hostname} dans Authentication > Settings > Authorized domains.`,
     "auth/popup-closed-by-user": "Fenetre Google fermee avant la fin de la connexion.",
@@ -1182,17 +1211,27 @@ async function signInWithGoogle() {
   try {
     const client = await loadFirebaseAuthClient();
 
+    if (isEmbeddedAppBrowser()) {
+      setStatus(quickSignupStatus, "Google s'ouvre dans le navigateur securise...", "success");
+      openGoogleLoginInSystemBrowser();
+      return;
+    }
+
     if (isMobileBrowser()) {
-      await client.signInWithRedirect(client.auth, client.googleProvider);
+      await client.signInWithRedirect(client.auth, client.googleProvider, client.browserPopupRedirectResolver);
       return;
     }
 
     try {
-      const result = await client.signInWithPopup(client.auth, client.googleProvider);
+      const result = await client.signInWithPopup(client.auth, client.googleProvider, client.browserPopupRedirectResolver);
       await completeGoogleSignup(result.user);
     } catch (popupError) {
-      if (popupError.code === "auth/popup-blocked" || popupError.code === "auth/cancelled-popup-request") {
-        await client.signInWithRedirect(client.auth, client.googleProvider);
+      if (
+        popupError.code === "auth/popup-blocked" ||
+        popupError.code === "auth/cancelled-popup-request" ||
+        popupError.code === "auth/popup-closed-by-user"
+      ) {
+        await client.signInWithRedirect(client.auth, client.googleProvider, client.browserPopupRedirectResolver);
         return;
       }
       throw popupError;
@@ -4729,6 +4768,13 @@ if (isAdminRoute()) {
   requestLocationOnStartup();
 }
 void initFirebaseGoogleAuth().finally(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("login") === "google") {
+    window.history.replaceState({}, "", window.location.pathname);
+    state.loginIntent = "client";
+    void signInWithGoogle();
+  }
+
   void handleStripeReturn();
 });
 
