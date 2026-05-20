@@ -1,14 +1,13 @@
-const CACHE_NAME = "bko-eats-v39";
+const CACHE_NAME = "bko-eats-v40";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=27",
-  "./app.js?v=38",
+  "./styles.css?v=28",
+  "./app.js?v=39",
   "./firestore.rules",
   "./firebase-config.js?v=18",
   "./manifest.json",
   "./icon.svg",
-  "./assets/bko-eats-logo.png",
 ];
 
 self.addEventListener("install", (event) => {

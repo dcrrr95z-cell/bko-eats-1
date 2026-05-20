@@ -276,14 +276,26 @@ textarea:focus-visible {
 }
 
 .brand-logo {
+  display: grid;
   width: 54px;
   height: 54px;
   flex: 0 0 auto;
+  place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.32);
   border-radius: 17px;
   background: #111111;
   box-shadow: 0 14px 36px rgba(17, 17, 17, 0.16);
   object-fit: cover;
+  overflow: hidden;
+}
+
+.brand-logo-fallback span {
+  background: linear-gradient(135deg, #fff1b8 0%, #d7a53a 48%, #fff0ad 100%);
+  background-clip: text;
+  color: transparent;
+  font-size: 17px;
+  font-weight: 920;
+  letter-spacing: 0;
 }
 
 .eyebrow {

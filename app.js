@@ -552,6 +552,7 @@ const FIREBASE_SDK_VERSION = "12.13.0";
 let firebaseAuthClient = null;
 let remoteSaveTimer = null;
 let remoteLocationTimer = null;
+let locationLabelRequestId = 0;
 let isApplyingRemoteUserData = false;
 let clientOrderUnsubscribe = null;
 let clientKnownOrderStatuses = new Map();
@@ -1156,6 +1157,24 @@ function isMobileBrowser() {
   return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
 }
 
+function getGoogleAuthErrorMessage(error) {
+  if (error?.message === "firebase-config-missing") {
+    return "Google n'est pas encore configure. Ajoute tes cles Firebase dans firebase-config.js.";
+  }
+
+  const hostname = window.location.hostname;
+  const errorMessages = {
+    "auth/unauthorized-domain": `Domaine non autorise dans Firebase. Ajoute ${hostname} dans Authentication > Settings > Authorized domains.`,
+    "auth/popup-closed-by-user": "Fenetre Google fermee avant la fin de la connexion.",
+    "auth/popup-blocked": "Popup Google bloquee par le navigateur. Autorise les popups ou reessaie.",
+    "auth/cancelled-popup-request": "Connexion Google annulee. Reessaie dans quelques secondes.",
+    "auth/operation-not-allowed": "Google n'est pas active dans Firebase Authentication > Sign-in method.",
+    "auth/network-request-failed": "Connexion reseau impossible. Verifie internet puis reessaie.",
+  };
+
+  return errorMessages[error?.code] || `Connexion Google impossible: ${error?.code || "erreur inconnue"}.`;
+}
+
 async function signInWithGoogle() {
   setStatus(quickSignupStatus, "Connexion Google...", "success");
 
@@ -1178,41 +1197,38 @@ async function signInWithGoogle() {
       throw popupError;
     }
   } catch (error) {
-    if (error.message === "firebase-config-missing") {
-      setStatus(quickSignupStatus, "Google n'est pas encore configure. Ajoute tes cles Firebase dans firebase-config.js.", "error");
-      return;
-    }
-
-    const errorMessages = {
-      "auth/unauthorized-domain": `Domaine non autorise dans Firebase. Ajoute ${window.location.hostname}, localhost et 127.0.0.1 dans Authentication > Settings > Authorized domains.`,
-      "auth/popup-closed-by-user": "Fenetre Google fermee avant la fin de la connexion.",
-      "auth/popup-blocked": "Popup Google bloquee par le navigateur. Autorise les popups ou reessaie.",
-      "auth/operation-not-allowed": "Google n'est pas active dans Firebase Authentication > Sign-in method.",
-      "auth/network-request-failed": "Connexion reseau impossible. Verifie internet puis reessaie.",
-    };
-
-    setStatus(
-      quickSignupStatus,
-      errorMessages[error.code] || `Connexion Google impossible: ${error.code || "erreur inconnue"}.`,
-      "error",
-    );
+    setStatus(quickSignupStatus, getGoogleAuthErrorMessage(error), "error");
   }
 }
 
 async function initFirebaseGoogleAuth() {
+  if (isAdminRoute()) return;
   if (!getFirebaseConfig()) return;
 
   try {
     const client = await loadFirebaseAuthClient();
-    const redirectResult = await client.getRedirectResult(client.auth);
-    if (redirectResult?.user) {
-      await completeGoogleSignup(redirectResult.user);
-      return;
+
+    try {
+      const redirectResult = await client.getRedirectResult(client.auth);
+      if (redirectResult?.user) {
+        await completeGoogleSignup(redirectResult.user);
+      }
+    } catch (redirectError) {
+      setStatus(quickSignupStatus, getGoogleAuthErrorMessage(redirectError), "error");
     }
 
-    client.onAuthStateChanged(client.auth, () => {});
-  } catch {
-    setStatus(quickSignupStatus, "");
+    client.onAuthStateChanged(client.auth, async (firebaseUser) => {
+      if (!firebaseUser || state.adminMode || state.currentUser?.uid === firebaseUser.uid) return;
+
+      try {
+        await handleAuthenticatedFirebaseUser(firebaseUser);
+        setStatus(quickSignupStatus, "Connexion Google reussie.", "success");
+      } catch (authError) {
+        setStatus(quickSignupStatus, getGoogleAuthErrorMessage(authError), "error");
+      }
+    });
+  } catch (error) {
+    setStatus(quickSignupStatus, getGoogleAuthErrorMessage(error), "error");
   }
 }
 
@@ -1653,8 +1669,8 @@ function showBrowserRestaurantNotification(order, count = 1) {
 
   const notification = new Notification(title, {
     body,
-    icon: "assets/bko-eats-logo.png",
-    badge: "assets/bko-eats-logo.png",
+    icon: "icon.svg",
+    badge: "icon.svg",
     tag: `bko-eats-${state.restaurantProfile?.id || "restaurant"}-${getRestaurantOrderKey(order)}`,
   });
 
@@ -1730,8 +1746,8 @@ function showBrowserClientNotification(title, body, tag) {
 
   const notification = new Notification(title, {
     body,
-    icon: "assets/bko-eats-logo.png",
-    badge: "assets/bko-eats-logo.png",
+    icon: "icon.svg",
+    badge: "icon.svg",
     tag,
   });
   notification.onclick = () => {
@@ -3183,22 +3199,93 @@ function toggleFavorite(type, id) {
   renderRestaurants();
 }
 
+function formatCoordinateLabel(location) {
+  if (!location?.lat || !location?.lng) return "Position actuelle";
+  return `${Number(location.lat).toFixed(4)}, ${Number(location.lng).toFixed(4)}`;
+}
+
 function updateLocationLabel() {
-  locationLabel.textContent = state.userLocation ? "Position actuelle" : "Bamako, Mali";
+  if (!state.userLocation) {
+    locationLabel.textContent = "Bamako, Mali";
+    locationLabel.title = "Utiliser ma localisation";
+    return;
+  }
+
+  locationLabel.textContent = state.userLocation.label || formatCoordinateLabel(state.userLocation);
+  locationLabel.title = `Position: ${formatCoordinateLabel(state.userLocation)}`;
+}
+
+function getReadableLocationFromApi(data) {
+  const parts = [
+    data.locality,
+    data.city,
+    data.principalSubdivision,
+    data.countryName,
+  ]
+    .filter(Boolean)
+    .filter((part, index, list) => list.indexOf(part) === index);
+
+  if (!parts.length) return "";
+
+  const conciseParts = parts.filter((part) => !/^mali$/i.test(part)).slice(0, 2);
+  return conciseParts.length ? conciseParts.join(", ") : parts.slice(0, 2).join(", ");
+}
+
+async function resolveUserLocationLabel(location) {
+  if (!location?.lat || !location?.lng) return;
+
+  const requestId = ++locationLabelRequestId;
+  const params = new URLSearchParams({
+    latitude: String(location.lat),
+    longitude: String(location.lng),
+    localityLanguage: "fr",
+  });
+
+  try {
+    const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?${params.toString()}`);
+    if (!response.ok) throw new Error("reverse-geocode-failed");
+
+    const data = await response.json();
+    const label = getReadableLocationFromApi(data);
+    if (!label || requestId !== locationLabelRequestId || !state.userLocation) return;
+
+    state.userLocation = {
+      ...state.userLocation,
+      label,
+    };
+    updateLocationLabel();
+    saveState();
+    updateOpenLocalOrdersLocation();
+  } catch {
+    updateLocationLabel();
+  }
 }
 
 function applyUserPosition(position) {
-  state.userLocation = {
+  const previousLocation = state.userLocation;
+  const nextLocation = {
     lat: position.coords.latitude,
     lng: position.coords.longitude,
     accuracy: position.coords.accuracy,
     updatedAt: Date.now(),
+  };
+
+  if (previousLocation?.label && getDistanceKm(previousLocation, nextLocation) < 0.08) {
+    nextLocation.label = previousLocation.label;
+  }
+
+  state.userLocation = {
+    ...nextLocation,
   };
   updateLocationLabel();
   saveState();
   renderRestaurants();
   renderCart();
   updateOpenLocalOrdersLocation();
+
+  if (!state.userLocation.label) {
+    void resolveUserLocationLabel(state.userLocation);
+  }
 }
 
 function startUserLocationWatch() {
