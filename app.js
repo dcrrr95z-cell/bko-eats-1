@@ -484,6 +484,130 @@ if (burgerAndCo?.brooklynMenu && brooklynBurger) {
   delete burgerAndCo.brooklynMenu;
 }
 
+const PRODUCT_DESCRIPTION_RULES = [
+  {
+    test: (item) => /menu/i.test(item.name) && !/familial|family|kids|mix/i.test(item.name),
+    text: (restaurant, item, detail) =>
+      `Formule ${cleanProductName(item.name).toLowerCase()} avec frites et boisson, preparee par ${restaurant.name}.${detail}`,
+  },
+  {
+    test: (item) => /tacos/i.test(item.name) && Number(item.price || 0) <= 1500,
+    text: (restaurant, item, detail) =>
+      `Option tacos pour transformer le plat en version plus gourmande chez ${restaurant.name}.${detail}`,
+  },
+  {
+    test: (item) => /supplement|bacon|cheddar|chantilly|nappage|sauce/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Supplement pour personnaliser ta commande ${restaurant.name} selon tes envies.${detail}`,
+  },
+  {
+    test: (item) => /boisson|cocktail|expresso|cafe|infusion|milk/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Boisson selectionnee pour accompagner ton repas ou ton dessert chez ${restaurant.name}.${detail}`,
+  },
+  {
+    test: (item) => /burger|smash|classic|hummer|naan/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Burger genereux de ${restaurant.name}, servi chaud avec une base moelleuse, une garniture savoureuse et une sauce maison.${detail}`,
+  },
+  {
+    test: (item) => /wings|tenders|nuggets|pieces|poulet|chicken|fingers/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Specialite poulet de ${restaurant.name}, croustillante et bien assaisonnee, ideale seule ou avec un accompagnement.${detail}`,
+  },
+  {
+    test: (item) => /sandwich|wrap|kebab|bao|tacos/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Recette street-food de ${restaurant.name}, garnie et facile a manger, parfaite pour une commande rapide.${detail}`,
+  },
+  {
+    test: (item) => /frites|fries|potatoes|papatoes|side|mozza/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Accompagnement gourmand de ${restaurant.name}, a ajouter au panier pour completer ton repas.${detail}`,
+  },
+  {
+    test: (item) => /pizza|spaghetti|pasta|penne|carbonara|margherita/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Specialite italienne de ${restaurant.name}, preparee avec une base simple et des ingredients savoureux.${detail}`,
+  },
+  {
+    test: (item) => /glace|cornet|pot|barquette|tulipe|esquimaux|bricelet|gavotte|cream|chantilly/i.test(
+      `${item.section || ""} ${item.name}`,
+    ),
+    text: (restaurant, item, detail) =>
+      `Dessert glace de ${restaurant.name}, frais et doux, parfait pour terminer la commande sur une note sucree.${detail}`,
+  },
+  {
+    test: (item) => /croque|grilled/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Croque chaud de ${restaurant.name}, grille et fondant, pense pour un repas simple et reconfortant.${detail}`,
+  },
+  {
+    test: (item) => /dessert|tiramisu|torsade|crepe|pain perdu|fondant|sweet/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Dessert de ${restaurant.name}, gourmand et pratique a commander apres le repas.${detail}`,
+  },
+  {
+    test: (item) => /salade|quinoa/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Option fraiche de ${restaurant.name}, composee pour une commande plus legere et equilibree.${detail}`,
+  },
+  {
+    test: (item) => /brasserie|escalope|filet|cordon/i.test(`${item.section || ""} ${item.name}`),
+    text: (restaurant, item, detail) =>
+      `Plat complet de ${restaurant.name}, servi avec un accompagnement au choix selon la disponibilite du restaurant.${detail}`,
+  },
+  {
+    test: () => true,
+    text: (restaurant, item, detail) =>
+      `Produit ${cleanProductName(item.name).toLowerCase()} propose par ${restaurant.name}, disponible a la commande sur Bko Eats.${detail}`,
+  },
+];
+
+function cleanProductName(name) {
+  return String(name || "produit")
+    .replace(/\s+-\s+(Simple|Menu|Tacos)$/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function cleanOriginalDescription(description) {
+  const value = String(description || "").replace(/\s+/g, " ").trim();
+  if (!value) return "";
+
+  const genericPatterns = [
+    /^avec frites et boisson$/i,
+    /^version tacos$/i,
+    /^burger( .*)?$/i,
+    /^wrap( .*)?$/i,
+    /^tacos( .*)?$/i,
+    /^cocktail$/i,
+    /^dessert( .*)?$/i,
+    /^frites$/i,
+    /^wings$/i,
+    /^tenders$/i,
+    /^nuggets$/i,
+    /^chantilly$/i,
+    /^petit format$/i,
+    /^grand format$/i,
+  ];
+
+  if (genericPatterns.some((pattern) => pattern.test(value))) return "";
+  return value.endsWith(".") ? ` Details: ${value}` : ` Details: ${value}.`;
+}
+
+function enhanceMenuDescriptions() {
+  restaurants.forEach((restaurant) => {
+    restaurant.menu.forEach((item) => {
+      const detail = cleanOriginalDescription(item.description);
+      const rule = PRODUCT_DESCRIPTION_RULES.find((candidate) => candidate.test(item));
+      item.description = rule.text(restaurant, item, detail);
+    });
+  });
+}
+
+enhanceMenuDescriptions();
+
 const state = {
   category: "Tous",
   query: "",
