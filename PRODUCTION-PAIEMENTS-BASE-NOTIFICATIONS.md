@@ -8,8 +8,11 @@
 - Commandes separees par restaurant dans `orders`.
 - Portefeuilles restaurants/admin mis a jour par le serveur.
 - Notifications Firestore creees pour nouvelle commande et paiement confirme.
+- Statuts restaurant securises via `/api/order-status`, avec notification client a chaque changement important.
 - Regles Firestore strictes pour clients, restaurants et admin.
 - Orange Money ne cree plus de commande tant que l'API Orange Money n'est pas configuree.
+- Script de verification production : `verifier-bko-eats.cmd`.
+- Script de remplissage Firebase : `seed-firestore-bko-eats.cmd`.
 
 ## Variables Vercel obligatoires
 
@@ -95,12 +98,13 @@ NOTIFY_URL=https://bko-eats-1.vercel.app/api/orange-webhook
 1. Ajouter les variables Vercel.
 2. Redeployer Vercel.
 3. Configurer le webhook Stripe.
-4. Faire une commande carte en mode test.
-5. Verifier dans Firestore :
+4. Lancer `verifier-bko-eats.cmd` apres le deploiement.
+5. Faire une commande carte en mode test.
+6. Verifier dans Firestore :
    - `checkoutSessions`
    - `orders`
    - `notifications`
    - `wallets`
    - `walletLedgers`
-6. Ouvrir l'espace restaurant et verifier que la nouvelle commande apparait.
-7. Changer le statut restaurant et verifier que le client recoit le suivi.
+7. Ouvrir l'espace restaurant et verifier que la nouvelle commande apparait.
+8. Changer le statut restaurant et verifier que le client recoit le suivi.

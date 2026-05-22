@@ -3111,28 +3111,56 @@ function renderRestaurantSettingsTab() {
 }
 
 async function updateRestaurantOrderStatus(orderId, status) {
-  if (orderId?.startsWith("BKO-")) {
+  const normalizedStatus = normalizeRestaurantOrderStatus(status);
+
+  if (state.currentUser?.provider === "RestaurantCode" || !getFirebaseConfig()) {
     const order = state.restaurantOrders.find((candidate) => candidate.id === orderId);
     if (order) {
-      order.status = status;
+      order.status = normalizedStatus;
       const savedOrder = state.orders.find((candidate) => candidate.reference === orderId || orderId.startsWith(`${candidate.reference}-`));
-      if (savedOrder) savedOrder.status = status;
-      updateLocalRestaurantInboxOrderStatus(orderId, status);
+      if (savedOrder) savedOrder.status = normalizedStatus;
+      updateLocalRestaurantInboxOrderStatus(orderId, normalizedStatus);
       saveState();
       renderRestaurantDashboard();
-      showRestaurantNotificationToast("Statut envoye", `${getStatusLabel(status)} - le client sera notifie.`);
+      showRestaurantNotificationToast("Statut envoye", `${getStatusLabel(normalizedStatus)} - le client sera notifie.`);
     }
     return;
   }
 
   const client = await loadFirebaseAuthClient();
-  await client.updateDoc(client.doc(client.db, "orders", orderId), {
-    status,
-    updatedAt: client.serverTimestamp(),
+  const firebaseUser = client.auth.currentUser;
+  if (!firebaseUser) {
+    showRestaurantNotificationToast("Connexion requise", "Reconnecte le compte restaurant avant de modifier la commande.");
+    return;
+  }
+
+  const token = await firebaseUser.getIdToken();
+  const response = await fetch("/api/order-status", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      orderId,
+      status: normalizedStatus,
+    }),
   });
+  const result = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    showRestaurantNotificationToast("Statut bloque", result.message || "Le serveur n'a pas accepte la mise a jour.");
+    return;
+  }
+
   await loadRestaurantWorkspace(state.restaurantProfile.id);
   renderRestaurantDashboard();
-  showRestaurantNotificationToast("Statut envoye", `${getStatusLabel(status)} - le client sera notifie.`);
+  showRestaurantNotificationToast(
+    "Statut envoye",
+    result.clientNotified
+      ? `${getStatusLabel(normalizedStatus)} - notification client creee.`
+      : `${getStatusLabel(normalizedStatus)} - statut enregistre.`,
+  );
 }
 
 async function saveRestaurantMenuItem(form) {

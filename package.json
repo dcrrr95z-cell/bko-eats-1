@@ -4,7 +4,10 @@
   "private": true,
   "description": "Bko Eats web app",
   "scripts": {
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "verify": "node scripts/verify-production.mjs",
+    "seed:firestore": "node scripts/seed-firestore.mjs",
+    "seed:firestore:reset-wallets": "node scripts/seed-firestore.mjs --reset-wallets"
   },
   "dependencies": {
     "firebase-admin": "^13.10.0",
