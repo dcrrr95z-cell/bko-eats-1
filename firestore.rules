@@ -6,8 +6,12 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    function userDoc(uid) {
+      return get(/databases/$(database)/documents/users/$(uid)).data;
+    }
+
     function currentUser() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return userDoc(request.auth.uid);
     }
 
     function isKnownRestaurant(restaurantId) {
@@ -20,14 +24,22 @@ service cloud.firestore {
       ];
     }
 
-    function isRestaurantOwner(restaurantId) {
-      return signedIn()
-        && currentUser().role == "restaurant"
-        && currentUser().restaurantId == restaurantId;
-    }
-
     function isAdmin() {
       return signedIn() && currentUser().role == "admin";
+    }
+
+    function isRestaurantUser() {
+      return signedIn() && currentUser().role == "restaurant";
+    }
+
+    function isRestaurantOwner(restaurantId) {
+      return isRestaurantUser()
+        && currentUser().restaurantId == restaurantId
+        && isKnownRestaurant(restaurantId);
+    }
+
+    function isClientOwner(clientId) {
+      return signedIn() && request.auth.uid == clientId;
     }
 
     function validStatus(status) {
@@ -43,30 +55,21 @@ service cloud.firestore {
       ];
     }
 
-    function validOrder(data) {
-      return data.keys().hasAll([
-          "clientId",
-          "restaurantId",
-          "items",
-          "total",
-          "status",
-          "createdAt",
-          "deliveryAddress"
-        ])
-        && data.clientId is string
-        && data.restaurantId is string
-        && isKnownRestaurant(data.restaurantId)
-        && data.items is list
-        && data.total is number
-        && validStatus(data.status)
-        && data.deliveryAddress is string;
+    function lockedOrderFieldsUnchanged() {
+      return request.resource.data.restaurantId == resource.data.restaurantId
+        && request.resource.data.clientId == resource.data.clientId
+        && request.resource.data.total == resource.data.total
+        && request.resource.data.items == resource.data.items
+        && request.resource.data.paymentStatus == resource.data.paymentStatus;
     }
 
     match /users/{uid} {
-      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow read: if isAdmin() || isClientOwner(uid);
+
       allow create: if signedIn()
         && request.auth.uid == uid
         && request.resource.data.uid == uid
+        && request.resource.data.role in ["client", "restaurant"]
         && (
           request.resource.data.role == "client"
           || (
@@ -74,73 +77,102 @@ service cloud.firestore {
             && isKnownRestaurant(request.resource.data.restaurantId)
           )
         );
-      allow update, delete: if isAdmin()
+
+      allow update: if isAdmin()
         || (
-          signedIn()
-          && request.auth.uid == uid
+          isClientOwner(uid)
           && request.resource.data.uid == resource.data.uid
           && request.resource.data.role == resource.data.role
           && request.resource.data.restaurantId == resource.data.restaurantId
         );
+
+      allow delete: if isAdmin();
     }
 
     match /restaurants/{restaurantId} {
-      allow read: if isAdmin() || signedIn();
-      allow create: if isAdmin()
-        || (
-          signedIn()
-          && isKnownRestaurant(restaurantId)
-          && request.resource.data.ownerUid == request.auth.uid
-        );
-      allow update, delete: if isAdmin() || isRestaurantOwner(restaurantId);
+      allow read: if signedIn();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() || isRestaurantOwner(restaurantId);
     }
 
     match /menuItems/{itemId} {
-      allow read: if isAdmin() || signedIn();
+      allow read: if signedIn();
       allow create: if isAdmin() || isRestaurantOwner(request.resource.data.restaurantId);
       allow update, delete: if isAdmin() || isRestaurantOwner(resource.data.restaurantId);
     }
 
     match /orders/{orderId} {
-      allow create: if isAdmin()
-        || (
-          signedIn()
-          && validOrder(request.resource.data)
-          && request.resource.data.clientId == request.auth.uid
-          && request.resource.data.status == "pending"
-        );
+      // Les commandes payees sont creees par le webhook serveur Stripe/Orange via Admin SDK.
+      allow create: if isAdmin();
 
       allow read: if isAdmin()
         || isRestaurantOwner(resource.data.restaurantId)
-        || (signedIn() && resource.data.clientId == request.auth.uid);
+        || isClientOwner(resource.data.clientId);
 
       allow update: if isAdmin()
         || (
-          validOrder(request.resource.data)
-        && (
-          (
-            isRestaurantOwner(resource.data.restaurantId)
-            && request.resource.data.restaurantId == resource.data.restaurantId
-            && request.resource.data.clientId == resource.data.clientId
-            && request.resource.data.diff(resource.data).changedKeys().hasOnly(["status", "updatedAt"])
-            && validStatus(request.resource.data.status)
+          isRestaurantOwner(resource.data.restaurantId)
+          && lockedOrderFieldsUnchanged()
+          && request.resource.data.diff(resource.data).changedKeys().hasOnly(["status", "updatedAt"])
+          && validStatus(request.resource.data.status)
+        )
+        || (
+          isClientOwner(resource.data.clientId)
+          && lockedOrderFieldsUnchanged()
+          && request.resource.data.diff(resource.data).changedKeys().hasOnly(["status", "updatedAt", "deliveryLocation"])
+          && (
+            request.resource.data.status == "cancelled"
+            || request.resource.data.status == resource.data.status
           )
-          || (
-            signedIn()
-            && resource.data.clientId == request.auth.uid
-            && request.resource.data.diff(resource.data).changedKeys().hasOnly(["status", "updatedAt", "deliveryLocation"])
-            && (
-              request.resource.data.status == "cancelled"
-              || request.resource.data.status == resource.data.status
-            )
-          )
-        ));
+        );
 
       allow delete: if isAdmin();
     }
 
+    match /notifications/{notificationId} {
+      allow read: if isAdmin()
+        || (
+          signedIn()
+          && resource.data.recipientType == "client"
+          && resource.data.clientId == request.auth.uid
+        )
+        || (
+          resource.data.recipientType == "restaurant"
+          && isRestaurantOwner(resource.data.restaurantId)
+        );
+
+      allow update: if isAdmin()
+        || (
+          signedIn()
+          && request.resource.data.diff(resource.data).changedKeys().hasOnly(["read", "readAt"])
+          && (
+            (
+              resource.data.recipientType == "client"
+              && resource.data.clientId == request.auth.uid
+            )
+            || (
+              resource.data.recipientType == "restaurant"
+              && isRestaurantOwner(resource.data.restaurantId)
+            )
+          )
+        );
+
+      allow create, delete: if isAdmin();
+    }
+
     match /wallets/{walletId} {
-      allow read, write: if isAdmin();
+      allow read: if isAdmin() || (walletId != "admin" && isRestaurantOwner(walletId));
+      allow write: if isAdmin();
+    }
+
+    match /walletLedgers/{ledgerId} {
+      allow read: if isAdmin() || isRestaurantOwner(resource.data.restaurantId);
+      allow write: if isAdmin();
+    }
+
+    match /checkoutSessions/{sessionId} {
+      // Donnees internes paiement: accessibles uniquement au serveur Admin SDK.
+      allow read, write: if false;
     }
   }
 }

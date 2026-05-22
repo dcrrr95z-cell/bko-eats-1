@@ -637,7 +637,7 @@ const state = {
     items: [],
   },
   payment: {
-    method: "cash",
+    method: "orange-money",
     address: "",
     phone: "",
   },
@@ -897,8 +897,16 @@ function loadSavedState() {
     state.payment = { ...state.payment, ...(saved.payment || {}) };
     sanitizeSavedCart();
     sanitizeFavorites();
+    sanitizePaymentMethod();
   } catch {
     localStorage.removeItem(STORAGE_KEY);
+  }
+}
+
+function sanitizePaymentMethod() {
+  const allowedPaymentMethods = new Set(["orange-money", "card"]);
+  if (!allowedPaymentMethods.has(state.payment.method)) {
+    state.payment.method = "orange-money";
   }
 }
 
@@ -3647,9 +3655,10 @@ function renderAccount() {
 }
 
 function renderPaymentForm() {
+  sanitizePaymentMethod();
   deliveryAddress.value = state.payment.address || state.currentUser?.address || "";
   deliveryPhone.value = state.payment.phone || state.currentUser?.phone || "";
-  paymentMethod.value = state.payment.method || "cash";
+  paymentMethod.value = state.payment.method || "orange-money";
 }
 
 function showCartNotice(message) {
@@ -3670,9 +3679,7 @@ function resetCheckoutButton() {
 
 function getPaymentLabels() {
   return {
-    cash: "Paiement a la livraison",
     "orange-money": "Orange Money",
-    wave: "Wave",
     card: "Carte bancaire",
   };
 }
@@ -3689,9 +3696,9 @@ function buildCheckoutOrder(items, totalValue, estimate) {
     delivery: { ...state.payment, location: state.userLocation ? { ...state.userLocation } : null },
     deliveryAddress: state.payment.address,
     deliveryLocation: state.userLocation ? { ...state.userLocation } : null,
-    paymentLabel: paymentLabels[state.payment.method] || "Paiement a la livraison",
+    paymentLabel: paymentLabels[state.payment.method] || "Orange Money",
     paymentMethod: state.payment.method,
-    paymentStatus: state.payment.method === "card" ? "pending" : "cod",
+    paymentStatus: state.payment.method === "card" ? "pending" : "orange_pending",
     items: items.map((item) => ({ ...item })),
     total: totalValue,
     estimate,
@@ -3699,7 +3706,7 @@ function buildCheckoutOrder(items, totalValue, estimate) {
   };
 }
 
-async function finalizeConfirmedOrder(order, paymentDetails = {}) {
+async function finalizeConfirmedOrder(order, paymentDetails = {}, options = {}) {
   const confirmedOrder = {
     ...order,
     ...paymentDetails,
@@ -3710,8 +3717,10 @@ async function finalizeConfirmedOrder(order, paymentDetails = {}) {
   await requestClientNotificationPermission({ quiet: true });
   state.orders = state.orders.filter((savedOrder) => savedOrder.reference !== confirmedOrder.reference);
   state.orders.unshift(confirmedOrder);
-  saveOrderToLocalRestaurantInbox(confirmedOrder);
-  const firestoreSave = saveOrderToFirestore(confirmedOrder);
+  if (!options.skipRestaurantInbox) {
+    saveOrderToLocalRestaurantInbox(confirmedOrder);
+  }
+  const firestoreSave = options.skipFirestore ? Promise.resolve() : saveOrderToFirestore(confirmedOrder);
   state.cart = {};
   clearCartNotice();
   saveState();
@@ -3722,6 +3731,10 @@ async function finalizeConfirmedOrder(order, paymentDetails = {}) {
   orderModal.classList.add("open");
   notifyClientOrderStatus(confirmedOrder, "pending");
   void firestoreSave;
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function startStripeCheckout(order) {
@@ -3748,6 +3761,26 @@ async function startStripeCheckout(order) {
   window.location.href = payload.url;
 }
 
+async function startOrangeMoneyPayment(order) {
+  showCartNotice("Preparation du paiement Orange Money...");
+
+  const response = await fetch("/api/orange-create-payment", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ order }),
+  });
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok || !payload.url) {
+    throw new Error(
+      payload.message ||
+        "Orange Money n'est pas encore configure. La commande ne sera creee qu'apres confirmation du paiement.",
+    );
+  }
+
+  window.location.href = payload.url;
+}
+
 async function verifyStripeSession(sessionId) {
   const response = await fetch(`/api/stripe-session?session_id=${encodeURIComponent(sessionId)}`);
   const payload = await response.json().catch(() => ({}));
@@ -3757,6 +3790,20 @@ async function verifyStripeSession(sessionId) {
   }
 
   return payload;
+}
+
+async function waitForStripeWebhookOrder(sessionId) {
+  let latestSession = null;
+
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    latestSession = await verifyStripeSession(sessionId);
+    if (latestSession.payment_status === "paid" && latestSession.serverOrderCreated) {
+      return latestSession;
+    }
+    await wait(1500);
+  }
+
+  return latestSession;
 }
 
 async function handleStripeReturn() {
@@ -3784,11 +3831,17 @@ async function handleStripeReturn() {
   }
 
   try {
-    showCartNotice("Verification du paiement carte...");
-    const session = await verifyStripeSession(sessionId);
+    showCartNotice("Verification du paiement carte et creation securisee de la commande...");
+    const session = await waitForStripeWebhookOrder(sessionId);
     if (session.payment_status !== "paid") {
       cartPanel.classList.add("open");
       showCartNotice("Paiement carte non confirme. Reessaie ou choisis un autre moyen de paiement.");
+      return;
+    }
+
+    if (!session.serverOrderCreated) {
+      cartPanel.classList.add("open");
+      showCartNotice("Paiement recu. Le serveur finalise la commande, actualise dans quelques secondes.");
       return;
     }
 
@@ -3798,6 +3851,10 @@ async function handleStripeReturn() {
       stripeSessionId: session.id,
       stripeAmountTotal: session.amount_total,
       stripeCurrency: session.currency,
+      serverOrderIds: session.orderIds || [],
+    }, {
+      skipFirestore: true,
+      skipRestaurantInbox: true,
     });
   } catch (error) {
     cartPanel.classList.add("open");
@@ -4267,7 +4324,7 @@ function createRestaurantOrdersFromCheckout(order) {
       status: "pending",
       reference: order.reference,
       paymentLabel: order.paymentLabel,
-      paymentStatus: order.paymentStatus || "cod",
+      paymentStatus: order.paymentStatus || "pending",
       stripeSessionId: order.stripeSessionId || "",
       createdAt: order.createdAt || Date.now(),
       createdAtText: order.date,
@@ -4363,7 +4420,9 @@ function createRestaurantTestOrder() {
     },
     deliveryAddress: "Adresse test a Bamako",
     deliveryLocation: state.userLocation || null,
-    paymentLabel: "Paiement a la livraison",
+    paymentLabel: "Orange Money",
+    paymentMethod: "orange-money",
+    paymentStatus: "orange_pending",
     items: [
       {
         ...menuItem,
@@ -4414,7 +4473,7 @@ async function saveOrderToFirestore(order) {
           status: "pending",
           reference: order.reference,
           paymentLabel: order.paymentLabel,
-          paymentStatus: order.paymentStatus || "cod",
+          paymentStatus: order.paymentStatus || "pending",
           stripeSessionId: order.stripeSessionId || "",
           createdAt: client.serverTimestamp(),
           createdAtText: order.date,
@@ -4792,6 +4851,7 @@ paymentForm.addEventListener("input", () => {
     address: deliveryAddress.value.trim(),
     phone: deliveryPhone.value.trim(),
   };
+  sanitizePaymentMethod();
   clearCartNotice();
   saveState();
 });
@@ -4807,6 +4867,7 @@ checkoutButton.addEventListener("click", async () => {
     address: deliveryAddress.value.trim(),
     phone: deliveryPhone.value.trim(),
   };
+  sanitizePaymentMethod();
 
   if (!state.currentUser) {
     renderAccount();
@@ -4836,8 +4897,12 @@ checkoutButton.addEventListener("click", async () => {
       return;
     }
 
-    await finalizeConfirmedOrder(order);
-    resetCheckoutButton();
+    if (state.payment.method === "orange-money") {
+      await startOrangeMoneyPayment(order);
+      return;
+    }
+
+    throw new Error("Moyen de paiement indisponible.");
   } catch (error) {
     showCartNotice(error.message || "Impossible de valider la commande pour le moment.");
     resetCheckoutButton();

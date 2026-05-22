@@ -1,9 +1,9 @@
-const CACHE_NAME = "bko-eats-v43";
+const CACHE_NAME = "bko-eats-v45";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css?v=28",
-  "./app.js?v=42",
+  "./app.js?v=44",
   "./firestore.rules",
   "./firebase-config.js?v=18",
   "./manifest.json",
