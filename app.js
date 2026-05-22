@@ -860,6 +860,8 @@ const restaurantEntryButton = document.querySelector("#restaurantEntryButton");
 const restaurantDashboard = document.querySelector("#restaurantDashboard");
 const adminDashboard = document.querySelector("#adminDashboard");
 const appShell = document.querySelector(".app-shell");
+const launchScreen = document.querySelector("#launchScreen");
+const launchEnterButton = document.querySelector("#launchEnterButton");
 
 const STORAGE_KEY = "bko-eats-state-v1";
 const RESTAURANT_ORDERS_KEY = "bko-eats-restaurant-orders-v1";
@@ -869,6 +871,7 @@ const PLATFORM_COMMISSION_RATE = 0.2;
 const WALLET_RESET_ONCE_KEY = "bko-eats-wallet-reset-2026-05-19-v1";
 const restaurantOrderChannel =
   "BroadcastChannel" in window ? new BroadcastChannel(RESTAURANT_ORDER_CHANNEL) : null;
+let launchScreenTimer = null;
 
 function resetLocalWalletsOnce() {
   if (localStorage.getItem(WALLET_RESET_ONCE_KEY)) return;
@@ -1110,6 +1113,31 @@ function renderOnboarding() {
   onboardingScreen.classList.toggle("open", shouldShow);
   document.body.classList.toggle("onboarding-open", shouldShow);
   if (shouldShow) showOnboardingPanel("quick");
+}
+
+function closeLaunchScreen() {
+  if (!launchScreen || launchScreen.hidden) return;
+
+  window.clearTimeout(launchScreenTimer);
+  launchScreen.classList.add("leaving");
+  document.body.classList.remove("launch-open");
+  window.setTimeout(() => {
+    launchScreen.hidden = true;
+    launchScreen.classList.remove("open", "leaving");
+  }, 520);
+}
+
+function initLaunchScreen() {
+  if (!launchScreen) return;
+
+  launchScreenTimer = window.setTimeout(closeLaunchScreen, 1700);
+  launchEnterButton?.addEventListener("click", closeLaunchScreen, { once: true });
+  launchScreen.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key === "Enter" || event.key === " ") closeLaunchScreen();
+    },
+  );
 }
 
 function completeSignup(user) {
@@ -4971,6 +4999,7 @@ restaurantOrderChannel?.addEventListener("message", (event) => {
 
 resetLocalWalletsOnce();
 loadSavedState();
+initLaunchScreen();
 updateLocationLabel();
 renderOnboarding();
 renderCategories();

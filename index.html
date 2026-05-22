@@ -8,9 +8,20 @@
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="icon.svg" />
-    <link rel="stylesheet" href="styles.css?v=28" />
+    <link rel="stylesheet" href="styles.css?v=29" />
   </head>
-  <body>
+  <body class="launch-open">
+    <section class="launch-screen open" id="launchScreen" aria-label="Bko Eats">
+      <button class="launch-surface" type="button" id="launchEnterButton" aria-label="Entrer dans Bko Eats">
+        <span class="launch-brand">
+          <span>Bko</span>
+          <span>Eats</span>
+        </span>
+        <span class="launch-mark" aria-hidden="true">BE</span>
+        <span class="launch-progress" aria-hidden="true"><span></span></span>
+      </button>
+    </section>
+
     <section class="onboarding-screen" id="onboardingScreen" aria-labelledby="onboardingTitle">
       <div class="onboarding-card">
         <div class="onboarding-panel quick-panel" id="quickSignupPanel">
@@ -239,7 +250,7 @@
     </div>
 
     <script src="firebase-config.js?v=18"></script>
-    <script src="app.js?v=45"></script>
+    <script src="app.js?v=46"></script>
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("sw.js");
