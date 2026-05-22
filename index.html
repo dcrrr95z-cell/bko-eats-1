@@ -8,7 +8,7 @@
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="icon.svg" />
-    <link rel="stylesheet" href="styles.css?v=31" />
+    <link rel="stylesheet" href="styles.css?v=32" />
   </head>
   <body class="launch-open">
     <section class="launch-screen open" id="launchScreen" aria-label="Bko Eats">
@@ -125,6 +125,16 @@
       </div>
     </section>
 
+    <section class="catalog-transition" id="catalogTransition" aria-live="polite" hidden>
+      <div class="catalog-transition-card">
+        <span class="catalog-transition-logo" aria-hidden="true">BE</span>
+        <p class="eyebrow">Bko Eats</p>
+        <h2 id="catalogTransitionTitle">Bienvenue</h2>
+        <p id="catalogTransitionSubtitle">Preparation des restaurants autour de toi.</p>
+        <div class="catalog-transition-loader" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
     <main class="app-shell">
       <section class="topbar">
         <div class="brand-lockup">
@@ -224,6 +234,21 @@
       </div>
     </div>
 
+    <div class="order-modal product-modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="productTitle">
+      <div class="modal-card product-detail-card">
+        <button class="icon-button modal-close" type="button" id="closeProductModal" aria-label="Fermer">x</button>
+        <div class="product-modal-visual" id="productModalVisual"></div>
+        <p class="eyebrow" id="productRestaurantName">Bko Eats</p>
+        <h2 id="productTitle">Produit</h2>
+        <p id="productDescription"></p>
+        <div class="product-modal-actions">
+          <strong id="productPrice">0 FCFA</strong>
+          <button class="favorite-button" type="button" id="productFavoriteButton" aria-label="Ajouter aux favoris">&#9825;</button>
+        </div>
+        <button class="primary-button" type="button" id="productAddButton">Ajouter au panier</button>
+      </div>
+    </div>
+
     <div class="order-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
       <div class="modal-card account-card">
         <button class="icon-button modal-close" type="button" id="closeAuthModal" aria-label="Fermer">x</button>
@@ -250,7 +275,7 @@
     </div>
 
     <script src="firebase-config.js?v=18"></script>
-    <script src="app.js?v=49"></script>
+    <script src="app.js?v=50"></script>
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("sw.js");

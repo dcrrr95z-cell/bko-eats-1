@@ -878,8 +878,28 @@ const RESTAURANT_MENU_ACCENTS = {
   "da-guido-pizza-bamako": "#d94b32",
 };
 
+function isMenuOnlyItem(item) {
+  const text = `${item.section || ""} ${item.name || ""} ${item.description || ""}`.toLowerCase();
+  const name = String(item.name || "").trim().toLowerCase();
+
+  return (
+    /^menu\b/i.test(name) ||
+    /ajout menu|supplement menu|menu en supplement|cocktail en menu|en menu supplement|avec menu/i.test(text) ||
+    (/supplement/i.test(item.section || "") && /menu/i.test(item.name || ""))
+  );
+}
+
 function getMenuVisual(item, restaurant) {
   const visualText = `${item.section || ""} ${item.name || ""}`;
+
+  if (isMenuOnlyItem(item)) {
+    return {
+      image: "",
+      accent: item.accent || RESTAURANT_MENU_ACCENTS[restaurant.id] || "#111111",
+      kind: "menu",
+    };
+  }
+
   const rule = PRODUCT_IMAGE_RULES.find((candidate) => candidate.test.test(visualText)) || PRODUCT_IMAGE_RULES[1];
   const imagePool = rule.images || [rule.image];
   const imageIndex = hashString(`${restaurant.id}-${item.id || item.name}`) % imagePool.length;
@@ -887,6 +907,7 @@ function getMenuVisual(item, restaurant) {
   return {
     image: item.image || imagePool[imageIndex],
     accent: item.accent || rule.accent || RESTAURANT_MENU_ACCENTS[restaurant.id],
+    kind: "photo",
   };
 }
 
@@ -900,6 +921,7 @@ function attachMenuVisuals() {
       const visual = getMenuVisual(item, restaurant);
       item.image = visual.image;
       item.accent = visual.accent;
+      item.visualKind = visual.kind || "photo";
     });
   });
 }
@@ -916,6 +938,7 @@ const state = {
   userProfile: null,
   orders: [],
   activeOrder: null,
+  activeProductId: "",
   userLocation: null,
   onboardingDismissed: false,
   loginIntent: "client",
@@ -1139,6 +1162,15 @@ const orderModal = document.querySelector("#orderModal");
 const closeModal = document.querySelector("#closeModal");
 const orderMessage = document.querySelector("#orderMessage");
 const orderTracking = document.querySelector("#orderTracking");
+const productModal = document.querySelector("#productModal");
+const closeProductModalButton = document.querySelector("#closeProductModal");
+const productModalVisual = document.querySelector("#productModalVisual");
+const productRestaurantName = document.querySelector("#productRestaurantName");
+const productTitle = document.querySelector("#productTitle");
+const productDescription = document.querySelector("#productDescription");
+const productPrice = document.querySelector("#productPrice");
+const productFavoriteButton = document.querySelector("#productFavoriteButton");
+const productAddButton = document.querySelector("#productAddButton");
 const authButton = document.querySelector("#authButton");
 const authModal = document.querySelector("#authModal");
 const closeAuthModal = document.querySelector("#closeAuthModal");
@@ -1160,6 +1192,9 @@ const adminDashboard = document.querySelector("#adminDashboard");
 const appShell = document.querySelector(".app-shell");
 const launchScreen = document.querySelector("#launchScreen");
 const launchEnterButton = document.querySelector("#launchEnterButton");
+const catalogTransition = document.querySelector("#catalogTransition");
+const catalogTransitionTitle = document.querySelector("#catalogTransitionTitle");
+const catalogTransitionSubtitle = document.querySelector("#catalogTransitionSubtitle");
 
 const STORAGE_KEY = "bko-eats-state-v1";
 const RESTAURANT_ORDERS_KEY = "bko-eats-restaurant-orders-v1";
@@ -1170,6 +1205,7 @@ const WALLET_RESET_ONCE_KEY = "bko-eats-wallet-reset-2026-05-19-v1";
 const restaurantOrderChannel =
   "BroadcastChannel" in window ? new BroadcastChannel(RESTAURANT_ORDER_CHANNEL) : null;
 let launchScreenTimer = null;
+let catalogTransitionTimer = null;
 
 function resetLocalWalletsOnce() {
   if (localStorage.getItem(WALLET_RESET_ONCE_KEY)) return;
@@ -1390,6 +1426,7 @@ function applyClientDocument(firebaseUser, profile = {}, provider = "Email") {
     openRestaurantDashboard(state.currentUser.restaurantId);
   } else {
     closeRestaurantDashboard();
+    showCatalogTransition("Chargement de ton catalogue Bko Eats.");
     rememberClientOrderStatuses();
     syncClientOrdersFromRestaurantInbox();
     startClientOrderRealtime();
@@ -1411,6 +1448,32 @@ function renderOnboarding() {
   onboardingScreen.classList.toggle("open", shouldShow);
   document.body.classList.toggle("onboarding-open", shouldShow);
   if (shouldShow) showOnboardingPanel("quick");
+}
+
+function closeCatalogTransition() {
+  if (!catalogTransition || catalogTransition.hidden) return;
+
+  window.clearTimeout(catalogTransitionTimer);
+  catalogTransition.classList.add("leaving");
+  document.body.classList.remove("transition-open");
+  window.setTimeout(() => {
+    catalogTransition.hidden = true;
+    catalogTransition.classList.remove("open", "ready", "leaving");
+  }, 420);
+}
+
+function showCatalogTransition(message = "Preparation des restaurants autour de toi.") {
+  if (!catalogTransition || state.restaurantMode || state.currentUser?.role === "restaurant") return;
+
+  window.clearTimeout(catalogTransitionTimer);
+  catalogTransitionTitle.textContent = `Bienvenue${state.currentUser?.firstName ? `, ${state.currentUser.firstName}` : ""}`;
+  catalogTransitionSubtitle.textContent = message;
+  catalogTransition.hidden = false;
+  catalogTransition.classList.remove("leaving");
+  catalogTransition.classList.add("open");
+  document.body.classList.add("transition-open");
+  window.setTimeout(() => catalogTransition.classList.add("ready"), 80);
+  catalogTransitionTimer = window.setTimeout(closeCatalogTransition, 1550);
 }
 
 function closeLaunchScreen() {
@@ -1452,6 +1515,7 @@ function completeSignup(user) {
   renderOnboarding();
   renderAccount();
   renderPaymentForm();
+  showCatalogTransition("Chargement de ton catalogue Bko Eats.");
 }
 
 function setStatus(element, message = "", type = "info") {
@@ -2988,6 +3052,7 @@ function resumeSavedRestaurantSession() {
 async function showIdentificationPage() {
   stopRestaurantOrderRealtime();
   stopClientOrderRealtime();
+  closeCatalogTransition();
   if (firebaseAuthClient?.auth && firebaseAuthClient.signOut) {
     try {
       await firebaseAuthClient.signOut(firebaseAuthClient.auth);
@@ -3971,6 +4036,59 @@ function renderOrderModal(order) {
   orderTracking.innerHTML = renderOrderTracking(order);
 }
 
+function renderProductVisualContent(item) {
+  if (item.visualKind === "menu") {
+    return `
+      <div class="menu-photo-text-content">
+        <span>MENU</span>
+        <small>Formule</small>
+      </div>
+    `;
+  }
+
+  return `<img src="${item.image}" alt="" loading="lazy" decoding="async" />`;
+}
+
+function getItemById(itemId) {
+  return getAllItems().find((item) => item.id === itemId);
+}
+
+function updateProductFavoriteButton(item) {
+  if (!productFavoriteButton || !item) return;
+
+  const favorite = isFavorite("items", item.id);
+  productFavoriteButton.classList.toggle("active", favorite);
+  productFavoriteButton.innerHTML = favorite ? "&#9829;" : "&#9825;";
+  productFavoriteButton.setAttribute(
+    "aria-label",
+    favorite ? "Retirer ce plat des favoris" : "Ajouter ce plat aux favoris",
+  );
+}
+
+function openProductModal(itemId) {
+  const item = getItemById(itemId);
+  if (!item || !productModal) return;
+
+  state.activeProductId = item.id;
+  productModalVisual.innerHTML = `
+    <div class="menu-photo product-modal-photo ${item.visualKind === "menu" ? "menu-photo-text" : ""}" style="--menu-accent: ${item.accent || "#f2b84b"};">
+      ${renderProductVisualContent(item)}
+    </div>
+  `;
+  productRestaurantName.textContent = item.restaurant || "Bko Eats";
+  productTitle.textContent = item.name;
+  productDescription.textContent = item.description || "Produit disponible chez Bko Eats.";
+  productPrice.textContent = money.format(item.price);
+  updateProductFavoriteButton(item);
+  productAddButton.textContent = "Ajouter au panier";
+  productModal.classList.add("open");
+}
+
+function closeProductModal() {
+  productModal?.classList.remove("open");
+  state.activeProductId = "";
+}
+
 function renderAccount() {
   authButton.textContent = state.currentUser ? getInitials(state.currentUser.name) : "SF";
   authName.value = state.currentUser?.name || "";
@@ -4325,9 +4443,9 @@ function renderRestaurantDetail(restaurantId) {
             ${items
               .map(
                 (item) => `
-                  <article class="menu-item detail-menu-item" style="--menu-accent: ${item.accent || "#f2b84b"};">
-                    <div class="menu-photo">
-                      <img src="${item.image}" alt="" loading="lazy" decoding="async" />
+                  <article class="menu-item detail-menu-item" role="button" tabindex="0" data-product-item="${item.id}" style="--menu-accent: ${item.accent || "#f2b84b"};">
+                    <div class="menu-photo ${item.visualKind === "menu" ? "menu-photo-text" : ""}">
+                      ${renderProductVisualContent(item)}
                       <div class="menu-actions">
                         <button class="favorite-button item-favorite ${isFavorite("items", item.id) ? "active" : ""}" type="button" data-favorite-item="${item.id}" aria-label="${isFavorite("items", item.id) ? "Retirer ce plat des favoris" : "Ajouter ce plat aux favoris"}">
                           ${isFavorite("items", item.id) ? "&#9829;" : "&#9825;"}
@@ -4944,12 +5062,28 @@ restaurantList.addEventListener("click", (event) => {
     return;
   }
 
+  const productCard = event.target.closest("[data-product-item]");
+  if (productCard) {
+    openProductModal(productCard.dataset.productItem);
+    return;
+  }
+
   const card = event.target.closest("[data-restaurant]");
   if (!card) return;
 
   state.selectedRestaurantId = card.dataset.restaurant;
   renderRestaurants();
   window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+restaurantList.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+
+  const productCard = event.target.closest("[data-product-item]");
+  if (!productCard) return;
+
+  event.preventDefault();
+  openProductModal(productCard.dataset.productItem);
 });
 
 restaurantList.addEventListener("submit", (event) => {
@@ -5036,6 +5170,7 @@ skipOnboarding.addEventListener("click", () => {
   state.onboardingDismissed = true;
   saveState();
   renderOnboarding();
+  showCatalogTransition("Ouverture du catalogue Bko Eats.");
 });
 
 onboardingForm.addEventListener("submit", async (event) => {
@@ -5295,6 +5430,36 @@ checkoutButton.addEventListener("click", async () => {
 closeModal.addEventListener("click", () => {
   orderModal.classList.remove("open");
   state.activeOrder = null;
+});
+
+closeProductModalButton?.addEventListener("click", closeProductModal);
+
+productModal?.addEventListener("click", (event) => {
+  if (event.target === productModal) closeProductModal();
+});
+
+productAddButton?.addEventListener("click", () => {
+  if (!state.activeProductId) return;
+
+  addItem(state.activeProductId);
+  productAddButton.textContent = "Ajoute";
+  window.setTimeout(() => {
+    if (state.activeProductId) productAddButton.textContent = "Ajouter au panier";
+  }, 900);
+});
+
+productFavoriteButton?.addEventListener("click", () => {
+  const item = getItemById(state.activeProductId);
+  if (!item) return;
+
+  toggleFavorite("items", item.id);
+  updateProductFavoriteButton(item);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && productModal?.classList.contains("open")) {
+    closeProductModal();
+  }
 });
 
 window.addEventListener("storage", (event) => {
