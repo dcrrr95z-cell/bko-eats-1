@@ -392,6 +392,11 @@ const restaurants = [
       ["Dimanche", "08:00 - 23:30"],
     ],
     website: "https://linktr.ee/ACI2000NICECREAM",
+    officialMenus: [
+      { title: "Menu petit dejeuner", href: "assets/nicecream-menus/petit-dejeuner-2025.pdf" },
+      { title: "Menu restaurant", href: "assets/nicecream-menus/restaurant-sale-bougie.pdf" },
+      { title: "Menu salon de the", href: "assets/nicecream-menus/salon-de-the.pdf" },
+    ],
     description: "Adresse dessert et glace a Bamako, ideale pour coupes, milkshakes et gaufres.",
     image: "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?auto=format&fit=crop&w=900&q=80",
     reviews: [
@@ -440,6 +445,150 @@ const restaurants = [
       { id: "nice-croque-poulet-seul", section: "Nos Croques", name: "Croque-Poulet - Seul", description: "Pain de mie, bechamel, poulet, champignons, emmental", price: 3000 },
       { id: "nice-croque-poulet-menu", section: "Nos Croques", name: "Croque-Poulet - Menu", description: "Avec accompagnement", price: 4500 },
       { id: "nice-sweet-croque", section: "Croque Sucre", name: "Sweet-Croque", description: "Pain de mie, Nutella, compotee de banane", price: 2000 },
+      { id: "nice-pdj-express", section: "Petit Dejeuner - Formules", name: "Express", description: "Boisson chaude et viennoiserie au choix", price: 1700 },
+      { id: "nice-pdj-classique", section: "Petit Dejeuner - Formules", name: "Classique", description: "Boisson chaude, viennoiserie et jus naturel 20cl", price: 3500 },
+      { id: "nice-pdj-continentale", section: "Petit Dejeuner - Formules", name: "Continentale", description: "Boisson chaude, oeuf ou omelette au choix et jus naturel 20cl", price: 4000 },
+      { id: "nice-pdj-healthy", section: "Petit Dejeuner - Formules", name: "Healthy", description: "Boisson chaude, healthy bowl et jus naturel 20cl", price: 5500 },
+      { id: "nice-pdj-brunch", section: "Petit Dejeuner - Formules", name: "Brunch", description: "Boisson chaude, salade de fruits, delice sucre, delice sale, jus 20cl et viennoiserie", price: 7500 },
+      { id: "nice-pdj-brunch-gourmand", section: "Petit Dejeuner - Formules", name: "Brunch Gourmand", description: "Formule brunch complete avec delice sale, delice sucre, salade de fruits, boisson chaude et jus", price: 11500 },
+      { id: "nice-pain-perdu-caramelo", section: "Petit Dejeuner - Pains Perdus", name: "Pain perdu Caramelo", description: "Caramel beurre sale, pommes caramelisees et glace fleur de lait", price: 3500 },
+      { id: "nice-pain-perdu-chocolat", section: "Petit Dejeuner - Pains Perdus", name: "Pain perdu Chocolat", description: "Coulis de chocolat, chocolat et glace chocolat", price: 3500 },
+      { id: "nice-pain-perdu-signature", section: "Petit Dejeuner - Pains Perdus", name: "Pain perdu Signature", description: "Caramel beurre sale, Nutella, glace au choix et chantilly", price: 4000 },
+      { id: "nice-crepe-sucre", section: "Crepes et Gaufres", name: "Crepe ou gaufre sucre", description: "Crepe ou gaufre simple sucre", price: 1500 },
+      { id: "nice-crepe-confiture", section: "Crepes et Gaufres", name: "Crepe ou gaufre confiture", description: "Crepe ou gaufre avec confiture", price: 2000 },
+      { id: "nice-crepe-chocolat", section: "Crepes et Gaufres", name: "Crepe ou gaufre chocolat", description: "Crepe ou gaufre avec chocolat", price: 2000 },
+      { id: "nice-crepe-nutella", section: "Crepes et Gaufres", name: "Crepe ou gaufre Nutella", description: "Crepe ou gaufre avec Nutella", price: 2500 },
+      { id: "nice-crepe-caramel", section: "Crepes et Gaufres", name: "Crepe ou gaufre caramel beurre sale", description: "Crepe ou gaufre avec caramel beurre sale", price: 2500 },
+      { id: "nice-crepe-nutella-banane", section: "Crepes et Gaufres", name: "Crepe ou gaufre Nutella banane", description: "Crepe ou gaufre avec Nutella et banane", price: 2700 },
+      { id: "nice-crepe-nice", section: "Crepes et Gaufres", name: "N'Ice Crepe", description: "Crepe glacee avec chantilly, sauce chocolat et sauce caramel", price: 3000 },
+      { id: "nice-gaufre-nice", section: "Crepes et Gaufres", name: "N'Ice Gaufre", description: "Gaufre glacee avec chantilly, sauce chocolat et sauce caramel", price: 3000 },
+      { id: "nice-healthy-bowl", section: "Fraicheurs Matin", name: "Healthy Bowl", description: "Granola, fruits, miel et yaourt", price: 4000 },
+      { id: "nice-salade-fruits", section: "Fraicheurs Matin", name: "Salade de fruits", description: "Salade de fruits frais", price: 2500 },
+      { id: "nice-oeuf-au-plat", section: "Oeufs et Assiettes Salees", name: "Oeuf au plat", description: "Oeuf au plat prepare sur commande", price: 1700 },
+      { id: "nice-oeufs-brouilles", section: "Oeufs et Assiettes Salees", name: "Oeufs brouilles", description: "Oeufs brouilles maison", price: 2500 },
+      { id: "nice-omelette-nature", section: "Oeufs et Assiettes Salees", name: "Omelette nature", description: "Omelette simple", price: 1700 },
+      { id: "nice-omelette-legumes", section: "Oeufs et Assiettes Salees", name: "Omelette legumes", description: "Omelette aux legumes", price: 2200 },
+      { id: "nice-omelette-jambon", section: "Oeufs et Assiettes Salees", name: "Omelette au jambon", description: "Omelette jambon", price: 2200 },
+      { id: "nice-omelette-fromage", section: "Oeufs et Assiettes Salees", name: "Omelette au fromage", description: "Omelette fromage", price: 2500 },
+      { id: "nice-omelette-jambon-fromage", section: "Oeufs et Assiettes Salees", name: "Omelette jambon fromage", description: "Omelette jambon et fromage", price: 2700 },
+      { id: "nice-avocado-toast", section: "Oeufs et Assiettes Salees", name: "Avocado Toast", description: "Pain aux cereales, puree d'avocat, oeuf et sauce vegetale", price: 4000 },
+      { id: "nice-croissant-jambon", section: "Oeufs et Assiettes Salees", name: "Croissant au jambon", description: "Croissant, jambon, bechamel et fromage", price: 1500 },
+      { id: "nice-sando-tamago-pdj", section: "Oeufs et Assiettes Salees", name: "Sando Tamago", description: "Sandwich oeuf, mayonnaise et oignons confits", price: 2500 },
+      { id: "nice-coupe-1-boule", section: "Salon de The - Coupes Glacees", name: "Coupe 1 boule", description: "Coupe glacee 1 boule", price: 1500 },
+      { id: "nice-coupe-2-boules", section: "Salon de The - Coupes Glacees", name: "Coupe 2 boules", description: "Coupe glacee 2 boules", price: 2000 },
+      { id: "nice-coupe-3-boules", section: "Salon de The - Coupes Glacees", name: "Coupe 3 boules", description: "Coupe glacee 3 boules", price: 2500 },
+      { id: "nice-sup-topping", section: "Salon de The - Supplements", name: "Topping", description: "Oreo, Kinder Bueno, Kit-Kat ou M&M's", price: 1000 },
+      { id: "nice-coupe-brownie", section: "Salon de The - Coupes Glacees", name: "Coupe Brownie", description: "3 boules au choix, chantilly, brownie et coulis au choix", price: 4500 },
+      { id: "nice-dame-blanche", section: "Salon de The - Coupes Glacees", name: "Dame Blanche", description: "3 boules vanille, meringue, chantilly et sauce chocolat", price: 3500 },
+      { id: "nice-banana-split", section: "Salon de The - Coupes Glacees", name: "Banana Split", description: "Banane, vanille, chocolat, fraise, chantilly, sauce fraise et chocolat", price: 4500 },
+      { id: "nice-sundae", section: "Salon de The - Coupes Glacees", name: "N'Ice Sundae", description: "2 boules yaourt, chantilly, nappage fruits rouges et granola", price: 3500 },
+      { id: "nice-frozen-yogurt", section: "Salon de The - Coupes Glacees", name: "Frozen Yogurt", description: "Fleur de lait, chantilly, topping et nappage au choix", price: 3500 },
+      { id: "nice-chocolat-cookie", section: "Salon de The - Desserts", name: "Chocolat cookie", description: "Dessert chocolat cookie", price: 4000 },
+      { id: "nice-chocolat-brownie", section: "Salon de The - Desserts", name: "Chocolat brownie", description: "Dessert chocolat brownie", price: 4000 },
+      { id: "nice-chocolat-oreo", section: "Salon de The - Desserts", name: "Chocolat Oreo", description: "Dessert chocolat Oreo", price: 4000 },
+      { id: "nice-boisson-expresso", section: "Boissons", name: "Expresso", description: "Cafe expresso", price: 1200 },
+      { id: "nice-boisson-double-expresso", section: "Boissons", name: "Double Expresso", description: "Double cafe expresso", price: 2200 },
+      { id: "nice-boisson-expresso-noisette", section: "Boissons", name: "Expresso Noisette", description: "Expresso noisette", price: 1500 },
+      { id: "nice-boisson-cafe-lait", section: "Boissons", name: "Cafe au lait", description: "Cafe au lait chaud", price: 1700 },
+      { id: "nice-boisson-cappuccino", section: "Boissons", name: "Cappuccino", description: "Cappuccino chaud", price: 2000 },
+      { id: "nice-boisson-the", section: "Boissons", name: "The", description: "The chaud", price: 1000 },
+      { id: "nice-boisson-the-lait", section: "Boissons", name: "The au lait", description: "The au lait chaud", price: 1500 },
+      { id: "nice-boisson-chocolat-chaud", section: "Boissons", name: "Chocolat chaud", description: "Chocolat chaud", price: 2000 },
+      { id: "nice-boisson-affogato", section: "Boissons", name: "Affogato", description: "Cafe et glace", price: 2000 },
+      { id: "nice-boisson-lait", section: "Boissons", name: "Verre de lait", description: "Lait frais", price: 1000 },
+      { id: "nice-boisson-bissap-gingembre", section: "Boissons", name: "Bissap, gingembre ou mixte", description: "Boisson fraiche maison", price: 1500 },
+      { id: "nice-boisson-jus-fruits", section: "Boissons", name: "Jus de fruits naturels 30cl", description: "Jus naturel selon saison", price: 2500 },
+      { id: "nice-boisson-frappuccino", section: "Boissons", name: "Frappuccino", description: "Cafe glace avec chantilly", price: 2500 },
+      { id: "nice-boisson-frappuccino-nappage", section: "Boissons", name: "Frappuccino nappage", description: "Cafe glace, chantilly et nappage", price: 3000 },
+      { id: "nice-boisson-milkshake-2-parfums", section: "Boissons", name: "Milk Shake 2 parfums", description: "Milk shake avec 2 parfums de glace au choix", price: 2500 },
+      { id: "nice-boisson-nice-milkshake", section: "Boissons", name: "N'Ice Milkshake", description: "Milkshake signature Nice Cream", price: 4000 },
+      { id: "nice-boisson-nice-cocktail", section: "Boissons", name: "N'Ice Cocktail", description: "Jus d'orange, salade de fruits, glace fleur de lait, grenadine et chantilly", price: 3500 },
+      { id: "nice-boisson-virgin-mojito", section: "Boissons", name: "Virgin mojito", description: "Cocktail sans alcool", price: 2500 },
+      { id: "nice-boisson-soda", section: "Boissons", name: "Soda", description: "Boisson gazeuse", price: 1000 },
+      { id: "nice-boisson-eau-50cl", section: "Boissons", name: "Eau 50cl", description: "Bouteille d'eau 50cl", price: 500 },
+      { id: "nice-boisson-eau-1l5", section: "Boissons", name: "Eau 1.5L", description: "Bouteille d'eau 1.5L", price: 1000 },
+      { id: "nice-crunchy-jalapenos-4", section: "Restaurant - Crunchy Corner", name: "Jalapenos x4", description: "Bouchees au fromage et piment", price: 2000 },
+      { id: "nice-crunchy-jalapenos-6", section: "Restaurant - Crunchy Corner", name: "Jalapenos x6", description: "Bouchees au fromage et piment", price: 3000 },
+      { id: "nice-crunchy-nuggets-4", section: "Restaurant - Crunchy Corner", name: "Chicken Nuggets x4", description: "Nuggets avec sauces ketchup et mayonnaise", price: 2500 },
+      { id: "nice-crunchy-nuggets-6", section: "Restaurant - Crunchy Corner", name: "Chicken Nuggets x6", description: "Nuggets avec sauces ketchup et mayonnaise", price: 3500 },
+      { id: "nice-crunchy-kfc-4", section: "Restaurant - Crunchy Corner", name: "K.F.C x4", description: "Poulet croustillant sauce south west", price: 5000 },
+      { id: "nice-crunchy-kfc-6", section: "Restaurant - Crunchy Corner", name: "K.F.C x6", description: "Poulet croustillant sauce south west", price: 7000 },
+      { id: "nice-crunchy-tenders-4", section: "Restaurant - Crunchy Corner", name: "Chicken Tenders x4", description: "Tenders sauce algerienne", price: 2500 },
+      { id: "nice-crunchy-tenders-6", section: "Restaurant - Crunchy Corner", name: "Chicken Tenders x6", description: "Tenders sauce algerienne", price: 3500 },
+      { id: "nice-crunchy-buffalo-4", section: "Restaurant - Crunchy Corner", name: "Buffalo Wings x4", description: "Wings sauce buffalo", price: 4000 },
+      { id: "nice-crunchy-buffalo-6", section: "Restaurant - Crunchy Corner", name: "Buffalo Wings x6", description: "Wings sauce buffalo", price: 5500 },
+      { id: "nice-crunchy-dynamite-4", section: "Restaurant - Crunchy Corner", name: "Dynamite Nuggets x4", description: "Nuggets sauce south west", price: 3000 },
+      { id: "nice-crunchy-dynamite-6", section: "Restaurant - Crunchy Corner", name: "Dynamite Nuggets x6", description: "Nuggets sauce south west", price: 4500 },
+      { id: "nice-frites-portion", section: "Restaurant - Crunchy Corner", name: "Portion frites", description: "Frites avec ketchup, mayonnaise ou sauce au choix", price: 1000 },
+      { id: "nice-frites-cheese-bomb", section: "Restaurant - Crunchy Corner", name: "Frites Cheese Bomb", description: "Frites, sauce fromagere, oignons confits et ketchup", price: 4000 },
+      { id: "nice-frites-hot-bomb", section: "Restaurant - Crunchy Corner", name: "Frites Hot Bomb", description: "Frites, poulet, sauce fromagere et sauce piquante", price: 4500 },
+      { id: "nice-family-combo", section: "Restaurant - Crunchy Corner", name: "Family Combo", description: "5 nuggets, 5 tenders, 5 K.F.C, 3 frites et 3 boissons", price: 16500 },
+      { id: "nice-spicy-combo", section: "Restaurant - Crunchy Corner", name: "Spicy Combo", description: "5 buffalo wings, 5 dynamite nuggets, 5 K.F.C, 3 frites et 3 boissons", price: 18500 },
+      { id: "nice-salade-caprese-simple", section: "Restaurant - Salades et Pates", name: "Caprese - Simple", description: "Tomate, mozzarella, pesto et creme balsamique", price: 2000 },
+      { id: "nice-salade-caprese-menu", section: "Restaurant - Salades et Pates", name: "Caprese - Menu", description: "Avec boisson et accompagnement", price: 4000 },
+      { id: "nice-salade-cesar-simple", section: "Restaurant - Salades et Pates", name: "Cesar - Simple", description: "Salade, poulet, mais, parmesan, croutons et sauce cesar", price: 2500 },
+      { id: "nice-salade-cesar-menu", section: "Restaurant - Salades et Pates", name: "Cesar - Menu", description: "Avec boisson et accompagnement", price: 4500 },
+      { id: "nice-salade-crudites-simple", section: "Restaurant - Salades et Pates", name: "Crudites - Simple", description: "Salade, legumes varies, oeuf et vinaigrette", price: 1900 },
+      { id: "nice-salade-crudites-menu", section: "Restaurant - Salades et Pates", name: "Crudites - Menu", description: "Avec boisson et accompagnement", price: 3000 },
+      { id: "nice-salade-mexicaine-simple", section: "Restaurant - Salades et Pates", name: "Mexicaine - Simple", description: "Salade, thon, guacamole, legumes varies et vinaigrette", price: 2500 },
+      { id: "nice-salade-mexicaine-menu", section: "Restaurant - Salades et Pates", name: "Mexicaine - Menu", description: "Avec boisson et accompagnement", price: 4500 },
+      { id: "nice-pate-bolognaise", section: "Restaurant - Salades et Pates", name: "Bolognaise", description: "Tagliatelles maison, sauce tomate, legumes, viande hachee et emmental", price: 5500 },
+      { id: "nice-pate-creme-poulet-champignon", section: "Restaurant - Salades et Pates", name: "Creme Poulet Champignon", description: "Tagliatelles maison, creme, poulet, champignons et emmental", price: 5500 },
+      { id: "nice-chawarma-pesto-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Pesto - Simple", description: "Pain blanc grille, tomate, mozzarella et pesto", price: 2500 },
+      { id: "nice-chawarma-pesto-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Pesto - Menu", description: "Avec boisson et accompagnement", price: 4000 },
+      { id: "nice-chawarma-jambon-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Jambon - Simple", description: "Sandwich jambon", price: 3000 },
+      { id: "nice-chawarma-jambon-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Jambon - Menu", description: "Avec boisson et accompagnement", price: 4500 },
+      { id: "nice-chawarma-poulet-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Poulet - Simple", description: "Sandwich poulet", price: 3500 },
+      { id: "nice-chawarma-poulet-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Poulet - Menu", description: "Avec boisson et accompagnement", price: 5000 },
+      { id: "nice-chawarma-steak-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Steak - Simple", description: "Sandwich steak", price: 3500 },
+      { id: "nice-chawarma-steak-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Steak - Menu", description: "Avec boisson et accompagnement", price: 5000 },
+      { id: "nice-chawarma-merguez-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Merguez - Simple", description: "Sandwich merguez", price: 3500 },
+      { id: "nice-chawarma-merguez-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Merguez - Menu", description: "Avec boisson et accompagnement", price: 5000 },
+      { id: "nice-chawarma-original-poulet-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Chawarma Original Poulet - Simple", description: "Salade, tomate, oignon, frites et sauce algerienne", price: 4000 },
+      { id: "nice-chawarma-original-poulet-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Chawarma Original Poulet - Menu", description: "Avec boisson et accompagnement", price: 5500 },
+      { id: "nice-chawarma-original-mixte-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Chawarma Original Mixte - Simple", description: "Salade, tomate, oignon, frites et sauce algerienne", price: 4000 },
+      { id: "nice-chawarma-original-mixte-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Chawarma Original Mixte - Menu", description: "Avec boisson et accompagnement", price: 5500 },
+      { id: "nice-chawarma-original-viande-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Chawarma Original Viande - Simple", description: "Salade, tomate, oignon, frites et sauce algerienne", price: 3500 },
+      { id: "nice-chawarma-original-viande-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Chawarma Original Viande - Menu", description: "Avec boisson et accompagnement", price: 5000 },
+      { id: "nice-jambon-beurre-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Jambon Beurre - Simple", description: "Jambon de boeuf, beurre, cornichons et pain ciabatta", price: 2500 },
+      { id: "nice-jambon-beurre-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Jambon Beurre - Menu", description: "Avec boisson et accompagnement", price: 4000 },
+      { id: "nice-thon-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Thon - Simple", description: "Rillettes de thon, salade, tomate, mais et pain ciabatta", price: 3000 },
+      { id: "nice-thon-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Thon - Menu", description: "Avec boisson et accompagnement", price: 4500 },
+      { id: "nice-poulet-sandwich-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Poulet Sandwich - Simple", description: "Effiloche de poulet mayo, salade, tomates confites et pain ciabatta", price: 3500 },
+      { id: "nice-poulet-sandwich-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Poulet Sandwich - Menu", description: "Avec boisson et accompagnement", price: 5000 },
+      { id: "nice-pizza-margherita", section: "Restaurant - Pizzas", name: "Margherita", description: "Sauce tomate, tomates confites, mozzarella et olives", price: 6000 },
+      { id: "nice-pizza-vegetariano", section: "Restaurant - Pizzas", name: "Vegetariano", description: "Sauce tomate, mozzarella, legumes grilles et creme balsamique", price: 7500 },
+      { id: "nice-pizza-regina", section: "Restaurant - Pizzas", name: "Regina", description: "Sauce tomate, jambon de boeuf, champignons, mozzarella et olives", price: 7500 },
+      { id: "nice-pizza-campione", section: "Restaurant - Pizzas", name: "Campione", description: "Sauce tomate, viande hachee, piment vert, tomates fraiches, oignons et mozzarella", price: 7500 },
+      { id: "nice-pizza-parmigiana-pollo", section: "Restaurant - Pizzas", name: "Parmigiana Pollo", description: "Sauce tomate, poulet, mozzarella, persillade, tomates confites et parmesan", price: 7500 },
+      { id: "nice-pizza-pizz-chawarma", section: "Restaurant - Pizzas", name: "Pizz-Chawarma", description: "Sauce tomate, viande chawarma, salade, tomates, oignons et sauce algerienne", price: 8000 },
+      { id: "nice-pizza-pollo-pesto", section: "Restaurant - Pizzas", name: "Pollo Pesto", description: "Creme fraiche, poulet, tomates cerises, mozzarella, creme balsamique et pesto", price: 8000 },
+      { id: "nice-pizza-crema", section: "Restaurant - Pizzas", name: "Crema", description: "Sauce tomate, creme fraiche, jambon de boeuf, champignons, mozzarella et olives", price: 8000 },
+      { id: "nice-pizza-merguez-oeuf", section: "Restaurant - Pizzas", name: "Merguez-Oeuf", description: "Sauce tomate, merguez, oeuf, tomates et oignons", price: 8000 },
+      { id: "nice-pizza-calzone", section: "Restaurant - Pizzas", name: "Calzone", description: "Sauce tomate, jambon de boeuf, oeuf, champignons et mozzarella", price: 7500 },
+      { id: "nice-pizza-moitie-moitie", section: "Restaurant - Pizzas", name: "Moitie-Moitie", description: "Melange de deux pizzas au choix dans une seule pizza", price: 8000 },
+      { id: "nice-burger-cheese-simple", section: "Restaurant - Burgers", name: "Cheese Burger - Simple", description: "Steak hache, cheddar, ketchup maison, tomate et salade", price: 3000 },
+      { id: "nice-burger-cheese-menu", section: "Restaurant - Burgers", name: "Cheese Burger - Menu", description: "Avec boisson et accompagnement", price: 4500 },
+      { id: "nice-burger-double-cheese-simple", section: "Restaurant - Burgers", name: "Double Cheese Burger - Simple", description: "Double steaks haches, double cheddar, ketchup maison, tomate et salade", price: 4000 },
+      { id: "nice-burger-double-cheese-menu", section: "Restaurant - Burgers", name: "Double Cheese Burger - Menu", description: "Avec boisson et accompagnement", price: 5500 },
+      { id: "nice-burger-chicken-simple", section: "Restaurant - Burgers", name: "Chicken Burger - Simple", description: "Poulet pane, sauce fromage frais, tomate et salade", price: 4000 },
+      { id: "nice-burger-chicken-menu", section: "Restaurant - Burgers", name: "Chicken Burger - Menu", description: "Avec boisson et accompagnement", price: 5500 },
+      { id: "nice-burger-american-simple", section: "Restaurant - Burgers", name: "American Burger - Simple", description: "Double steak smashe, cheddar, sauce americaine, salade et oignon", price: 4000 },
+      { id: "nice-burger-american-menu", section: "Restaurant - Burgers", name: "American Burger - Menu", description: "Avec boisson et accompagnement", price: 5500 },
+      { id: "nice-burger-chicken-spicy-simple", section: "Restaurant - Burgers", name: "Chicken Spicy - Simple", description: "Poulet pimente, cheddar, sauce algerienne, salade et oignon", price: 4000 },
+      { id: "nice-burger-chicken-spicy-menu", section: "Restaurant - Burgers", name: "Chicken Spicy - Menu", description: "Avec boisson et accompagnement", price: 5500 },
+      { id: "nice-burger-nice-simple", section: "Restaurant - Burgers", name: "N'Ice Burger - Simple", description: "Steak hache, emmental, oignon confit, pickles, sauce south-west, salade et tomate", price: 4000 },
+      { id: "nice-burger-nice-menu", section: "Restaurant - Burgers", name: "N'Ice Burger - Menu", description: "Avec boisson et accompagnement", price: 5500 },
+      { id: "nice-burger-triple-cheese-simple", section: "Restaurant - Burgers", name: "Triple Cheese Burger - Simple", description: "Triple steaks haches, triple cheddar, ketchup maison, tomate et salade", price: 5500 },
+      { id: "nice-burger-triple-cheese-menu", section: "Restaurant - Burgers", name: "Triple Cheese Burger - Menu", description: "Avec boisson et accompagnement", price: 7000 },
+      { id: "nice-tacos-m", section: "Restaurant - Tacos", name: "Tacos M", description: "1 viande au choix, sauce fromagere, frites et 1 sauce", price: 5500 },
+      { id: "nice-tacos-l", section: "Restaurant - Tacos", name: "Tacos L", description: "2 viandes au choix, sauce fromagere, frites et 2 sauces", price: 7500 },
+      { id: "nice-tacos-xxl", section: "Restaurant - Tacos", name: "Tacos XXL", description: "3 viandes au choix, plus de sauce fromagere, plus de frites et 2 sauces", price: 10000 },
+      { id: "nice-tacos-supp-legumes-oeuf", section: "Restaurant - Tacos", name: "Supplement legumes et oeuf", description: "Tomates, poivrons, champignons, oignons, aubergines et oeuf", price: 500 },
+      { id: "nice-tacos-supp-fromage", section: "Restaurant - Tacos", name: "Supplement fromage", description: "Mozzarella, cheddar ou emmental", price: 1000 },
+      { id: "nice-tacos-supp-jambon", section: "Restaurant - Tacos", name: "Supplement jambon", description: "Supplement jambon", price: 1000 },
+      { id: "nice-tacos-gratiner-m-l", section: "Restaurant - Tacos", name: "Gratiner un tacos M ou L", description: "Supplement gratinage", price: 1000 },
+      { id: "nice-tacos-gratiner-xxl", section: "Restaurant - Tacos", name: "Gratiner un tacos XXL", description: "Supplement gratinage XXL", price: 1500 },
     ],
   },
   {
@@ -607,6 +756,155 @@ function enhanceMenuDescriptions() {
 }
 
 enhanceMenuDescriptions();
+
+const PRODUCT_IMAGE_RULES = [
+  {
+    test: /wing|tender|nugget|k\.f\.c|piece|poulet|chicken|crispy|finger|messy/i,
+    images: [
+      "https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#c72121",
+  },
+  {
+    test: /burger|cheese|smash|classic|hummer|diner|oklahoma|mushroom|fish|falafel/i,
+    images: [
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#f2b84b",
+  },
+  {
+    test: /frites|fries|potato|potatoes|papatoes|wedges|mozza|side|jalapenos/i,
+    images: [
+      "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1598679253544-2c97992403ea?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#f3a620",
+  },
+  {
+    test: /pizza|margherita|regina|calzone|vegetariano|campione|pollo|crema/i,
+    images: [
+      "https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1548369937-47519962c11a?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#d93622",
+  },
+  {
+    test: /tacos|wrap|sandwich|naan|bao|kebab|chawarma|thon|jambon|pesto/i,
+    images: [
+      "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1613514785940-daed07799d9b?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#e2532f",
+  },
+  {
+    test: /pasta|penne|spaghetti|carbonara|bolognaise|tagliatelle/i,
+    images: [
+      "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#d88736",
+  },
+  {
+    test: /salade|quinoa|crudite|cesar|caprese|mexicaine/i,
+    images: [
+      "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#68a85b",
+  },
+  {
+    test: /glace|cornet|pot |barquette|tulipe|esquimaux|bricelet|gavotte|coupe|sundae|frozen|milkshake|cream/i,
+    images: [
+      "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1488900128323-21503983a07e?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#eec3cf",
+  },
+  {
+    test: /crepe|gaufre|pain perdu|brownie|chocolat|tiramisu|torsade|dessert|fondant|sweet|dame blanche|banana/i,
+    images: [
+      "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#c7835b",
+  },
+  {
+    test: /cafe|expresso|noisette|cappuccino|the|infusion|chocolat chaud|affogato/i,
+    images: [
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#8b5e3c",
+  },
+  {
+    test: /jus|bissap|gingembre|cocktail|mojito|soda|boisson|eau|lait|frappuccino/i,
+    images: [
+      "https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#35a38d",
+  },
+  {
+    test: /oeuf|omelette|avocado|brunch|dejeuner|healthy|croissant/i,
+    images: [
+      "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=700&q=82",
+    ],
+    accent: "#f0c45c",
+  },
+];
+
+const RESTAURANT_MENU_ACCENTS = {
+  "burger-and-co-bamako": "#f4c516",
+  "brooklyn-burger-bamako": "#cf1f2d",
+  "sigma-burgers-bamako": "#f0c84d",
+  "nice-cream-bamako": "#e9b64d",
+  "da-guido-pizza-bamako": "#d94b32",
+};
+
+function getMenuVisual(item, restaurant) {
+  const visualText = `${item.section || ""} ${item.name || ""}`;
+  const rule = PRODUCT_IMAGE_RULES.find((candidate) => candidate.test.test(visualText)) || PRODUCT_IMAGE_RULES[1];
+  const imagePool = rule.images || [rule.image];
+  const imageIndex = hashString(`${restaurant.id}-${item.id || item.name}`) % imagePool.length;
+
+  return {
+    image: item.image || imagePool[imageIndex],
+    accent: item.accent || rule.accent || RESTAURANT_MENU_ACCENTS[restaurant.id],
+  };
+}
+
+function hashString(value) {
+  return [...String(value || "")].reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) >>> 0, 0);
+}
+
+function attachMenuVisuals() {
+  restaurants.forEach((restaurant) => {
+    restaurant.menu.forEach((item) => {
+      const visual = getMenuVisual(item, restaurant);
+      item.image = visual.image;
+      item.accent = visual.accent;
+    });
+  });
+}
+
+attachMenuVisuals();
 
 const state = {
   category: "Tous",
@@ -4027,17 +4325,20 @@ function renderRestaurantDetail(restaurantId) {
             ${items
               .map(
                 (item) => `
-                  <article class="menu-item detail-menu-item">
-                    <div>
+                  <article class="menu-item detail-menu-item" style="--menu-accent: ${item.accent || "#f2b84b"};">
+                    <div class="menu-photo">
+                      <img src="${item.image}" alt="" loading="lazy" decoding="async" />
+                      <div class="menu-actions">
+                        <button class="favorite-button item-favorite ${isFavorite("items", item.id) ? "active" : ""}" type="button" data-favorite-item="${item.id}" aria-label="${isFavorite("items", item.id) ? "Retirer ce plat des favoris" : "Ajouter ce plat aux favoris"}">
+                          ${isFavorite("items", item.id) ? "&#9829;" : "&#9825;"}
+                        </button>
+                        <button class="add-button" type="button" data-item="${item.id}" aria-label="Ajouter ${item.name}">Ajouter</button>
+                      </div>
+                    </div>
+                    <div class="menu-copy">
                       <strong>${item.name}</strong>
                       <p>${item.description}</p>
                       <span>${money.format(item.price)}</span>
-                    </div>
-                    <div class="menu-actions">
-                      <button class="favorite-button item-favorite ${isFavorite("items", item.id) ? "active" : ""}" type="button" data-favorite-item="${item.id}" aria-label="${isFavorite("items", item.id) ? "Retirer ce plat des favoris" : "Ajouter ce plat aux favoris"}">
-                        ${isFavorite("items", item.id) ? "&#9829;" : "&#9825;"}
-                      </button>
-                      <button class="add-button" type="button" data-item="${item.id}">Ajouter</button>
                     </div>
                   </article>
                 `,
@@ -4084,6 +4385,30 @@ function renderRestaurantDetail(restaurantId) {
       </div>
     </section>
   `;
+  const officialMenus = restaurant.officialMenus?.length
+    ? `
+      <section class="official-menu-section">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Menus officiels</p>
+            <h2>Cartes du restaurant</h2>
+          </div>
+        </div>
+        <div class="official-menu-grid">
+          ${restaurant.officialMenus
+            .map(
+              (menu) => `
+                <a class="official-menu-card" href="${menu.href}" target="_blank" rel="noreferrer">
+                  <span>${menu.title}</span>
+                  <strong>Ouvrir le PDF</strong>
+                </a>
+              `,
+            )
+            .join("")}
+        </div>
+      </section>
+    `
+    : "";
 
   restaurantList.innerHTML = `
     <section class="restaurant-detail">
@@ -4119,6 +4444,8 @@ function renderRestaurantDetail(restaurantId) {
         </div>
         <button class="text-button" type="button" data-use-location>Utiliser ma position</button>
       </section>
+
+      ${officialMenus}
 
       <section class="hours-section">
         <div class="section-heading compact">
