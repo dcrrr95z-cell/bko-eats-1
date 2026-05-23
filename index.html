@@ -8,7 +8,7 @@
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="icon.svg" />
-    <link rel="stylesheet" href="styles.css?v=32" />
+    <link rel="stylesheet" href="styles.css?v=34" />
   </head>
   <body class="launch-open">
     <section class="launch-screen open" id="launchScreen" aria-label="Bko Eats">
@@ -139,13 +139,13 @@
       <section class="topbar">
         <div class="brand-lockup">
           <span class="brand-logo brand-logo-fallback" aria-hidden="true"><span>BE</span></span>
-          <div>
+          <div class="brand-copy">
             <p class="brand-name">Bko Eats</p>
-            <p class="eyebrow">Livraison maintenant</p>
             <button class="location-button" type="button" id="useLocationButton" aria-label="Utiliser ma localisation">
               <span id="locationLabel">Bamako, Mali</span>
               <span aria-hidden="true">v</span>
             </button>
+            <p class="eyebrow">Livraison maintenant</p>
           </div>
         </div>
         <div class="topbar-actions">
@@ -275,7 +275,7 @@
     </div>
 
     <script src="firebase-config.js?v=18"></script>
-    <script src="app.js?v=50"></script>
+    <script src="app.js?v=51"></script>
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("sw.js");

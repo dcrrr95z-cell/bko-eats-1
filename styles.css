@@ -448,7 +448,7 @@ textarea:focus-visible {
   width: min(100%, 620px);
   min-height: 100vh;
   margin: 0 auto;
-  padding: 24px 18px 108px;
+  padding: 18px 14px 108px;
 }
 
 .topbar,
@@ -464,44 +464,48 @@ textarea:focus-visible {
   position: sticky;
   top: 0;
   z-index: 10;
-  margin: -24px -18px 0;
-  padding: 22px 18px 16px;
-  background: rgba(247, 247, 244, 0.86);
-  backdrop-filter: blur(22px);
-  border-bottom: 1px solid rgba(226, 226, 221, 0.72);
+  margin: -18px -14px 0;
+  padding: 16px 14px 12px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(226, 226, 221, 0.58);
 }
 
 .topbar-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex: 0 0 auto;
 }
 
 .restaurant-entry-button {
-  padding: 8px 10px;
+  min-height: 34px;
+  padding: 7px 10px;
   border-radius: 999px;
-  background: var(--surface);
-  box-shadow: var(--shadow-soft);
-  color: var(--ink);
+  background: transparent;
+  box-shadow: none;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 850;
 }
 
 .brand-lockup {
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 11px;
   min-width: 0;
 }
 
 .brand-logo {
   display: grid;
-  width: 54px;
-  height: 54px;
+  width: 42px;
+  height: 42px;
   flex: 0 0 auto;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  border-radius: 17px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 13px;
   background: #111111;
-  box-shadow: 0 14px 36px rgba(17, 17, 17, 0.16);
+  box-shadow: 0 10px 24px rgba(17, 17, 17, 0.14);
   object-fit: cover;
   overflow: hidden;
 }
@@ -510,9 +514,13 @@ textarea:focus-visible {
   background: linear-gradient(135deg, #fff1b8 0%, #d7a53a 48%, #fff0ad 100%);
   background-clip: text;
   color: transparent;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 920;
   letter-spacing: 0;
+}
+
+.brand-copy {
+  min-width: 0;
 }
 
 .eyebrow {
@@ -524,12 +532,18 @@ textarea:focus-visible {
   text-transform: uppercase;
 }
 
+.brand-copy .eyebrow {
+  display: none;
+}
+
 .brand-name {
-  margin: 0 0 7px;
+  margin: 0 0 4px;
   color: var(--ink);
-  font-size: 24px;
-  font-weight: 860;
+  font-size: 21px;
+  line-height: 1;
+  font-weight: 880;
   letter-spacing: 0;
+  white-space: nowrap;
 }
 
 .location-button,
@@ -548,12 +562,41 @@ textarea:focus-visible {
 .location-button {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
+  max-width: min(42vw, 190px);
   padding: 0;
   background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.15;
+  font-weight: 710;
+  white-space: nowrap;
+}
+
+.location-button #locationLabel {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.location-button span[aria-hidden="true"] {
+  display: inline-grid;
+  width: 12px;
+  flex: 0 0 auto;
+  place-items: center;
   color: var(--ink);
-  font-size: 16px;
-  font-weight: 760;
+  font-size: 0;
+}
+
+.location-button span[aria-hidden="true"]::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 1.6px solid currentColor;
+  border-bottom: 1.6px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
 }
 
 .location-button.is-loading {
@@ -562,31 +605,31 @@ textarea:focus-visible {
 
 .icon-button {
   display: grid;
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 50%;
   background: var(--surface);
   color: var(--ink);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 8px 24px rgba(17, 17, 17, 0.08);
   font-size: 14px;
   font-weight: 830;
 }
 
 .search-panel {
-  margin-top: 22px;
+  margin: 14px -2px 0;
 }
 
 .search-box {
   display: flex;
   align-items: center;
-  min-height: 56px;
-  padding: 0 18px;
+  min-height: 48px;
+  padding: 0 15px;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 15px;
   background: var(--surface);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 8px 24px rgba(17, 17, 17, 0.05);
 }
 
 .search-box::before {
@@ -616,9 +659,9 @@ textarea:focus-visible {
 
 .category-row {
   display: flex;
-  gap: 9px;
+  gap: 8px;
   overflow-x: auto;
-  padding: 14px 0 4px;
+  padding: 10px 0 2px;
   scrollbar-width: none;
 }
 
@@ -628,13 +671,14 @@ textarea:focus-visible {
 
 .category-chip {
   flex: 0 0 auto;
-  padding: 9px 15px;
+  min-height: 34px;
+  padding: 8px 14px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--muted);
-  font-size: 14px;
-  font-weight: 760;
+  font-size: 13px;
+  font-weight: 780;
   box-shadow: none;
 }
 
@@ -646,16 +690,14 @@ textarea:focus-visible {
 
 .hero {
   display: grid;
-  min-height: 154px;
-  margin: 22px 0 30px;
-  padding: 24px;
+  min-height: 0;
+  margin: 16px 0 20px;
+  padding: 16px 2px 4px;
   border: 1px solid var(--line);
-  border-radius: 28px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(241, 242, 239, 0.88)),
-    var(--surface);
+  border-width: 0 0 1px;
+  border-radius: 0;
+  background: transparent;
   color: var(--ink);
-  box-shadow: var(--shadow-soft);
   overflow: hidden;
 }
 
@@ -669,32 +711,32 @@ textarea:focus-visible {
 }
 
 .hero h1 {
-  max-width: 430px;
+  max-width: 340px;
   margin: 0;
-  font-size: 34px;
-  line-height: 1.02;
+  font-size: 27px;
+  line-height: 1.04;
   letter-spacing: 0;
-  font-weight: 870;
+  font-weight: 900;
 }
 
 .hero p:last-child {
   max-width: 360px;
-  margin: 14px 0 0;
+  margin: 8px 0 0;
   color: var(--muted);
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.42;
 }
 
 .section-heading {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
 }
 
 .section-heading h2,
 .cart-header h2 {
   margin: 0;
-  font-size: 22px;
+  font-size: 21px;
   line-height: 1.1;
-  font-weight: 850;
+  font-weight: 880;
   letter-spacing: 0;
 }
 
@@ -708,14 +750,14 @@ textarea:focus-visible {
 
 .restaurant-list {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .restaurant-card {
   border: 1px solid var(--line);
-  border-radius: 24px;
+  border-radius: 22px;
   background: var(--surface);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 10px 28px rgba(17, 17, 17, 0.06);
   overflow: hidden;
 }
 
@@ -734,12 +776,12 @@ textarea:focus-visible {
 }
 
 .restaurant-image {
-  height: 154px;
+  height: 168px;
   background: var(--image) center/cover;
 }
 
 .restaurant-body {
-  padding: 16px;
+  padding: 13px 14px 15px;
 }
 
 .restaurant-title {
@@ -752,9 +794,9 @@ textarea:focus-visible {
 .restaurant-title h3 {
   min-width: 0;
   margin: 0;
-  font-size: 19px;
+  font-size: 18px;
   line-height: 1.16;
-  font-weight: 840;
+  font-weight: 880;
 }
 
 .favorite-button {
@@ -781,22 +823,22 @@ textarea:focus-visible {
 .rating {
   flex: 0 0 auto;
   color: var(--accent);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 820;
 }
 
 .restaurant-meta {
-  margin: 8px 0 12px;
+  margin: 6px 0 10px;
   color: var(--muted);
-  font-size: 13px;
-  line-height: 1.4;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
 .restaurant-description {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   color: var(--ink);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.42;
 }
 
 .card-footer {
@@ -1146,6 +1188,10 @@ textarea:focus-visible {
   outline-offset: 4px;
 }
 
+.menu-item-pinned .menu-photo {
+  box-shadow: 0 16px 36px rgba(17, 17, 17, 0.14);
+}
+
 .menu-photo {
   position: relative;
   aspect-ratio: 1 / 0.92;
@@ -1264,6 +1310,21 @@ textarea:focus-visible {
   color: var(--ink);
   font-size: 14px;
   font-weight: 850;
+}
+
+.menu-pin-label {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 7px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 860;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
 
 .add-button {
@@ -1399,6 +1460,36 @@ textarea:focus-visible {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.35;
+}
+
+.menu-upgrade-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  min-height: 32px;
+  margin-top: 9px;
+  padding: 7px 10px 7px 8px;
+  border: 1px solid rgba(15, 143, 111, 0.16);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 820;
+  line-height: 1;
+}
+
+.menu-upgrade-button span {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 760;
+  transform: translateY(-0.5px);
 }
 
 .quantity {

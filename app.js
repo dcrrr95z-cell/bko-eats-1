@@ -889,6 +889,66 @@ function isMenuOnlyItem(item) {
   );
 }
 
+function isFullMenuVersion(item) {
+  const name = String(item.name || "");
+  return /\s-\sMenu\b/i.test(name) || /^Menu Kids\b/i.test(name) || /^Menu Mix\b/i.test(name);
+}
+
+function isMenuAddOnItem(item) {
+  const text = `${item.section || ""} ${item.name || ""} ${item.description || ""}`.toLowerCase();
+  const name = String(item.name || "").trim().toLowerCase();
+
+  return !isFullMenuVersion(item) && (
+    /^menu\b/i.test(name) ||
+    /ajout menu|supplement menu|menu en supplement|cocktail en menu|en menu supplement/.test(text)
+  );
+}
+
+function getMenuDisplayPriority(item) {
+  if (isMenuAddOnItem(item)) return 0;
+  if (isFullMenuVersion(item)) return 1;
+  return 2;
+}
+
+function normalizeMenuVariantName(name = "") {
+  return String(name)
+    .replace(/\s-\s(Simple|Menu|Tacos)\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function isMainDishCandidate(item) {
+  if (!item || isMenuOnlyItem(item)) return false;
+
+  const text = `${item.section || ""} ${item.name || ""}`.toLowerCase();
+  if (/boisson|cafe|expresso|noisette|infusion|eau|soda|dessert|torsade|tiramisu|sauce|supplement|bacon|cheddar|frites|fries|potato|wedges|stick|mozza|cornet|glace|barquette|biscuit|tulipe|pot\b/i.test(text)) {
+    return false;
+  }
+
+  return /burger|sandwich|wrap|tacos|naan|bao|pasta|penne|pizza|poulet|chicken|wings|tenders|pieces|nuggets|fingers|hummer|steak|fish|falafel|salade|chawarma|escalope/i.test(text);
+}
+
+function getEnhancedDescription(item) {
+  const description = String(item.description || "").trim();
+  const text = `${item.section || ""} ${item.name || ""}`.toLowerCase();
+
+  if (isMenuAddOnItem(item)) return "Ajoute 1 portion de frites et 1 boisson au plat selectionne.";
+  if (isFullMenuVersion(item) && /avec frites et boisson/i.test(description)) return "Formule avec 1 portion de frites et 1 boisson.";
+  if (/\bmaestro combo\b/i.test(item.name)) return "Combo tenders avec 1 portion de frites, 1 boisson et sauce.";
+  if (/\bfriends combo\b/i.test(item.name)) return "Combo a partager avec tenders, frites et sauces.";
+  if (/wings box/i.test(item.name)) return "Box a partager autour d'ailes de poulet, avec sauces selon le restaurant.";
+  if (/kids meals|menu enfant|menu kids/i.test(`${item.section || ""} ${item.name || ""} ${description}`)) {
+    return description.includes("boisson") ? description : `${description || "Format enfant"} avec accompagnement et boisson.`;
+  }
+  if (/wings/i.test(text) && !/\d|x\d|piece|portion/i.test(description)) return `${description || "Ailes de poulet"} en portion restaurant.`;
+  if (/tenders/i.test(text) && !/\d|x\d|piece|portion/i.test(description)) return `${description || "Tenders de poulet"} en portion restaurant.`;
+  if (/nuggets/i.test(text) && !/\d|x\d|piece|portion/i.test(description)) return `${description || "Nuggets de poulet"} en portion restaurant.`;
+  if (/pieces de poulet|chicken pieces/i.test(text) && !/\d|x\d|piece|portion/i.test(description)) return `${description || "Pieces de poulet"} en portion restaurant.`;
+
+  return description;
+}
+
 function getMenuVisual(item, restaurant) {
   const visualText = `${item.section || ""} ${item.name || ""}`;
 
@@ -918,6 +978,7 @@ function hashString(value) {
 function attachMenuVisuals() {
   restaurants.forEach((restaurant) => {
     restaurant.menu.forEach((item) => {
+      item.description = getEnhancedDescription(item);
       const visual = getMenuVisual(item, restaurant);
       item.image = visual.image;
       item.accent = visual.accent;
@@ -4053,6 +4114,38 @@ function getItemById(itemId) {
   return getAllItems().find((item) => item.id === itemId);
 }
 
+function getMenuUpgradeForItem(item) {
+  if (!item || !isMainDishCandidate(item)) return null;
+
+  const restaurant = restaurants.find((candidate) => candidate.id === item.restaurantId);
+  if (!restaurant) return null;
+
+  const baseName = normalizeMenuVariantName(item.name);
+  const menuVariant = restaurant.menu.find(
+    (candidate) =>
+      candidate.id !== item.id &&
+      isFullMenuVersion(candidate) &&
+      normalizeMenuVariantName(candidate.name) === baseName,
+  );
+
+  if (menuVariant) {
+    return {
+      item: menuVariant,
+      mode: "replace",
+      label: `Ajouter avec menu +${money.format(Math.max(0, menuVariant.price - item.price))}`,
+    };
+  }
+
+  const addOn = restaurant.menu.find((candidate) => isMenuAddOnItem(candidate));
+  if (!addOn) return null;
+
+  return {
+    item: addOn,
+    mode: "addon",
+    label: `Ajouter avec menu +${money.format(addOn.price)}`,
+  };
+}
+
 function updateProductFavoriteButton(item) {
   if (!productFavoriteButton || !item) return;
 
@@ -4428,7 +4521,10 @@ function renderRestaurantDetail(restaurantId) {
   const estimate = getDeliveryEstimate(restaurant);
   const restaurantFavorite = isFavorite("restaurants", restaurant.id);
 
-  const menuGroups = restaurant.menu.reduce((groups, item) => {
+  const menuGroups = restaurant.menu
+    .map((item, index) => ({ item, index }))
+    .sort((left, right) => getMenuDisplayPriority(left.item) - getMenuDisplayPriority(right.item) || left.index - right.index)
+    .reduce((groups, { item }) => {
     const section = item.section || "Menu";
     groups[section] = groups[section] || [];
     groups[section].push(item);
@@ -4443,7 +4539,7 @@ function renderRestaurantDetail(restaurantId) {
             ${items
               .map(
                 (item) => `
-                  <article class="menu-item detail-menu-item" role="button" tabindex="0" data-product-item="${item.id}" style="--menu-accent: ${item.accent || "#f2b84b"};">
+                  <article class="menu-item detail-menu-item ${getMenuDisplayPriority(item) === 0 ? "menu-item-pinned" : ""}" role="button" tabindex="0" data-product-item="${item.id}" style="--menu-accent: ${item.accent || "#f2b84b"};">
                     <div class="menu-photo ${item.visualKind === "menu" ? "menu-photo-text" : ""}">
                       ${renderProductVisualContent(item)}
                       <div class="menu-actions">
@@ -4457,6 +4553,7 @@ function renderRestaurantDetail(restaurantId) {
                       <strong>${item.name}</strong>
                       <p>${item.description}</p>
                       <span>${money.format(item.price)}</span>
+                      ${getMenuDisplayPriority(item) === 0 ? `<em class="menu-pin-label">Option menu</em>` : ""}
                     </div>
                   </article>
                 `,
@@ -4609,15 +4706,40 @@ function renderRestaurantDetail(restaurantId) {
   `;
 }
 
+function putItemInCart(item, quantity = 1) {
+  state.cart[item.id] = state.cart[item.id] || { ...item, quantity: 0 };
+  state.cart[item.id].quantity += quantity;
+}
+
 function addItem(itemId) {
-  const item = getAllItems().find((candidate) => candidate.id === itemId);
+  const item = getItemById(itemId);
   if (!item) return;
 
-  state.cart[itemId] = state.cart[itemId] || { ...item, quantity: 0 };
-  state.cart[itemId].quantity += 1;
+  putItemInCart(item);
   clearCartNotice();
   saveState();
   renderCart();
+}
+
+function addMenuUpgrade(sourceItemId, targetItemId, mode) {
+  const target = getItemById(targetItemId);
+  if (!target) return;
+
+  if (mode === "replace" && state.cart[sourceItemId]) {
+    state.cart[sourceItemId].quantity -= 1;
+    if (state.cart[sourceItemId].quantity <= 0) {
+      delete state.cart[sourceItemId];
+    }
+  }
+
+  putItemInCart(target);
+  saveState();
+  renderCart();
+  showCartNotice(
+    mode === "replace"
+      ? "Le plat est passe en version menu."
+      : "Option menu ajoutee au panier.",
+  );
 }
 
 function updateQuantity(itemId, delta) {
@@ -5001,12 +5123,22 @@ function renderCart() {
 
   cartItems.innerHTML = items.length
     ? items
-        .map(
-          (item) => `
+        .map((item) => {
+          const menuUpgrade = getMenuUpgradeForItem(item);
+
+          return `
             <article class="cart-line">
               <div>
                 <h3>${item.name}</h3>
                 <p>${item.restaurant} · ${money.format(item.price)}</p>
+                ${
+                  menuUpgrade
+                    ? `<button class="menu-upgrade-button" type="button" data-menu-upgrade-source="${item.id}" data-menu-upgrade-target="${menuUpgrade.item.id}" data-menu-upgrade-mode="${menuUpgrade.mode}" aria-label="${menuUpgrade.label}">
+                        <span aria-hidden="true">+</span>
+                        ${menuUpgrade.label}
+                      </button>`
+                    : ""
+                }
               </div>
               <div class="quantity">
                 <button class="qty-button" type="button" data-delta="-1" data-item="${item.id}">-</button>
@@ -5014,8 +5146,8 @@ function renderCart() {
                 <button class="qty-button" type="button" data-delta="1" data-item="${item.id}">+</button>
               </div>
             </article>
-          `,
-        )
+          `;
+        })
         .join("")
     : `<p class="restaurant-meta">Ton panier est vide. Ajoute un plat pour commencer.</p>`;
 }
@@ -5104,6 +5236,16 @@ restaurantList.addEventListener("submit", (event) => {
 });
 
 cartItems.addEventListener("click", (event) => {
+  const menuUpgradeButton = event.target.closest("[data-menu-upgrade-target]");
+  if (menuUpgradeButton) {
+    addMenuUpgrade(
+      menuUpgradeButton.dataset.menuUpgradeSource,
+      menuUpgradeButton.dataset.menuUpgradeTarget,
+      menuUpgradeButton.dataset.menuUpgradeMode,
+    );
+    return;
+  }
+
   const button = event.target.closest("[data-delta]");
   if (!button) return;
 
