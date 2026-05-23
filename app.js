@@ -764,6 +764,8 @@ const PRODUCT_IMAGE_RULES = [
       "https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=700&q=82",
     ],
     accent: "#c72121",
   },
@@ -774,6 +776,9 @@ const PRODUCT_IMAGE_RULES = [
       "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=700&q=82",
     ],
     accent: "#f2b84b",
   },
@@ -783,6 +788,7 @@ const PRODUCT_IMAGE_RULES = [
       "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1598679253544-2c97992403ea?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=700&q=82",
     ],
     accent: "#f3a620",
   },
@@ -802,6 +808,7 @@ const PRODUCT_IMAGE_RULES = [
       "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1613514785940-daed07799d9b?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?auto=format&fit=crop&w=700&q=82",
     ],
     accent: "#e2532f",
   },
@@ -829,6 +836,7 @@ const PRODUCT_IMAGE_RULES = [
       "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1488900128323-21503983a07e?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=700&q=82",
     ],
     accent: "#eec3cf",
   },
@@ -838,6 +846,7 @@ const PRODUCT_IMAGE_RULES = [
       "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=700&q=82",
+      "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=700&q=82",
     ],
     accent: "#c7835b",
   },
@@ -963,10 +972,14 @@ function getMenuVisual(item, restaurant) {
   const rule = PRODUCT_IMAGE_RULES.find((candidate) => candidate.test.test(visualText)) || PRODUCT_IMAGE_RULES[1];
   const imagePool = rule.images || [rule.image];
   const imageIndex = hashString(`${restaurant.id}-${item.id || item.name}`) % imagePool.length;
+  const positionSeed = hashString(`${item.id || item.name}-${restaurant.id}-position`);
+  const xPosition = 35 + (positionSeed % 31);
+  const yPosition = 38 + ((positionSeed >> 3) % 25);
 
   return {
     image: item.image || imagePool[imageIndex],
     accent: item.accent || rule.accent || RESTAURANT_MENU_ACCENTS[restaurant.id],
+    imagePosition: `${xPosition}% ${yPosition}%`,
     kind: "photo",
   };
 }
@@ -982,6 +995,7 @@ function attachMenuVisuals() {
       const visual = getMenuVisual(item, restaurant);
       item.image = visual.image;
       item.accent = visual.accent;
+      item.imagePosition = visual.imagePosition || "center";
       item.visualKind = visual.kind || "photo";
     });
   });
@@ -1000,6 +1014,7 @@ const state = {
   orders: [],
   activeOrder: null,
   activeProductId: "",
+  restaurantDetailTab: "menu",
   userLocation: null,
   onboardingDismissed: false,
   loginIntent: "client",
@@ -1247,6 +1262,7 @@ const deliveryAddress = document.querySelector("#deliveryAddress");
 const deliveryPhone = document.querySelector("#deliveryPhone");
 const paymentMethod = document.querySelector("#paymentMethod");
 const cartNotice = document.querySelector("#cartNotice");
+const cartFeedbackToast = document.querySelector("#cartFeedbackToast");
 const restaurantEntryButton = document.querySelector("#restaurantEntryButton");
 const restaurantDashboard = document.querySelector("#restaurantDashboard");
 const adminDashboard = document.querySelector("#adminDashboard");
@@ -4107,7 +4123,7 @@ function renderProductVisualContent(item) {
     `;
   }
 
-  return `<img src="${item.image}" alt="" loading="lazy" decoding="async" />`;
+  return `<img src="${item.image}" alt="" loading="lazy" decoding="async" style="object-position: ${item.imagePosition || "center"};" onerror="this.closest('.menu-photo')?.classList.add('image-error'); this.remove();" />`;
 }
 
 function getItemById(itemId) {
@@ -4234,6 +4250,24 @@ function showCartNotice(message) {
 function clearCartNotice() {
   cartNotice.textContent = "";
   cartNotice.classList.remove("show");
+}
+
+let cartFeedbackTimer = null;
+
+function showCartFeedback(message = "Ajouté au panier") {
+  if (!cartFeedbackToast) return;
+
+  window.clearTimeout(cartFeedbackTimer);
+  cartFeedbackToast.textContent = message;
+  cartFeedbackToast.classList.remove("show");
+  void cartFeedbackToast.offsetWidth;
+  cartFeedbackToast.classList.add("show");
+  openCart.classList.add("cart-pulse");
+
+  cartFeedbackTimer = window.setTimeout(() => {
+    cartFeedbackToast.classList.remove("show");
+    openCart.classList.remove("cart-pulse");
+  }, 1300);
 }
 
 function resetCheckoutButton() {
@@ -4520,6 +4554,15 @@ function renderRestaurantDetail(restaurantId) {
     : `${restaurant.rating} (avis a completer)`;
   const estimate = getDeliveryEstimate(restaurant);
   const restaurantFavorite = isFavorite("restaurants", restaurant.id);
+  const detailTabs = [
+    ["menu", "Menu"],
+    ["infos", "Infos"],
+    ["avis", "Avis"],
+  ];
+  if (!detailTabs.some(([key]) => key === state.restaurantDetailTab)) {
+    state.restaurantDetailTab = "menu";
+  }
+  const activeDetailTab = state.restaurantDetailTab;
 
   const menuGroups = restaurant.menu
     .map((item, index) => ({ item, index }))
@@ -4624,6 +4667,19 @@ function renderRestaurantDetail(restaurantId) {
       </section>
     `
     : "";
+  const tabsHtml = `
+    <nav class="detail-tabs" aria-label="Sections du restaurant">
+      ${detailTabs
+        .map(
+          ([key, label]) => `
+            <button class="detail-tab-button ${activeDetailTab === key ? "active" : ""}" type="button" data-detail-tab="${key}" aria-selected="${activeDetailTab === key}">
+              ${label}
+            </button>
+          `,
+        )
+        .join("")}
+    </nav>
+  `;
 
   restaurantList.innerHTML = `
     <section class="restaurant-detail">
@@ -4647,61 +4703,67 @@ function renderRestaurantDetail(restaurantId) {
         </div>
       </div>
 
-      <section class="delivery-card">
-        <div>
-          <p class="eyebrow">Livraison estimee</p>
-          <h3>${formatDeliveryEstimate(estimate)}</h3>
-          <p>${
-            estimate.basedOnLocation
-              ? "Calcule avec ta position actuelle et la localisation du restaurant."
-              : "Appuie sur Bamako, Mali en haut pour utiliser ta position reelle."
-          }</p>
-        </div>
-        <button class="text-button" type="button" data-use-location>Utiliser ma position</button>
-      </section>
+      ${tabsHtml}
 
-      ${officialMenus}
-
-      <section class="hours-section">
-        <div class="section-heading compact">
-          <div>
-            <p class="eyebrow">Horaires</p>
-            <h2>Ouverture</h2>
+      <div class="detail-tab-panels">
+        <section class="detail-panel" data-detail-panel="menu" ${activeDetailTab !== "menu" ? "hidden" : ""}>
+          <div class="section-heading compact">
+            <div>
+              <p class="eyebrow">Menu</p>
+              <h2>Commander</h2>
+            </div>
           </div>
-        </div>
-        <table class="hours-table">
-          <tbody>${hoursRows}</tbody>
-        </table>
-      </section>
+          <div class="menu-groups">${menuItems}</div>
+        </section>
 
-      <section class="reviews">
-        <div class="section-heading compact">
-          <div>
-            <p class="eyebrow">Avis</p>
-            <h2>Ce que les clients disent</h2>
+        <section class="detail-panel" data-detail-panel="infos" ${activeDetailTab !== "infos" ? "hidden" : ""}>
+          <section class="delivery-card">
+            <div>
+              <p class="eyebrow">Livraison estimee</p>
+              <h3>${formatDeliveryEstimate(estimate)}</h3>
+              <p>${
+                estimate.basedOnLocation
+                  ? "Calcule avec ta position actuelle et la localisation du restaurant."
+                  : "Appuie sur Bamako, Mali en haut pour utiliser ta position reelle."
+              }</p>
+            </div>
+            <button class="text-button" type="button" data-use-location>Utiliser ma position</button>
+          </section>
+
+          ${officialMenus}
+
+          <section class="hours-section">
+            <div class="section-heading compact">
+              <div>
+                <p class="eyebrow">Horaires</p>
+                <h2>Ouverture</h2>
+              </div>
+            </div>
+            <table class="hours-table">
+              <tbody>${hoursRows}</tbody>
+            </table>
+          </section>
+
+          ${contactInfo}
+        </section>
+
+        <section class="detail-panel" data-detail-panel="avis" ${activeDetailTab !== "avis" ? "hidden" : ""}>
+          <div class="section-heading compact">
+            <div>
+              <p class="eyebrow">Avis</p>
+              <h2>Ce que les clients disent</h2>
+            </div>
           </div>
-        </div>
-        <form class="review-form" id="reviewForm">
-          <label for="reviewInput">Ajouter ton avis</label>
-          <textarea id="reviewInput" name="review" rows="3" placeholder="Exemple: Burger tres bon, livraison rapide..."></textarea>
-          <button class="primary-button" type="submit">Publier l'avis</button>
-        </form>
-        <div class="review-list">
-          ${allReviews.map((review) => `<p class="review-line">"${review}"</p>`).join("")}
-        </div>
-      </section>
-
-      <section>
-        <div class="section-heading compact">
-          <div>
-            <p class="eyebrow">Menu</p>
-            <h2>Commander</h2>
+          <form class="review-form" id="reviewForm">
+            <label for="reviewInput">Ajouter ton avis</label>
+            <textarea id="reviewInput" name="review" rows="3" placeholder="Exemple: Burger tres bon, livraison rapide..."></textarea>
+            <button class="primary-button" type="submit">Publier l'avis</button>
+          </form>
+          <div class="review-list">
+            ${allReviews.map((review) => `<p class="review-line">"${review}"</p>`).join("")}
           </div>
-        </div>
-        <div class="menu-groups">${menuItems}</div>
-      </section>
-
-      ${contactInfo}
+        </section>
+      </div>
     </section>
   `;
 }
@@ -4719,6 +4781,7 @@ function addItem(itemId) {
   clearCartNotice();
   saveState();
   renderCart();
+  showCartFeedback("Ajouté au panier");
 }
 
 function addMenuUpgrade(sourceItemId, targetItemId, mode) {
@@ -5166,7 +5229,15 @@ restaurantList.addEventListener("click", (event) => {
   const backButton = event.target.closest("#backToRestaurants");
   if (backButton) {
     state.selectedRestaurantId = "";
+    state.restaurantDetailTab = "menu";
     renderRestaurants();
+    return;
+  }
+
+  const detailTabButton = event.target.closest("[data-detail-tab]");
+  if (detailTabButton) {
+    state.restaurantDetailTab = detailTabButton.dataset.detailTab || "menu";
+    renderRestaurantDetail(state.selectedRestaurantId);
     return;
   }
 
@@ -5204,6 +5275,7 @@ restaurantList.addEventListener("click", (event) => {
   if (!card) return;
 
   state.selectedRestaurantId = card.dataset.restaurant;
+  state.restaurantDetailTab = "menu";
   renderRestaurants();
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
@@ -5230,6 +5302,7 @@ restaurantList.addEventListener("submit", (event) => {
   state.userReviews[state.selectedRestaurantId] = state.userReviews[state.selectedRestaurantId] || [];
   const author = state.currentUser?.name ? `${state.currentUser.name}: ` : "";
   state.userReviews[state.selectedRestaurantId].unshift(`${author}${review}`);
+  state.restaurantDetailTab = "avis";
   input.value = "";
   saveState();
   renderRestaurantDetail(state.selectedRestaurantId);
@@ -5584,7 +5657,7 @@ productAddButton?.addEventListener("click", () => {
   if (!state.activeProductId) return;
 
   addItem(state.activeProductId);
-  productAddButton.textContent = "Ajoute";
+  productAddButton.textContent = "Ajouté";
   window.setTimeout(() => {
     if (state.activeProductId) productAddButton.textContent = "Ajouter au panier";
   }, 900);

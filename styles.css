@@ -875,8 +875,8 @@ textarea:focus-visible {
 }
 
 .detail-hero {
-  min-height: 238px;
-  border-radius: 30px;
+  min-height: 206px;
+  border-radius: 24px;
   background:
     linear-gradient(180deg, rgba(17, 17, 17, 0), rgba(17, 17, 17, 0.18)),
     var(--image) center/cover;
@@ -896,23 +896,24 @@ textarea:focus-visible {
 
 .detail-header h2 {
   margin: 0;
-  font-size: 34px;
+  font-size: 30px;
   line-height: 1.02;
   font-weight: 870;
   letter-spacing: 0;
 }
 
 .detail-header p:not(.eyebrow) {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
   color: var(--muted);
+  font-size: 15px;
   line-height: 1.55;
 }
 
 .detail-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 16px;
+  gap: 7px;
+  margin-top: 13px;
 }
 
 .detail-chips span {
@@ -923,6 +924,49 @@ textarea:focus-visible {
   color: var(--ink);
   font-size: 13px;
   font-weight: 750;
+}
+
+.detail-tabs {
+  position: sticky;
+  top: 71px;
+  z-index: 8;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 12px 30px rgba(17, 17, 17, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.detail-tab-button {
+  min-height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 830;
+}
+
+.detail-tab-button.active {
+  background: var(--ink);
+  color: #ffffff;
+}
+
+.detail-tab-panels,
+.detail-panel {
+  display: grid;
+}
+
+.detail-panel {
+  gap: 16px;
+}
+
+.detail-panel[hidden] {
+  display: none;
 }
 
 .info-list,
@@ -1221,6 +1265,18 @@ textarea:focus-visible {
   transform: scale(1.02);
 }
 
+.menu-photo.image-error::before {
+  content: "BKO";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 25px;
+  font-weight: 940;
+  letter-spacing: 0;
+}
+
 .menu-photo-text {
   display: grid;
   place-items: center;
@@ -1379,6 +1435,10 @@ textarea:focus-visible {
     opacity 0.2s ease;
 }
 
+.floating-cart.cart-pulse {
+  animation: cartPulse 0.42s ease;
+}
+
 .floating-cart.is-hidden {
   opacity: 0;
   pointer-events: none;
@@ -1397,6 +1457,43 @@ textarea:focus-visible {
   border-radius: 50%;
   background: var(--accent);
   font-size: 13px;
+}
+
+.cart-feedback-toast {
+  position: fixed;
+  right: max(16px, calc((100vw - 620px) / 2 + 18px));
+  bottom: 92px;
+  z-index: 22;
+  padding: 11px 15px;
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.92);
+  color: #ffffff;
+  box-shadow: 0 18px 48px rgba(17, 17, 17, 0.24);
+  font-size: 13px;
+  font-weight: 830;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px) scale(0.98);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.cart-feedback-toast.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@keyframes cartPulse {
+  0% {
+    transform: scale(1);
+  }
+  48% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .cart-panel {
