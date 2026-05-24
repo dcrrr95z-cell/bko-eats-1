@@ -457,7 +457,7 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 14px;
 }
 
 .topbar {
@@ -492,7 +492,8 @@ textarea:focus-visible {
 .brand-lockup {
   display: flex;
   align-items: center;
-  gap: 11px;
+  flex: 1 1 auto;
+  gap: 10px;
   min-width: 0;
 }
 
@@ -522,7 +523,10 @@ textarea:focus-visible {
 .brand-copy {
   display: grid;
   gap: 3px;
+  width: min(48vw, 220px);
   min-width: 0;
+  justify-items: center;
+  text-align: center;
 }
 
 .eyebrow {
@@ -540,11 +544,13 @@ textarea:focus-visible {
 
 .brand-name {
   margin: 0;
+  width: 100%;
   color: var(--ink);
   font-size: 21px;
   line-height: 1;
   font-weight: 880;
   letter-spacing: 0;
+  text-align: center;
   white-space: nowrap;
 }
 
@@ -562,16 +568,19 @@ textarea:focus-visible {
 }
 
 .location-button {
-  display: flex;
-  align-items: flex-start;
-  gap: 5px;
-  max-width: min(54vw, 260px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 12px;
+  align-items: center;
+  gap: 6px;
+  justify-self: center;
+  max-width: 100%;
   padding: 0;
   background: transparent;
   color: var(--muted);
   font-size: 13px;
   line-height: 1.15;
   font-weight: 710;
+  text-align: center;
   white-space: nowrap;
 }
 
@@ -581,6 +590,7 @@ textarea:focus-visible {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
+  text-align: center;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
@@ -588,7 +598,6 @@ textarea:focus-visible {
 .location-button span[aria-hidden="true"] {
   display: inline-grid;
   width: 12px;
-  flex: 0 0 auto;
   place-items: center;
   color: var(--ink);
   font-size: 0;
@@ -729,6 +738,40 @@ textarea:focus-visible {
   color: var(--muted);
   font-size: 14px;
   line-height: 1.42;
+}
+
+@media (max-width: 430px) {
+  .topbar {
+    gap: 8px;
+  }
+
+  .brand-lockup {
+    gap: 9px;
+  }
+
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+
+  .brand-copy {
+    width: min(46vw, 190px);
+  }
+
+  .restaurant-entry-button {
+    padding-inline: 8px;
+    font-size: 11px;
+  }
+
+  .topbar-actions {
+    gap: 6px;
+  }
+
+  .icon-button {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 .section-heading {
