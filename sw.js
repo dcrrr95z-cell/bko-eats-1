@@ -1,8 +1,8 @@
-const CACHE_NAME = "bko-eats-v60";
+const CACHE_NAME = "bko-eats-v61";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=37",
+  "./styles.css?v=38",
   "./app.js?v=56",
   "./firestore.rules",
   "./firebase-config.js?v=18",
@@ -25,6 +25,25 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  const requestUrl = new URL(event.request.url);
+  const isLocalAsset = requestUrl.origin === self.location.origin;
+  const isFreshCriticalAsset =
+    isLocalAsset &&
+    (event.request.mode === "navigate" || requestUrl.pathname.endsWith("/index.html") || requestUrl.pathname.endsWith("/styles.css") || requestUrl.pathname.endsWith("/app.js"));
+
+  if (isFreshCriticalAsset) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request)),
+    );
+    return;
+  }
+
   event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
 });
 

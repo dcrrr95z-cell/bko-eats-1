@@ -733,6 +733,7 @@ textarea:focus-visible {
 }
 
 .hero p:last-child {
+  display: none;
   max-width: 360px;
   margin: 8px 0 0;
   color: var(--muted);
