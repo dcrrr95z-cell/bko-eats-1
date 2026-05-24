@@ -19,12 +19,12 @@ const restaurants = [
       ["Dimanche", "10:30 - 01:00"],
     ],
     website: "https://burgerandcomali.com/",
-    description: "Fast-food specialise dans les burgers, wings et sandwiches a Bamako.",
+    description: "Fast-food spécialisé dans les burgers, wings et sandwiches à Bamako.",
     image: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80",
     reviews: [
-      "Restaurant fast-food specialise dans le burger, wings et sandwiches.",
+      "Restaurant fast-food spécialisé dans les burgers, wings et sandwiches.",
       "Adresse publique: Hamdallaye ACI 2000, Bamako.",
-      "Numero public: +223 82 63 63 63.",
+      "Numéro public : +223 82 63 63 63.",
     ],
     brooklynMenu: [
       { id: "brooklyn-double-cheese", section: "Burgers", name: "Double Cheese", description: "Burger double cheese", price: 4000 },
@@ -37,7 +37,7 @@ const restaurants = [
       { id: "brooklyn-mythic", section: "Burgers", name: "Brooklyn Mythic", description: "Burger Brooklyn Mythic", price: 6000 },
       { id: "brooklyn-american-dream", section: "Burgers", name: "American Dream", description: "Burger American Dream", price: 6500 },
       { id: "brooklyn-fish-burger", section: "Burgers", name: "Fish Burger", description: "Burger poisson", price: 3000 },
-      { id: "brooklyn-menu-burger", section: "Supplements", name: "Menu burger", description: "Ajout menu avec frites et boisson", price: 1000 },
+      { id: "brooklyn-menu-burger", section: "Suppléments", name: "Menu burger", description: "Ajout menu avec frites et boisson", price: 1000 },
       { id: "brooklyn-american-buffalo", section: "Sandwichs & Wraps", name: "L'American Buffalo", description: "Pain normal ou tortilla", price: 5000 },
       { id: "brooklyn-indien", section: "Sandwichs & Wraps", name: "L'Indien", description: "Pain normal ou tortilla", price: 4000 },
       { id: "brooklyn-bombino-wrap", section: "Sandwichs & Wraps", name: "Bombino Wrap", description: "Wrap Bombino", price: 4000 },
@@ -46,7 +46,7 @@ const restaurants = [
       { id: "brooklyn-brazier-wrap", section: "Sandwichs & Wraps", name: "Brazier Wrap", description: "Wrap Brazier", price: 5000 },
       { id: "brooklyn-mexicano-wrap", section: "Sandwichs & Wraps", name: "Mexicano Wrap", description: "Wrap Mexicano", price: 5000 },
       { id: "brooklyn-kebab", section: "Sandwichs & Wraps", name: "Kebab", description: "Pain normal ou tortilla", price: 6000 },
-      { id: "brooklyn-menu-sandwich", section: "Supplements", name: "Menu sandwich / wrap", description: "Ajout menu avec frites et boisson", price: 1000 },
+      { id: "brooklyn-menu-sandwich", section: "Suppléments", name: "Menu sandwich / wrap", description: "Ajout menu avec frites et boisson", price: 1000 },
       { id: "brooklyn-hummer-3x2", section: "Hummers", name: "Hummer 3x2", description: "3 steaks, 2 bacon, cheddar", price: 7000 },
       { id: "brooklyn-hummer-3x1", section: "Hummers", name: "Hummer 3x1", description: "3 steaks", price: 5000 },
       { id: "brooklyn-hummer-2x1", section: "Hummers", name: "Hummer 2x1", description: "2 steaks", price: 4500 },
@@ -57,8 +57,8 @@ const restaurants = [
       { id: "brooklyn-frites-ou-potatoes", section: "Frites & Papatoes", name: "Frites ou Potatoes", description: "Portion de frites ou potatoes", price: 1000 },
       { id: "brooklyn-frites-cheddar", section: "Frites & Papatoes", name: "Frites Cheddar", description: "Frites avec cheddar", price: 2500 },
       { id: "brooklyn-frites-cheddar-bacon", section: "Frites & Papatoes", name: "Frites Cheddar + Bacon", description: "Frites avec cheddar et bacon", price: 3500 },
-      { id: "brooklyn-supplement-cheddar", section: "Supplements", name: "Supplement cheddar", description: "Cheddar en supplement", price: 1500 },
-      { id: "brooklyn-supplement-bacon", section: "Supplements", name: "Supplement bacon", description: "Bacon en supplement", price: 2000 },
+      { id: "brooklyn-supplement-cheddar", section: "Suppléments", name: "Supplément cheddar", description: "Cheddar en supplément", price: 1500 },
+      { id: "brooklyn-supplement-bacon", section: "Suppléments", name: "Supplément bacon", description: "Bacon en supplément", price: 2000 },
       { id: "brooklyn-crazy-box", section: "Box", name: "Crazy Box", description: "Double cheese junior, wings crispy, frites, boisson 33cl", price: 7000 },
       { id: "brooklyn-nuggets-6", section: "Chicken", name: "Chicken Nuggets 6 pieces", description: "Nuggets de poulet", price: 4000 },
       { id: "brooklyn-nuggets-12", section: "Chicken", name: "Chicken Nuggets 12 pieces", description: "Nuggets de poulet", price: 7000 },
@@ -68,17 +68,17 @@ const restaurants = [
       { id: "brooklyn-wings-6", section: "Chicken", name: "Chicken Wings 6 pieces", description: "Wings de poulet", price: 6000 },
       { id: "brooklyn-pieces-4", section: "Chicken", name: "Chicken Pieces 4 pieces", description: "Pieces de poulet", price: 4000 },
       { id: "brooklyn-pieces-6", section: "Chicken", name: "Chicken Pieces 6 pieces", description: "Pieces de poulet", price: 6000 },
-      { id: "brooklyn-menu-chicken", section: "Supplements", name: "Menu chicken", description: "Ajout menu avec frites et boisson", price: 1000 },
+      { id: "brooklyn-menu-chicken", section: "Suppléments", name: "Menu chicken", description: "Ajout menu avec frites et boisson", price: 1000 },
       { id: "brooklyn-chicken-family", section: "Chicken Family", name: "Chicken Family", description: "Wings, pieces, frites et bouteille", price: 22000 },
       { id: "brooklyn-tacos-solo", section: "Tacos", name: "Solo 1 viande", description: "Viandes: merguez, chipolata, nuggets, steak hache, chicken", price: 6000 },
       { id: "brooklyn-tacos-mix", section: "Tacos", name: "Mix 2 viandes", description: "Tacos avec 2 viandes", price: 7500 },
-      { id: "brooklyn-supplement-tacos", section: "Tacos", name: "Supplement tacos", description: "Bacon, cheddar, boursin, kiri ou oeuf", price: 1000 },
+      { id: "brooklyn-supplement-tacos", section: "Tacos", name: "Supplément tacos", description: "Bacon, cheddar, boursin, kiri ou œuf", price: 1000 },
       { id: "brooklyn-torsade-daim", section: "Desserts", name: "Torsade Daim", description: "Dessert Daim", price: 3000 },
       { id: "brooklyn-tiramisu", section: "Desserts", name: "Tiramisu", description: "Oreo, Kinder, caramel, Speculoos, black & white, eclats caramel", price: 2500 },
       { id: "brooklyn-boisson", section: "Boissons", name: "Boisson", description: "Soda", price: 1000 },
-      { id: "brooklyn-expresso", section: "Boissons Chaudes", name: "Expresso", description: "Cafe expresso", price: 1000 },
-      { id: "brooklyn-cafe-allonge", section: "Boissons Chaudes", name: "Cafe allonge", description: "Cafe allonge", price: 2000 },
-      { id: "brooklyn-cafe-noisette", section: "Boissons Chaudes", name: "Cafe noisette", description: "Cafe noisette", price: 1500 },
+      { id: "brooklyn-expresso", section: "Boissons Chaudes", name: "Expresso", description: "Caf? expresso", price: 1000 },
+      { id: "brooklyn-cafe-allonge", section: "Boissons Chaudes", name: "Caf? allong?", description: "Caf? allong?", price: 2000 },
+      { id: "brooklyn-cafe-noisette", section: "Boissons Chaudes", name: "Caf? noisette", description: "Caf? noisette", price: 1500 },
       { id: "brooklyn-infusion", section: "Boissons Chaudes", name: "Infusion", description: "Infusion chaude", price: 1000 },
     ],
     menu: [
@@ -92,7 +92,7 @@ const restaurants = [
       { id: "salade-poulet-bco", section: "Salads", name: "Salade Poulet", description: "Salade avec poulet", price: 2500 },
       { id: "salade-quinoa-chicken-bco", section: "Salads", name: "Salade Quinoa Chicken", description: "Quinoa, poulet et salade", price: 3000 },
       { id: "menu-extra-bco", section: "Options", name: "Menu", description: "Ajout menu", price: 1500 },
-      { id: "bacon-halal-bco", section: "Options", name: "Bacon Halal", description: "Supplement bacon halal", price: 1000 },
+      { id: "bacon-halal-bco", section: "Options", name: "Bacon Halal", description: "Supplément bacon halal", price: 1000 },
       { id: "classic-cheese-bco", section: "Classic Burgers", name: "Classic Cheese", description: "Steak, fromage, salade, tomate, cornichons et sauce", price: 5000 },
       { id: "diner-mite-bco", section: "Classic Burgers", name: "Diner-Mite", description: "Burger signature Burger & Co", price: 6000 },
       { id: "oklahoma-bco", section: "Classic Burgers", name: "Oklahoma", description: "Burger Oklahoma avec oignons grilles", price: 5500 },
@@ -100,7 +100,7 @@ const restaurants = [
       { id: "chicken-filet-bco", section: "Classic Burgers", name: "Chicken Filet", description: "Filet de poulet, salade et sauce", price: 5000 },
       { id: "say-cheese-bco", section: "Classic Burgers", name: "Say Cheese", description: "Burger fromage", price: 4000 },
       { id: "chicken-wizard-bco", section: "Classic Burgers", name: "Chicken Wizard", description: "Poulet crispy et sauce maison", price: 5000 },
-      { id: "mighty-chicken-bco", section: "Classic Burgers", name: "Mighty Chicken", description: "Burger poulet genereux", price: 6000 },
+      { id: "mighty-chicken-bco", section: "Classic Burgers", name: "Mighty Chicken", description: "Burger poulet généreux", price: 6000 },
       { id: "smashed-authentic-burger-bco", section: "Classic Burgers", name: "Smashed Authentic Burger", description: "Smashed burger authentique", price: 6000 },
       { id: "chicken-deluxe-burger-bco", section: "Classic Burgers", name: "Chicken Deluxe Burger", description: "Chicken burger deluxe", price: 5000 },
       { id: "fish-burger-bco", section: "Classic Burgers", name: "Fish Burger", description: "Burger poisson", price: 5500 },
@@ -150,12 +150,12 @@ const restaurants = [
       ["Dimanche", "12:00 - 00:00"],
     ],
     website: "",
-    description: "Restaurant connu a Bamako pour ses burgers halal, poulet frit et tacos.",
+    description: "Restaurant connu à Bamako pour ses burgers halal, poulet frit et tacos.",
     image: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=80",
     reviews: [
       "Good burgers and fried chicken.",
       "Great place to eat delicious halal burgers.",
-      "Nice place and the food tastes pretty good.",
+      "Bonne adresse, service agréable et plats bien préparés.",
     ],
     menu: [
       { id: "brooklyn-hummer-3x2-simple", section: "Hummers", name: "Hummer 3x2 - Simple", description: "3 steaks, 2 bacon, cheddar", price: 7000 },
@@ -177,9 +177,9 @@ const restaurants = [
       { id: "brooklyn-personnalise-frites-potatoes", section: "Frites & Papatoes", name: "Frites ou Potatoes", description: "Petite portion", price: 1000 },
       { id: "brooklyn-crazy-box", section: "Box", name: "Crazy Box", description: "Double cheese junior, wings crispy, frites, boisson 33cl", price: 7000 },
       { id: "brooklyn-boisson", section: "Boissons", name: "Boisson", description: "Soda", price: 1000 },
-      { id: "brooklyn-expresso", section: "Boissons Chaudes", name: "Expresso", description: "Cafe expresso", price: 1000 },
-      { id: "brooklyn-cafe-allonge", section: "Boissons Chaudes", name: "Cafe Allonge", description: "Cafe allonge", price: 2000 },
-      { id: "brooklyn-cafe-noisette", section: "Boissons Chaudes", name: "Cafe Noisette", description: "Cafe noisette", price: 1500 },
+      { id: "brooklyn-expresso", section: "Boissons Chaudes", name: "Expresso", description: "Caf? expresso", price: 1000 },
+      { id: "brooklyn-cafe-allonge", section: "Boissons Chaudes", name: "Caf? allong?", description: "Caf? allong?", price: 2000 },
+      { id: "brooklyn-cafe-noisette", section: "Boissons Chaudes", name: "Caf? noisette", description: "Caf? noisette", price: 1500 },
       { id: "brooklyn-infusion", section: "Boissons Chaudes", name: "Infusion", description: "Infusion chaude", price: 1000 },
       { id: "brooklyn-double-cheese-simple", section: "Burgers", name: "Double Cheese - Simple", description: "Double cheese burger", price: 4000 },
       { id: "brooklyn-double-cheese-menu", section: "Burgers", name: "Double Cheese - Menu", description: "Avec frites et boisson", price: 5000 },
@@ -240,7 +240,7 @@ const restaurants = [
       { id: "brooklyn-tacos-solo", section: "Tacos", name: "Solo 1 viande", description: "Tacos solo", price: 6000 },
       { id: "brooklyn-tacos-mix-2", section: "Tacos", name: "Mix 2 viandes", description: "Tacos mix", price: 7500 },
       { id: "brooklyn-tacos-sauces", section: "Tacos", name: "Les Sauces", description: "Sauce algerienne, chili, poivre, blanche, andalouse", price: 0 },
-      { id: "brooklyn-tacos-supplement", section: "Tacos", name: "Supplement tacos", description: "Bacon, cheddar, boursin, kiri, oeuf", price: 1000 },
+      { id: "brooklyn-tacos-supplement", section: "Tacos", name: "Supplément tacos", description: "Bacon, cheddar, boursin, kiri, œuf", price: 1000 },
     ],
   },
   {
@@ -250,7 +250,7 @@ const restaurants = [
     rating: 5.0,
     reviewCount: 0,
     time: "20-40 min",
-    address: "ACI 2000, a cote de l'hotel Radisson, Bamako",
+    address: "ACI 2000, à côté de l'hôtel Radisson, Bamako",
     location: { lat: 12.6322, lng: -8.0294 },
     phone: "+223 76 54 31 31",
     hours: [
@@ -263,7 +263,7 @@ const restaurants = [
       ["Dimanche", "16:30 - 23:00"],
     ],
     website: "",
-    description: "Burgers, tacos et wings avec menus rapides pour livraison a Bamako.",
+    description: "Burgers, tacos et wings avec menus rapides pour livraison à Bamako.",
     image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
     reviews: [
       "Menus burgers, tacos et chicken wings.",
@@ -282,7 +282,7 @@ const restaurants = [
       { id: "sigma-supreme-smash-menu", section: "Smash Burgers", name: "Supreme Smash - Menu", description: "Avec frites et boisson", price: 6000 },
       { id: "sigma-geant-simple", section: "Naan Burgers", name: "Geant - Simple", description: "2 steaks 90g, 2 tranches de cheddar, salade", price: 6500 },
       { id: "sigma-geant-menu", section: "Naan Burgers", name: "Geant - Menu", description: "Avec frites et boisson", price: 8000 },
-      { id: "sigma-big-pepper-simple", section: "Naan Burgers", name: "Big Pepper - Simple", description: "2 steaks 90g, oeuf, bacon, cheddar", price: 5500 },
+      { id: "sigma-big-pepper-simple", section: "Naan Burgers", name: "Big Pepper - Simple", description: "2 steaks 90 g, œuf, bacon, cheddar", price: 5500 },
       { id: "sigma-big-pepper-menu", section: "Naan Burgers", name: "Big Pepper - Menu", description: "Avec frites et boisson", price: 7000 },
       { id: "sigma-cbo-simple", section: "Naan Burgers", name: "CBO - Simple", description: "1 steak 90g, poulet, bacon, oignon frits, cheddar", price: 5500 },
       { id: "sigma-cbo-menu", section: "Naan Burgers", name: "CBO - Menu", description: "Avec frites et boisson", price: 7000 },
@@ -328,15 +328,15 @@ const restaurants = [
       { id: "sigma-bao-fish-menu", section: "Bao Buns", name: "Fish Bao - Menu", description: "Avec frites et boisson", price: 6500 },
       { id: "sigma-pasta-poulet-curry-simple", section: "Pasta", name: "Penne Poulet Curry - Simple", description: "Pasta penne poulet curry", price: 5500 },
       { id: "sigma-pasta-poulet-curry-menu", section: "Pasta", name: "Penne Poulet Curry - Menu", description: "Avec boisson, sans frites", price: 6000 },
-      { id: "sigma-pasta-creme-champignon-simple", section: "Pasta", name: "Penne Poulet Creme Champignon - Simple", description: "Pasta creme champignon", price: 5500 },
-      { id: "sigma-pasta-creme-champignon-menu", section: "Pasta", name: "Penne Poulet Creme Champignon - Menu", description: "Avec boisson, sans frites", price: 6000 },
+      { id: "sigma-pasta-creme-champignon-simple", section: "Pasta", name: "Penne Poulet Crème Champignon - Simple", description: "Pâtes crème champignon", price: 5500 },
+      { id: "sigma-pasta-creme-champignon-menu", section: "Pasta", name: "Penne Poulet Crème Champignon - Menu", description: "Avec boisson, sans frites", price: 6000 },
       { id: "sigma-pasta-poulet-tomate-simple", section: "Pasta", name: "Penne Poulet Tomate - Simple", description: "Pasta poulet tomate", price: 5500 },
       { id: "sigma-pasta-poulet-tomate-menu", section: "Pasta", name: "Penne Poulet Tomate - Menu", description: "Avec boisson, sans frites", price: 6000 },
       { id: "sigma-pasta-bolognese-simple", section: "Pasta", name: "Bolognese - Simple", description: "Pasta bolognese", price: 5500 },
       { id: "sigma-pasta-bolognese-menu", section: "Pasta", name: "Bolognese - Menu", description: "Avec boisson, sans frites", price: 6000 },
       { id: "sigma-escalope-gratinee", section: "Nos Brasseries", name: "Escalope Gratinee", description: "1 accompagnement au choix", price: 8000 },
       { id: "sigma-escalope-forestiere", section: "Nos Brasseries", name: "Escalope Forestiere", description: "1 accompagnement au choix", price: 7000 },
-      { id: "sigma-filet-boeuf", section: "Nos Brasseries", name: "Filet de Boeuf", description: "1 accompagnement au choix", price: 7500 },
+      { id: "sigma-filet-boeuf", section: "Nos Brasseries", name: "Filet de bœuf", description: "1 accompagnement au choix", price: 7500 },
       { id: "sigma-cordon-bleu", section: "Nos Brasseries", name: "Cordon Bleu Fait Maison", description: "1 accompagnement au choix", price: 8500 },
       { id: "sigma-lemon-pepper-6-simple", section: "Wings", name: "Lemon Pepper 6x - Simple", description: "Wings lemon pepper", price: 4000 },
       { id: "sigma-lemon-pepper-6-menu", section: "Wings", name: "Lemon Pepper 6x - Menu", description: "Avec frites et boisson", price: 5000 },
@@ -355,7 +355,7 @@ const restaurants = [
       { id: "sigma-sandwich-chicken-curry-menu", section: "Nos Sandwichs", name: "Chicken Curry - Menu", description: "Avec frites et boisson", price: 6000 },
       { id: "sigma-sandwich-philly-cheese-simple", section: "Nos Sandwichs", name: "Philly Cheese - Simple", description: "Sandwich philly cheese", price: 4500 },
       { id: "sigma-sandwich-philly-cheese-menu", section: "Nos Sandwichs", name: "Philly Cheese - Menu", description: "Avec frites et boisson", price: 6000 },
-      { id: "sigma-tacos-beef-simple", section: "Nos Tacos", name: "Tacos Beef - Simple", description: "Tacos boeuf", price: 4500 },
+      { id: "sigma-tacos-beef-simple", section: "Nos Tacos", name: "Tacos Beef - Simple", description: "Tacos bœuf", price: 4500 },
       { id: "sigma-tacos-beef-menu", section: "Nos Tacos", name: "Tacos Beef - Menu", description: "Avec frites et boisson", price: 6000 },
       { id: "sigma-tacos-chicken-simple", section: "Nos Tacos", name: "Tacos Chicken - Simple", description: "Tacos poulet", price: 4500 },
       { id: "sigma-tacos-chicken-menu", section: "Nos Tacos", name: "Tacos Chicken - Menu", description: "Avec frites et boisson", price: 6000 },
@@ -369,7 +369,7 @@ const restaurants = [
       { id: "sigma-cocktail-mojito-fraise", section: "Cocktails", name: "Mojito Fraise", description: "Cocktail", price: 2000 },
       { id: "sigma-cocktail-mojito-passion", section: "Cocktails", name: "Mojito Passion", description: "Cocktail", price: 2000 },
       { id: "sigma-cocktail-iced-tea", section: "Cocktails", name: "Iced Tea", description: "Cocktail", price: 2000 },
-      { id: "sigma-cocktail-menu-supplement", section: "Cocktails", name: "Cocktail en menu - Supplement", description: "Supplement cocktail dans un menu", price: 1000 },
+      { id: "sigma-cocktail-menu-supplement", section: "Cocktails", name: "Cocktail en menu - Supplément", description: "Supplément cocktail dans un menu", price: 1000 },
     ],
   },
   {
@@ -395,13 +395,13 @@ const restaurants = [
     officialMenus: [
       { title: "Menu petit dejeuner", href: "assets/nicecream-menus/petit-dejeuner-2025.pdf" },
       { title: "Menu restaurant", href: "assets/nicecream-menus/restaurant-sale-bougie.pdf" },
-      { title: "Menu salon de the", href: "assets/nicecream-menus/salon-de-the.pdf" },
+      { title: "Menu salon de thé", href: "assets/nicecream-menus/salon-de-the.pdf" },
     ],
-    description: "Adresse dessert et glace a Bamako, ideale pour coupes, milkshakes et gaufres.",
+    description: "Adresse dessert et glace à Bamako, idéale pour coupes, milkshakes et gaufres.",
     image: "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?auto=format&fit=crop&w=900&q=80",
     reviews: [
       "Glaces et desserts froids.",
-      "Parfait pour une commande sucree.",
+      "Parfait pour une commande sucrée.",
     ],
     menu: [
       { id: "nice-cornet-1-parfum", section: "Les Cornets", name: "Cornet 1 parfum", description: "Cornet glace 1 parfum", price: 1500 },
@@ -409,9 +409,9 @@ const restaurants = [
       { id: "nice-cornet-americain-2", section: "Les Cornets", name: "Cornet americain 2 parfums", description: "Cornet americain", price: 2500 },
       { id: "nice-cornet-americain-3", section: "Les Cornets", name: "Cornet americain 3 parfums", description: "Cornet americain", price: 3000 },
       { id: "nice-california-dream", section: "Les Cornets", name: "California Dream", description: "Specialite glacee en cornet", price: 2700 },
-      { id: "nice-supplement-chantilly", section: "Supplements", name: "Chantilly", description: "Supplement chantilly", price: 500 },
-      { id: "nice-supplement-nappage", section: "Supplements", name: "Nappage", description: "Supplement nappage", price: 500 },
-      { id: "nice-milkshake", section: "Boissons Glacees", name: "Milk-Shake", description: "Milk-shake glace", price: 2000 },
+      { id: "nice-supplement-chantilly", section: "Suppléments", name: "Chantilly", description: "Supplément chantilly", price: 500 },
+      { id: "nice-supplement-nappage", section: "Suppléments", name: "Nappage", description: "Supplément nappage", price: 500 },
+      { id: "nice-milkshake", section: "Boissons glacées", name: "Milk-Shake", description: "Milk-shake glacé", price: 2000 },
       { id: "nice-pot-1-parfum", section: "Les Pots", name: "Pot 1 parfum", description: "Pot de glace 1 parfum", price: 1500 },
       { id: "nice-pot-2-parfums", section: "Les Pots", name: "Pot 2 parfums", description: "Pot de glace 2 parfums", price: 2000 },
       { id: "nice-pot-3-parfums", section: "Les Pots", name: "Pot 3 parfums", description: "Pot de glace 3 parfums", price: 2500 },
@@ -434,7 +434,7 @@ const restaurants = [
       { id: "nice-tulipe-1-chantilly-nappage", section: "Les Tulipes", name: "Tulipe 1 parfum + chantilly & nappage", description: "Tulipe avec chantilly et nappage", price: 2000 },
       { id: "nice-tulipe-2-parfums", section: "Les Tulipes", name: "Tulipe 2 parfums", description: "Tulipe glacee", price: 2000 },
       { id: "nice-tulipe-2-chantilly-nappage", section: "Les Tulipes", name: "Tulipe 2 parfums + chantilly & nappage", description: "Tulipe avec chantilly et nappage", price: 2500 },
-      { id: "nice-croque-monsieur-seul", section: "Nos Croques", name: "Croque-Monsieur - Seul", description: "Pain de mie, preparation fromagere, jambon de boeuf", price: 3000 },
+      { id: "nice-croque-monsieur-seul", section: "Nos Croques", name: "Croque-Monsieur - Seul", description: "Pain de mie, préparation fromagère, jambon de bœuf", price: 3000 },
       { id: "nice-croque-monsieur-menu", section: "Nos Croques", name: "Croque-Monsieur - Menu", description: "Avec accompagnement", price: 4500 },
       { id: "nice-grilled-cheese-seul", section: "Nos Croques", name: "Grilled-Cheese - Seul", description: "Pain de mie, cheddar, mozzarella, mayonnaise", price: 3000 },
       { id: "nice-grilled-cheese-menu", section: "Nos Croques", name: "Grilled-Cheese - Menu", description: "Avec accompagnement", price: 4500 },
@@ -447,7 +447,7 @@ const restaurants = [
       { id: "nice-sweet-croque", section: "Croque Sucre", name: "Sweet-Croque", description: "Pain de mie, Nutella, compotee de banane", price: 2000 },
       { id: "nice-pdj-express", section: "Petit Dejeuner - Formules", name: "Express", description: "Boisson chaude et viennoiserie au choix", price: 1700 },
       { id: "nice-pdj-classique", section: "Petit Dejeuner - Formules", name: "Classique", description: "Boisson chaude, viennoiserie et jus naturel 20cl", price: 3500 },
-      { id: "nice-pdj-continentale", section: "Petit Dejeuner - Formules", name: "Continentale", description: "Boisson chaude, oeuf ou omelette au choix et jus naturel 20cl", price: 4000 },
+      { id: "nice-pdj-continentale", section: "Petit déjeuner - Formules", name: "Continentale", description: "Boisson chaude, œuf ou omelette au choix et jus naturel 20 cl", price: 4000 },
       { id: "nice-pdj-healthy", section: "Petit Dejeuner - Formules", name: "Healthy", description: "Boisson chaude, healthy bowl et jus naturel 20cl", price: 5500 },
       { id: "nice-pdj-brunch", section: "Petit Dejeuner - Formules", name: "Brunch", description: "Boisson chaude, salade de fruits, delice sucre, delice sale, jus 20cl et viennoiserie", price: 7500 },
       { id: "nice-pdj-brunch-gourmand", section: "Petit Dejeuner - Formules", name: "Brunch Gourmand", description: "Formule brunch complete avec delice sale, delice sucre, salade de fruits, boisson chaude et jus", price: 11500 },
@@ -464,42 +464,42 @@ const restaurants = [
       { id: "nice-gaufre-nice", section: "Crepes et Gaufres", name: "N'Ice Gaufre", description: "Gaufre glacee avec chantilly, sauce chocolat et sauce caramel", price: 3000 },
       { id: "nice-healthy-bowl", section: "Fraicheurs Matin", name: "Healthy Bowl", description: "Granola, fruits, miel et yaourt", price: 4000 },
       { id: "nice-salade-fruits", section: "Fraicheurs Matin", name: "Salade de fruits", description: "Salade de fruits frais", price: 2500 },
-      { id: "nice-oeuf-au-plat", section: "Oeufs et Assiettes Salees", name: "Oeuf au plat", description: "Oeuf au plat prepare sur commande", price: 1700 },
-      { id: "nice-oeufs-brouilles", section: "Oeufs et Assiettes Salees", name: "Oeufs brouilles", description: "Oeufs brouilles maison", price: 2500 },
-      { id: "nice-omelette-nature", section: "Oeufs et Assiettes Salees", name: "Omelette nature", description: "Omelette simple", price: 1700 },
-      { id: "nice-omelette-legumes", section: "Oeufs et Assiettes Salees", name: "Omelette legumes", description: "Omelette aux legumes", price: 2200 },
-      { id: "nice-omelette-jambon", section: "Oeufs et Assiettes Salees", name: "Omelette au jambon", description: "Omelette jambon", price: 2200 },
-      { id: "nice-omelette-fromage", section: "Oeufs et Assiettes Salees", name: "Omelette au fromage", description: "Omelette fromage", price: 2500 },
-      { id: "nice-omelette-jambon-fromage", section: "Oeufs et Assiettes Salees", name: "Omelette jambon fromage", description: "Omelette jambon et fromage", price: 2700 },
-      { id: "nice-avocado-toast", section: "Oeufs et Assiettes Salees", name: "Avocado Toast", description: "Pain aux cereales, puree d'avocat, oeuf et sauce vegetale", price: 4000 },
-      { id: "nice-croissant-jambon", section: "Oeufs et Assiettes Salees", name: "Croissant au jambon", description: "Croissant, jambon, bechamel et fromage", price: 1500 },
-      { id: "nice-sando-tamago-pdj", section: "Oeufs et Assiettes Salees", name: "Sando Tamago", description: "Sandwich oeuf, mayonnaise et oignons confits", price: 2500 },
-      { id: "nice-coupe-1-boule", section: "Salon de The - Coupes Glacees", name: "Coupe 1 boule", description: "Coupe glacee 1 boule", price: 1500 },
-      { id: "nice-coupe-2-boules", section: "Salon de The - Coupes Glacees", name: "Coupe 2 boules", description: "Coupe glacee 2 boules", price: 2000 },
-      { id: "nice-coupe-3-boules", section: "Salon de The - Coupes Glacees", name: "Coupe 3 boules", description: "Coupe glacee 3 boules", price: 2500 },
-      { id: "nice-sup-topping", section: "Salon de The - Supplements", name: "Topping", description: "Oreo, Kinder Bueno, Kit-Kat ou M&M's", price: 1000 },
-      { id: "nice-coupe-brownie", section: "Salon de The - Coupes Glacees", name: "Coupe Brownie", description: "3 boules au choix, chantilly, brownie et coulis au choix", price: 4500 },
-      { id: "nice-dame-blanche", section: "Salon de The - Coupes Glacees", name: "Dame Blanche", description: "3 boules vanille, meringue, chantilly et sauce chocolat", price: 3500 },
-      { id: "nice-banana-split", section: "Salon de The - Coupes Glacees", name: "Banana Split", description: "Banane, vanille, chocolat, fraise, chantilly, sauce fraise et chocolat", price: 4500 },
-      { id: "nice-sundae", section: "Salon de The - Coupes Glacees", name: "N'Ice Sundae", description: "2 boules yaourt, chantilly, nappage fruits rouges et granola", price: 3500 },
-      { id: "nice-frozen-yogurt", section: "Salon de The - Coupes Glacees", name: "Frozen Yogurt", description: "Fleur de lait, chantilly, topping et nappage au choix", price: 3500 },
-      { id: "nice-chocolat-cookie", section: "Salon de The - Desserts", name: "Chocolat cookie", description: "Dessert chocolat cookie", price: 4000 },
-      { id: "nice-chocolat-brownie", section: "Salon de The - Desserts", name: "Chocolat brownie", description: "Dessert chocolat brownie", price: 4000 },
-      { id: "nice-chocolat-oreo", section: "Salon de The - Desserts", name: "Chocolat Oreo", description: "Dessert chocolat Oreo", price: 4000 },
-      { id: "nice-boisson-expresso", section: "Boissons", name: "Expresso", description: "Cafe expresso", price: 1200 },
+      { id: "nice-oeuf-au-plat", section: "Œufs et assiettes salées", name: "Œuf au plat", description: "Œuf au plat préparé sur commande", price: 1700 },
+      { id: "nice-oeufs-brouilles", section: "Œufs et assiettes salées", name: "Œufs brouillés", description: "Œufs brouillés maison", price: 2500 },
+      { id: "nice-omelette-nature", section: "Œufs et assiettes salées", name: "Omelette nature", description: "Omelette simple", price: 1700 },
+      { id: "nice-omelette-legumes", section: "Œufs et assiettes salées", name: "Omelette légumes", description: "Omelette aux légumes", price: 2200 },
+      { id: "nice-omelette-jambon", section: "Œufs et assiettes salées", name: "Omelette au jambon", description: "Omelette jambon", price: 2200 },
+      { id: "nice-omelette-fromage", section: "Œufs et assiettes salées", name: "Omelette au fromage", description: "Omelette fromage", price: 2500 },
+      { id: "nice-omelette-jambon-fromage", section: "Œufs et assiettes salées", name: "Omelette jambon fromage", description: "Omelette jambon et fromage", price: 2700 },
+      { id: "nice-avocado-toast", section: "Œufs et assiettes salées", name: "Avocado Toast", description: "Pain aux céréales, purée d'avocat, œuf et sauce végétale", price: 4000 },
+      { id: "nice-croissant-jambon", section: "Œufs et assiettes salées", name: "Croissant au jambon", description: "Croissant, jambon, béchamel et fromage", price: 1500 },
+      { id: "nice-sando-tamago-pdj", section: "Œufs et assiettes salées", name: "Sando Tamago", description: "Sandwich œuf, mayonnaise et oignons confits", price: 2500 },
+      { id: "nice-coupe-1-boule", section: "Salon de thé - Coupes glacées", name: "Coupe 1 boule", description: "Coupe glacée 1 boule", price: 1500 },
+      { id: "nice-coupe-2-boules", section: "Salon de thé - Coupes glacées", name: "Coupe 2 boules", description: "Coupe glacée 2 boules", price: 2000 },
+      { id: "nice-coupe-3-boules", section: "Salon de thé - Coupes glacées", name: "Coupe 3 boules", description: "Coupe glacée 3 boules", price: 2500 },
+      { id: "nice-sup-topping", section: "Salon de thé - Suppléments", name: "Topping", description: "Oreo, Kinder Bueno, Kit-Kat ou M&M's", price: 1000 },
+      { id: "nice-coupe-brownie", section: "Salon de thé - Coupes glacées", name: "Coupe Brownie", description: "3 boules au choix, chantilly, brownie et coulis au choix", price: 4500 },
+      { id: "nice-dame-blanche", section: "Salon de thé - Coupes glacées", name: "Dame Blanche", description: "3 boules vanille, meringue, chantilly et sauce chocolat", price: 3500 },
+      { id: "nice-banana-split", section: "Salon de thé - Coupes glacées", name: "Banana Split", description: "Banane, vanille, chocolat, fraise, chantilly, sauce fraise et chocolat", price: 4500 },
+      { id: "nice-sundae", section: "Salon de thé - Coupes glacées", name: "N'Ice Sundae", description: "2 boules yaourt, chantilly, nappage fruits rouges et granola", price: 3500 },
+      { id: "nice-frozen-yogurt", section: "Salon de thé - Coupes glacées", name: "Frozen Yogurt", description: "Fleur de lait, chantilly, topping et nappage au choix", price: 3500 },
+      { id: "nice-chocolat-cookie", section: "Salon de thé - Desserts", name: "Chocolat cookie", description: "Dessert chocolat cookie", price: 4000 },
+      { id: "nice-chocolat-brownie", section: "Salon de thé - Desserts", name: "Chocolat brownie", description: "Dessert chocolat brownie", price: 4000 },
+      { id: "nice-chocolat-oreo", section: "Salon de thé - Desserts", name: "Chocolat Oreo", description: "Dessert chocolat Oreo", price: 4000 },
+      { id: "nice-boisson-expresso", section: "Boissons", name: "Expresso", description: "Caf? expresso", price: 1200 },
       { id: "nice-boisson-double-expresso", section: "Boissons", name: "Double Expresso", description: "Double cafe expresso", price: 2200 },
       { id: "nice-boisson-expresso-noisette", section: "Boissons", name: "Expresso Noisette", description: "Expresso noisette", price: 1500 },
-      { id: "nice-boisson-cafe-lait", section: "Boissons", name: "Cafe au lait", description: "Cafe au lait chaud", price: 1700 },
+      { id: "nice-boisson-cafe-lait", section: "Boissons", name: "Caf? au lait", description: "Caf? au lait chaud", price: 1700 },
       { id: "nice-boisson-cappuccino", section: "Boissons", name: "Cappuccino", description: "Cappuccino chaud", price: 2000 },
-      { id: "nice-boisson-the", section: "Boissons", name: "The", description: "The chaud", price: 1000 },
-      { id: "nice-boisson-the-lait", section: "Boissons", name: "The au lait", description: "The au lait chaud", price: 1500 },
+      { id: "nice-boisson-the", section: "Boissons", name: "Thé", description: "Thé chaud", price: 1000 },
+      { id: "nice-boisson-the-lait", section: "Boissons", name: "Thé au lait", description: "Thé au lait chaud", price: 1500 },
       { id: "nice-boisson-chocolat-chaud", section: "Boissons", name: "Chocolat chaud", description: "Chocolat chaud", price: 2000 },
-      { id: "nice-boisson-affogato", section: "Boissons", name: "Affogato", description: "Cafe et glace", price: 2000 },
+      { id: "nice-boisson-affogato", section: "Boissons", name: "Affogato", description: "Caf? et glace", price: 2000 },
       { id: "nice-boisson-lait", section: "Boissons", name: "Verre de lait", description: "Lait frais", price: 1000 },
-      { id: "nice-boisson-bissap-gingembre", section: "Boissons", name: "Bissap, gingembre ou mixte", description: "Boisson fraiche maison", price: 1500 },
+      { id: "nice-boisson-bissap-gingembre", section: "Boissons", name: "Bissap, gingembre ou mixte", description: "Boisson fraîche maison", price: 1500 },
       { id: "nice-boisson-jus-fruits", section: "Boissons", name: "Jus de fruits naturels 30cl", description: "Jus naturel selon saison", price: 2500 },
-      { id: "nice-boisson-frappuccino", section: "Boissons", name: "Frappuccino", description: "Cafe glace avec chantilly", price: 2500 },
-      { id: "nice-boisson-frappuccino-nappage", section: "Boissons", name: "Frappuccino nappage", description: "Cafe glace, chantilly et nappage", price: 3000 },
+      { id: "nice-boisson-frappuccino", section: "Boissons", name: "Frappuccino", description: "Caf? glac? avec chantilly", price: 2500 },
+      { id: "nice-boisson-frappuccino-nappage", section: "Boissons", name: "Frappuccino nappage", description: "Caf? glac?, chantilly et nappage", price: 3000 },
       { id: "nice-boisson-milkshake-2-parfums", section: "Boissons", name: "Milk Shake 2 parfums", description: "Milk shake avec 2 parfums de glace au choix", price: 2500 },
       { id: "nice-boisson-nice-milkshake", section: "Boissons", name: "N'Ice Milkshake", description: "Milkshake signature Nice Cream", price: 4000 },
       { id: "nice-boisson-nice-cocktail", section: "Boissons", name: "N'Ice Cocktail", description: "Jus d'orange, salade de fruits, glace fleur de lait, grenadine et chantilly", price: 3500 },
@@ -524,16 +524,16 @@ const restaurants = [
       { id: "nice-frites-hot-bomb", section: "Restaurant - Crunchy Corner", name: "Frites Hot Bomb", description: "Frites, poulet, sauce fromagere et sauce piquante", price: 4500 },
       { id: "nice-family-combo", section: "Restaurant - Crunchy Corner", name: "Family Combo", description: "5 nuggets, 5 tenders, 5 K.F.C, 3 frites et 3 boissons", price: 16500 },
       { id: "nice-spicy-combo", section: "Restaurant - Crunchy Corner", name: "Spicy Combo", description: "5 buffalo wings, 5 dynamite nuggets, 5 K.F.C, 3 frites et 3 boissons", price: 18500 },
-      { id: "nice-salade-caprese-simple", section: "Restaurant - Salades et Pates", name: "Caprese - Simple", description: "Tomate, mozzarella, pesto et creme balsamique", price: 2000 },
-      { id: "nice-salade-caprese-menu", section: "Restaurant - Salades et Pates", name: "Caprese - Menu", description: "Avec boisson et accompagnement", price: 4000 },
-      { id: "nice-salade-cesar-simple", section: "Restaurant - Salades et Pates", name: "Cesar - Simple", description: "Salade, poulet, mais, parmesan, croutons et sauce cesar", price: 2500 },
-      { id: "nice-salade-cesar-menu", section: "Restaurant - Salades et Pates", name: "Cesar - Menu", description: "Avec boisson et accompagnement", price: 4500 },
-      { id: "nice-salade-crudites-simple", section: "Restaurant - Salades et Pates", name: "Crudites - Simple", description: "Salade, legumes varies, oeuf et vinaigrette", price: 1900 },
-      { id: "nice-salade-crudites-menu", section: "Restaurant - Salades et Pates", name: "Crudites - Menu", description: "Avec boisson et accompagnement", price: 3000 },
-      { id: "nice-salade-mexicaine-simple", section: "Restaurant - Salades et Pates", name: "Mexicaine - Simple", description: "Salade, thon, guacamole, legumes varies et vinaigrette", price: 2500 },
-      { id: "nice-salade-mexicaine-menu", section: "Restaurant - Salades et Pates", name: "Mexicaine - Menu", description: "Avec boisson et accompagnement", price: 4500 },
-      { id: "nice-pate-bolognaise", section: "Restaurant - Salades et Pates", name: "Bolognaise", description: "Tagliatelles maison, sauce tomate, legumes, viande hachee et emmental", price: 5500 },
-      { id: "nice-pate-creme-poulet-champignon", section: "Restaurant - Salades et Pates", name: "Creme Poulet Champignon", description: "Tagliatelles maison, creme, poulet, champignons et emmental", price: 5500 },
+      { id: "nice-salade-caprese-simple", section: "Restaurant - Salades et pâtes", name: "Caprese - Simple", description: "Tomate, mozzarella, pesto et crème balsamique", price: 2000 },
+      { id: "nice-salade-caprese-menu", section: "Restaurant - Salades et pâtes", name: "Caprese - Menu", description: "Avec boisson et accompagnement", price: 4000 },
+      { id: "nice-salade-cesar-simple", section: "Restaurant - Salades et pâtes", name: "César - Simple", description: "Salade, poulet, maïs, parmesan, croûtons et sauce César", price: 2500 },
+      { id: "nice-salade-cesar-menu", section: "Restaurant - Salades et pâtes", name: "César - Menu", description: "Avec boisson et accompagnement", price: 4500 },
+      { id: "nice-salade-crudites-simple", section: "Restaurant - Salades et pâtes", name: "Crudités - Simple", description: "Salade, légumes variés, œuf et vinaigrette", price: 1900 },
+      { id: "nice-salade-crudites-menu", section: "Restaurant - Salades et pâtes", name: "Crudités - Menu", description: "Avec boisson et accompagnement", price: 3000 },
+      { id: "nice-salade-mexicaine-simple", section: "Restaurant - Salades et pâtes", name: "Mexicaine - Simple", description: "Salade, thon, guacamole, légumes variés et vinaigrette", price: 2500 },
+      { id: "nice-salade-mexicaine-menu", section: "Restaurant - Salades et pâtes", name: "Mexicaine - Menu", description: "Avec boisson et accompagnement", price: 4500 },
+      { id: "nice-pate-bolognaise", section: "Restaurant - Salades et pâtes", name: "Bolognaise", description: "Tagliatelles maison, sauce tomate, légumes, viande hachée et emmental", price: 5500 },
+      { id: "nice-pate-creme-poulet-champignon", section: "Restaurant - Salades et pâtes", name: "Crème Poulet Champignon", description: "Tagliatelles maison, crème, poulet, champignons et emmental", price: 5500 },
       { id: "nice-chawarma-pesto-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Pesto - Simple", description: "Pain blanc grille, tomate, mozzarella et pesto", price: 2500 },
       { id: "nice-chawarma-pesto-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Pesto - Menu", description: "Avec boisson et accompagnement", price: 4000 },
       { id: "nice-chawarma-jambon-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Jambon - Simple", description: "Sandwich jambon", price: 3000 },
@@ -550,7 +550,7 @@ const restaurants = [
       { id: "nice-chawarma-original-mixte-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Chawarma Original Mixte - Menu", description: "Avec boisson et accompagnement", price: 5500 },
       { id: "nice-chawarma-original-viande-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Chawarma Original Viande - Simple", description: "Salade, tomate, oignon, frites et sauce algerienne", price: 3500 },
       { id: "nice-chawarma-original-viande-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Chawarma Original Viande - Menu", description: "Avec boisson et accompagnement", price: 5000 },
-      { id: "nice-jambon-beurre-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Jambon Beurre - Simple", description: "Jambon de boeuf, beurre, cornichons et pain ciabatta", price: 2500 },
+      { id: "nice-jambon-beurre-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Jambon Beurre - Simple", description: "Jambon de bœuf, beurre, cornichons et pain ciabatta", price: 2500 },
       { id: "nice-jambon-beurre-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Jambon Beurre - Menu", description: "Avec boisson et accompagnement", price: 4000 },
       { id: "nice-thon-simple", section: "Restaurant - Chawarmas et Sandwichs", name: "Thon - Simple", description: "Rillettes de thon, salade, tomate, mais et pain ciabatta", price: 3000 },
       { id: "nice-thon-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Thon - Menu", description: "Avec boisson et accompagnement", price: 4500 },
@@ -558,14 +558,14 @@ const restaurants = [
       { id: "nice-poulet-sandwich-menu", section: "Restaurant - Chawarmas et Sandwichs", name: "Poulet Sandwich - Menu", description: "Avec boisson et accompagnement", price: 5000 },
       { id: "nice-pizza-margherita", section: "Restaurant - Pizzas", name: "Margherita", description: "Sauce tomate, tomates confites, mozzarella et olives", price: 6000 },
       { id: "nice-pizza-vegetariano", section: "Restaurant - Pizzas", name: "Vegetariano", description: "Sauce tomate, mozzarella, legumes grilles et creme balsamique", price: 7500 },
-      { id: "nice-pizza-regina", section: "Restaurant - Pizzas", name: "Regina", description: "Sauce tomate, jambon de boeuf, champignons, mozzarella et olives", price: 7500 },
+      { id: "nice-pizza-regina", section: "Restaurant - Pizzas", name: "Regina", description: "Sauce tomate, jambon de bœuf, champignons, mozzarella et olives", price: 7500 },
       { id: "nice-pizza-campione", section: "Restaurant - Pizzas", name: "Campione", description: "Sauce tomate, viande hachee, piment vert, tomates fraiches, oignons et mozzarella", price: 7500 },
       { id: "nice-pizza-parmigiana-pollo", section: "Restaurant - Pizzas", name: "Parmigiana Pollo", description: "Sauce tomate, poulet, mozzarella, persillade, tomates confites et parmesan", price: 7500 },
       { id: "nice-pizza-pizz-chawarma", section: "Restaurant - Pizzas", name: "Pizz-Chawarma", description: "Sauce tomate, viande chawarma, salade, tomates, oignons et sauce algerienne", price: 8000 },
-      { id: "nice-pizza-pollo-pesto", section: "Restaurant - Pizzas", name: "Pollo Pesto", description: "Creme fraiche, poulet, tomates cerises, mozzarella, creme balsamique et pesto", price: 8000 },
-      { id: "nice-pizza-crema", section: "Restaurant - Pizzas", name: "Crema", description: "Sauce tomate, creme fraiche, jambon de boeuf, champignons, mozzarella et olives", price: 8000 },
-      { id: "nice-pizza-merguez-oeuf", section: "Restaurant - Pizzas", name: "Merguez-Oeuf", description: "Sauce tomate, merguez, oeuf, tomates et oignons", price: 8000 },
-      { id: "nice-pizza-calzone", section: "Restaurant - Pizzas", name: "Calzone", description: "Sauce tomate, jambon de boeuf, oeuf, champignons et mozzarella", price: 7500 },
+      { id: "nice-pizza-pollo-pesto", section: "Restaurant - Pizzas", name: "Pollo Pesto", description: "Crème fraîche, poulet, tomates cerises, mozzarella, crème balsamique et pesto", price: 8000 },
+      { id: "nice-pizza-crema", section: "Restaurant - Pizzas", name: "Crema", description: "Sauce tomate, crème fraîche, jambon de bœuf, champignons, mozzarella et olives", price: 8000 },
+      { id: "nice-pizza-merguez-oeuf", section: "Restaurant - Pizzas", name: "Merguez-Œuf", description: "Sauce tomate, merguez, œuf, tomates et oignons", price: 8000 },
+      { id: "nice-pizza-calzone", section: "Restaurant - Pizzas", name: "Calzone", description: "Sauce tomate, jambon de bœuf, œuf, champignons et mozzarella", price: 7500 },
       { id: "nice-pizza-moitie-moitie", section: "Restaurant - Pizzas", name: "Moitie-Moitie", description: "Melange de deux pizzas au choix dans une seule pizza", price: 8000 },
       { id: "nice-burger-cheese-simple", section: "Restaurant - Burgers", name: "Cheese Burger - Simple", description: "Steak hache, cheddar, ketchup maison, tomate et salade", price: 3000 },
       { id: "nice-burger-cheese-menu", section: "Restaurant - Burgers", name: "Cheese Burger - Menu", description: "Avec boisson et accompagnement", price: 4500 },
@@ -584,11 +584,11 @@ const restaurants = [
       { id: "nice-tacos-m", section: "Restaurant - Tacos", name: "Tacos M", description: "1 viande au choix, sauce fromagere, frites et 1 sauce", price: 5500 },
       { id: "nice-tacos-l", section: "Restaurant - Tacos", name: "Tacos L", description: "2 viandes au choix, sauce fromagere, frites et 2 sauces", price: 7500 },
       { id: "nice-tacos-xxl", section: "Restaurant - Tacos", name: "Tacos XXL", description: "3 viandes au choix, plus de sauce fromagere, plus de frites et 2 sauces", price: 10000 },
-      { id: "nice-tacos-supp-legumes-oeuf", section: "Restaurant - Tacos", name: "Supplement legumes et oeuf", description: "Tomates, poivrons, champignons, oignons, aubergines et oeuf", price: 500 },
-      { id: "nice-tacos-supp-fromage", section: "Restaurant - Tacos", name: "Supplement fromage", description: "Mozzarella, cheddar ou emmental", price: 1000 },
-      { id: "nice-tacos-supp-jambon", section: "Restaurant - Tacos", name: "Supplement jambon", description: "Supplement jambon", price: 1000 },
-      { id: "nice-tacos-gratiner-m-l", section: "Restaurant - Tacos", name: "Gratiner un tacos M ou L", description: "Supplement gratinage", price: 1000 },
-      { id: "nice-tacos-gratiner-xxl", section: "Restaurant - Tacos", name: "Gratiner un tacos XXL", description: "Supplement gratinage XXL", price: 1500 },
+      { id: "nice-tacos-supp-legumes-oeuf", section: "Restaurant - Tacos", name: "Supplément légumes et œuf", description: "Tomates, poivrons, champignons, oignons, aubergines et œuf", price: 500 },
+      { id: "nice-tacos-supp-fromage", section: "Restaurant - Tacos", name: "Supplément fromage", description: "Mozzarella, cheddar ou emmental", price: 1000 },
+      { id: "nice-tacos-supp-jambon", section: "Restaurant - Tacos", name: "Supplément jambon", description: "Supplément jambon", price: 1000 },
+      { id: "nice-tacos-gratiner-m-l", section: "Restaurant - Tacos", name: "Gratiner un tacos M ou L", description: "Supplément gratinage", price: 1000 },
+      { id: "nice-tacos-gratiner-xxl", section: "Restaurant - Tacos", name: "Gratiner un tacos XXL", description: "Supplément gratinage XXL", price: 1500 },
     ],
   },
   {
@@ -611,16 +611,16 @@ const restaurants = [
       ["Dimanche", "08:00 - 21:00"],
     ],
     website: "",
-    description: "Pizzeria italienne a Bamako avec pizzas et plats classiques.",
+    description: "Pizzeria italienne à Bamako avec pizzas et plats classiques.",
     image: "https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=80",
     reviews: [
-      "Pizzeria connue a Bamako.",
+      "Pizzeria connue à Bamako.",
       "Cuisine italienne, pizzas et pates.",
     ],
     menu: [
       { id: "guido-margherita", name: "Pizza Margherita", description: "Tomate, mozzarella, basilic", price: 4500 },
-      { id: "guido-vegetarienne", name: "Pizza Vegetarienne", description: "Legumes, mozzarella, sauce tomate", price: 6000 },
-      { id: "guido-carbonara", name: "Spaghetti Carbonara", description: "Pates italiennes, creme, fromage", price: 7000 },
+      { id: "guido-vegetarienne", name: "Pizza Végétarienne", description: "Légumes, mozzarella, sauce tomate", price: 6000 },
+      { id: "guido-carbonara", name: "Spaghetti Carbonara", description: "Pâtes italiennes, crème, fromage", price: 7000 },
     ],
   },
 ];
@@ -637,7 +637,7 @@ const PRODUCT_DESCRIPTION_RULES = [
   {
     test: (item) => /menu/i.test(item.name) && !/familial|family|kids|mix/i.test(item.name),
     text: (restaurant, item, detail) =>
-      `Formule ${cleanProductName(item.name).toLowerCase()} avec frites et boisson, preparee par ${restaurant.name}.${detail}`,
+      `Formule ${cleanProductName(item.name).toLowerCase()} avec frites et boisson, préparée par ${restaurant.name}.${detail}`,
   },
   {
     test: (item) => /tacos/i.test(item.name) && Number(item.price || 0) <= 1500,
@@ -647,69 +647,69 @@ const PRODUCT_DESCRIPTION_RULES = [
   {
     test: (item) => /supplement|bacon|cheddar|chantilly|nappage|sauce/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Supplement pour personnaliser ta commande ${restaurant.name} selon tes envies.${detail}`,
+      `Supplément pour personnaliser ta commande ${restaurant.name} selon tes envies.${detail}`,
   },
   {
     test: (item) => /boisson|cocktail|expresso|cafe|infusion|milk/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Boisson selectionnee pour accompagner ton repas ou ton dessert chez ${restaurant.name}.${detail}`,
+      `Boisson sélectionnée pour accompagner ton repas ou ton dessert chez ${restaurant.name}.${detail}`,
   },
   {
     test: (item) => /burger|smash|classic|hummer|naan/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Burger genereux de ${restaurant.name}, servi chaud avec une base moelleuse, une garniture savoureuse et une sauce maison.${detail}`,
+      `Burger généreux de ${restaurant.name}, servi chaud avec une base moelleuse, une garniture savoureuse et une sauce maison.${detail}`,
   },
   {
     test: (item) => /wings|tenders|nuggets|pieces|poulet|chicken|fingers/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Specialite poulet de ${restaurant.name}, croustillante et bien assaisonnee, ideale seule ou avec un accompagnement.${detail}`,
+      `Spécialité poulet de ${restaurant.name}, croustillante et bien assaisonnée, idéale seule ou avec un accompagnement.${detail}`,
   },
   {
     test: (item) => /sandwich|wrap|kebab|bao|tacos/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Recette street-food de ${restaurant.name}, garnie et facile a manger, parfaite pour une commande rapide.${detail}`,
+      `Recette street-food de ${restaurant.name}, garnie et facile à manger, parfaite pour une commande rapide.${detail}`,
   },
   {
     test: (item) => /frites|fries|potatoes|papatoes|side|mozza/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Accompagnement gourmand de ${restaurant.name}, a ajouter au panier pour completer ton repas.${detail}`,
+      `Accompagnement gourmand de ${restaurant.name}, à ajouter au panier pour compléter ton repas.${detail}`,
   },
   {
     test: (item) => /pizza|spaghetti|pasta|penne|carbonara|margherita/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Specialite italienne de ${restaurant.name}, preparee avec une base simple et des ingredients savoureux.${detail}`,
+      `Spécialité italienne de ${restaurant.name}, préparée avec une base simple et des ingrédients savoureux.${detail}`,
   },
   {
     test: (item) => /glace|cornet|pot|barquette|tulipe|esquimaux|bricelet|gavotte|cream|chantilly/i.test(
       `${item.section || ""} ${item.name}`,
     ),
     text: (restaurant, item, detail) =>
-      `Dessert glace de ${restaurant.name}, frais et doux, parfait pour terminer la commande sur une note sucree.${detail}`,
+      `Dessert glacé de ${restaurant.name}, frais et doux, parfait pour terminer la commande sur une note sucrée.${detail}`,
   },
   {
     test: (item) => /croque|grilled/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Croque chaud de ${restaurant.name}, grille et fondant, pense pour un repas simple et reconfortant.${detail}`,
+      `Croque chaud de ${restaurant.name}, grillé et fondant, pensé pour un repas simple et réconfortant.${detail}`,
   },
   {
     test: (item) => /dessert|tiramisu|torsade|crepe|pain perdu|fondant|sweet/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Dessert de ${restaurant.name}, gourmand et pratique a commander apres le repas.${detail}`,
+      `Dessert de ${restaurant.name}, gourmand et pratique à commander après le repas.${detail}`,
   },
   {
     test: (item) => /salade|quinoa/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Option fraiche de ${restaurant.name}, composee pour une commande plus legere et equilibree.${detail}`,
+      `Option fraîche de ${restaurant.name}, composée pour une commande plus légère et équilibrée.${detail}`,
   },
   {
     test: (item) => /brasserie|escalope|filet|cordon/i.test(`${item.section || ""} ${item.name}`),
     text: (restaurant, item, detail) =>
-      `Plat complet de ${restaurant.name}, servi avec un accompagnement au choix selon la disponibilite du restaurant.${detail}`,
+      `Plat complet de ${restaurant.name}, servi avec un accompagnement au choix selon la disponibilité du restaurant.${detail}`,
   },
   {
     test: () => true,
     text: (restaurant, item, detail) =>
-      `Produit ${cleanProductName(item.name).toLowerCase()} propose par ${restaurant.name}, disponible a la commande sur Bko Eats.${detail}`,
+      `Produit ${cleanProductName(item.name).toLowerCase()} proposé par ${restaurant.name}, disponible à la commande sur Bko Eats.${detail}`,
   },
 ];
 
@@ -748,9 +748,7 @@ function cleanOriginalDescription(description) {
 function enhanceMenuDescriptions() {
   restaurants.forEach((restaurant) => {
     restaurant.menu.forEach((item) => {
-      const detail = cleanOriginalDescription(item.description);
-      const rule = PRODUCT_DESCRIPTION_RULES.find((candidate) => candidate.test(item));
-      item.description = rule.text(restaurant, item, detail);
+      item.originalDescription = String(item.description || "").replace(/\s+/g, " ").trim();
     });
   });
 }
@@ -851,7 +849,7 @@ const PRODUCT_IMAGE_RULES = [
     accent: "#c7835b",
   },
   {
-    test: /cafe|expresso|noisette|cappuccino|the|infusion|chocolat chaud|affogato/i,
+    test: /cafe|café|expresso|noisette|cappuccino|the|thé|infusion|chocolat chaud|affogato/i,
     images: [
       "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=82",
@@ -869,7 +867,7 @@ const PRODUCT_IMAGE_RULES = [
     accent: "#35a38d",
   },
   {
-    test: /oeuf|omelette|avocado|brunch|dejeuner|healthy|croissant/i,
+    test: /oeuf|œuf|omelette|avocado|brunch|dejeuner|déjeuner|healthy|croissant/i,
     images: [
       "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=700&q=82",
       "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=700&q=82",
@@ -938,9 +936,48 @@ function isMainDishCandidate(item) {
   return /burger|sandwich|wrap|tacos|naan|bao|pasta|penne|pizza|poulet|chicken|wings|tenders|pieces|nuggets|fingers|hummer|steak|fish|falafel|salade|chawarma|escalope/i.test(text);
 }
 
+function toSentence(value) {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  if (!text) return "";
+  return /[.!?]$/.test(text) ? text : `${text}.`;
+}
+
+function isWeakProductDescription(description, item) {
+  const value = String(description || "").replace(/\s+/g, " ").trim().toLowerCase();
+  const name = String(item.name || "").replace(/\s+-\s+(simple|menu|tacos)$/i, "").trim().toLowerCase();
+  if (!value) return true;
+
+  const weakPatterns = [
+    /^burger( .*)?$/,
+    /^wrap( .*)?$/,
+    /^tacos( .*)?$/,
+    /^sandwich( .*)?$/,
+    /^dessert( .*)?$/,
+    /^soda$/,
+    /^cafe$/,
+    /^frites$/,
+    /^wings$/,
+    /^tenders$/,
+    /^nuggets$/,
+    /^chantilly$/,
+    /^version tacos$/,
+    /^avec frites et boisson$/,
+  ];
+
+  return value === name || weakPatterns.some((pattern) => pattern.test(value));
+}
+
+function getPieceCountLabel(item) {
+  const text = `${item.name || ""} ${item.description || ""}`;
+  const match = text.match(/(?:x\s*)?(\d+)\s*(?:pieces|piece|wings|tenders|nuggets|fingers|pi[eè]ces)/i);
+  return match ? `${match[1]} pieces` : "";
+}
+
 function getEnhancedDescription(item) {
-  const description = String(item.description || "").trim();
+  const description = String(item.originalDescription || item.description || "").trim();
   const text = `${item.section || ""} ${item.name || ""}`.toLowerCase();
+  const cleanDescription = isWeakProductDescription(description, item) ? "" : toSentence(description);
+  const pieceCount = getPieceCountLabel(item);
 
   if (isMenuAddOnItem(item)) return "Ajoute 1 portion de frites et 1 boisson au plat selectionne.";
   if (isFullMenuVersion(item) && /avec frites et boisson/i.test(description)) return "Formule avec 1 portion de frites et 1 boisson.";
@@ -948,14 +985,14 @@ function getEnhancedDescription(item) {
   if (/\bfriends combo\b/i.test(item.name)) return "Combo a partager avec tenders, frites et sauces.";
   if (/wings box/i.test(item.name)) return "Box a partager autour d'ailes de poulet, avec sauces selon le restaurant.";
   if (/kids meals|menu enfant|menu kids/i.test(`${item.section || ""} ${item.name || ""} ${description}`)) {
-    return description.includes("boisson") ? description : `${description || "Format enfant"} avec accompagnement et boisson.`;
+    return description.includes("boisson") ? toSentence(description) : `${cleanDescription || "Format enfant"} Avec accompagnement et boisson.`;
   }
-  if (/wings/i.test(text) && !/\d|x\d|piece|portion/i.test(description)) return `${description || "Ailes de poulet"} en portion restaurant.`;
-  if (/tenders/i.test(text) && !/\d|x\d|piece|portion/i.test(description)) return `${description || "Tenders de poulet"} en portion restaurant.`;
-  if (/nuggets/i.test(text) && !/\d|x\d|piece|portion/i.test(description)) return `${description || "Nuggets de poulet"} en portion restaurant.`;
-  if (/pieces de poulet|chicken pieces/i.test(text) && !/\d|x\d|piece|portion/i.test(description)) return `${description || "Pieces de poulet"} en portion restaurant.`;
+  if (/wings/i.test(text)) return pieceCount ? `${pieceCount} d'ailes de poulet.${cleanDescription ? ` ${cleanDescription}` : ""}` : cleanDescription || "Ailes de poulet.";
+  if (/tenders/i.test(text)) return pieceCount ? `${pieceCount} de tenders de poulet.${cleanDescription ? ` ${cleanDescription}` : ""}` : cleanDescription || "Tenders de poulet.";
+  if (/nuggets/i.test(text)) return pieceCount ? `${pieceCount} de nuggets de poulet.${cleanDescription ? ` ${cleanDescription}` : ""}` : cleanDescription || "Nuggets de poulet.";
+  if (/pieces de poulet|chicken pieces/i.test(text)) return pieceCount ? `${pieceCount} de poulet.${cleanDescription ? ` ${cleanDescription}` : ""}` : cleanDescription || "Pieces de poulet.";
 
-  return description;
+  return cleanDescription || toSentence(description);
 }
 
 function getMenuVisual(item, restaurant) {
@@ -965,7 +1002,19 @@ function getMenuVisual(item, restaurant) {
     return {
       image: "",
       accent: item.accent || RESTAURANT_MENU_ACCENTS[restaurant.id] || "#111111",
+      visualLabel: "MENU",
+      visualSubLabel: "Formule",
       kind: "menu",
+    };
+  }
+
+  if (/supplement|sauce|bacon halal|cheddar|les sauces/i.test(visualText) || Number(item.price || 0) === 0) {
+    return {
+      image: "",
+      accent: item.accent || RESTAURANT_MENU_ACCENTS[restaurant.id] || "#111111",
+      visualLabel: /sauce/i.test(visualText) ? "SAUCE" : "OPTION",
+      visualSubLabel: Number(item.price || 0) === 0 ? "Info" : "Extra",
+      kind: "text",
     };
   }
 
@@ -996,6 +1045,8 @@ function attachMenuVisuals() {
       item.image = visual.image;
       item.accent = visual.accent;
       item.imagePosition = visual.imagePosition || "center";
+      item.visualLabel = visual.visualLabel || "";
+      item.visualSubLabel = visual.visualSubLabel || "";
       item.visualKind = visual.kind || "photo";
     });
   });
@@ -1054,12 +1105,12 @@ const ORDER_STEPS = [
 ];
 
 const ORDER_TRACKING_STEPS = [
-  { status: "pending", label: "Commande recue" },
-  { status: "accepted", label: "Acceptee" },
-  { status: "preparing", label: "En preparation" },
-  { status: "ready", label: "Prete" },
+  { status: "pending", label: "Commande reçue" },
+  { status: "accepted", label: "Acceptée" },
+  { status: "preparing", label: "En préparation" },
+  { status: "ready", label: "Prête" },
   { status: "delivering", label: "Livreur en route" },
-  { status: "completed", label: "Livree" },
+  { status: "completed", label: "Livrée" },
 ];
 
 const PREP_MINUTES_BY_CATEGORY = {
@@ -1089,23 +1140,23 @@ let restaurantNotificationTimer = null;
 let restaurantAudioContext = null;
 const RESTAURANT_ORDER_STATUSES = [
   ["pending", "Nouvelle commande"],
-  ["accepted", "Acceptee"],
-  ["preparing", "En preparation"],
-  ["ready", "Prete"],
+  ["accepted", "Acceptée"],
+  ["preparing", "En préparation"],
+  ["ready", "Prête"],
   ["delivering", "Livreur en route"],
-  ["completed", "Terminee"],
-  ["cancelled", "Annulee"],
-  ["refused", "Refusee"],
+  ["completed", "Terminée"],
+  ["cancelled", "Annulée"],
+  ["refused", "Refusée"],
 ];
 const CLIENT_STATUS_NOTIFICATIONS = {
-  pending: ["Commande recue", "Ta commande a bien ete envoyee au restaurant."],
-  accepted: ["Commande en cours de traitement", "Le restaurant a accepte ta commande."],
-  preparing: ["Commande en preparation", "Le restaurant prepare ta commande."],
-  ready: ["Commande prete", "Ta commande est prete pour le livreur."],
+  pending: ["Commande reçue", "Ta commande a bien été envoyée au restaurant."],
+  accepted: ["Commande en cours de traitement", "Le restaurant a accepté ta commande."],
+  preparing: ["Commande en préparation", "Le restaurant prépare ta commande."],
+  ready: ["Commande prête", "Ta commande est prête pour le livreur."],
   delivering: ["Livreur en route", "Le livreur est en route vers toi."],
-  completed: ["Commande livree", "Ta commande est marquee comme livree."],
-  cancelled: ["Commande annulee", "La commande a ete annulee."],
-  refused: ["Commande refusee", "Le restaurant a refuse la commande."],
+  completed: ["Commande livrée", "Ta commande est marquée comme livrée."],
+  cancelled: ["Commande annulée", "La commande a été annulée."],
+  refused: ["Commande refusée", "Le restaurant a refusé la commande."],
 };
 const RESTAURANT_CREDENTIALS = [
   {
@@ -1143,7 +1194,7 @@ const INTEGRATION_MODULES = [
   {
     name: "Supabase",
     status: "Pret a connecter",
-    use: "Base de donnees, comptes clients/restaurants/livreurs, stockage des infos.",
+    use: "Base de données, comptes clients/restaurants/livreurs, stockage des infos.",
   },
   {
     name: "Stripe",
@@ -1158,7 +1209,7 @@ const INTEGRATION_MODULES = [
   {
     name: "Expo",
     status: "Mobile",
-    use: "Tester sur telephone et preparer Android/iPhone.",
+    use: "Tester sur téléphone et préparer Android/iPhone.",
   },
   {
     name: "Vercel",
@@ -1539,7 +1590,7 @@ function closeCatalogTransition() {
   }, 420);
 }
 
-function showCatalogTransition(message = "Preparation des restaurants autour de toi.") {
+function showCatalogTransition(message = "Préparation des restaurants autour de toi.") {
   if (!catalogTransition || state.restaurantMode || state.currentUser?.role === "restaurant") return;
 
   window.clearTimeout(catalogTransitionTimer);
@@ -1783,7 +1834,7 @@ function openGoogleLoginInSystemBrowser() {
 
 function getGoogleAuthErrorMessage(error) {
   if (error?.message === "firebase-config-missing") {
-    return "Google n'est pas encore configure. Ajoute tes cles Firebase dans firebase-config.js.";
+    return "Google n'est pas encore configuré. Ajoute tes clés Firebase dans firebase-config.js.";
   }
 
   const hostname = window.location.hostname;
@@ -1795,10 +1846,10 @@ function getGoogleAuthErrorMessage(error) {
   const errorMessages = {
     "auth/unauthorized-domain": `Domaine non autorise dans Firebase. Ajoute ${hostname} dans Authentication > Settings > Authorized domains.`,
     "auth/popup-closed-by-user": "Fenetre Google fermee avant la fin de la connexion.",
-    "auth/popup-blocked": "Popup Google bloquee par le navigateur. Autorise les popups ou reessaie.",
-    "auth/cancelled-popup-request": "Connexion Google annulee. Reessaie dans quelques secondes.",
+    "auth/popup-blocked": "Popup Google bloquée par le navigateur. Autorise les popups ou réessaie.",
+    "auth/cancelled-popup-request": "Connexion Google annulée. Réessaie dans quelques secondes.",
     "auth/operation-not-allowed": "Google n'est pas active dans Firebase Authentication > Sign-in method.",
-    "auth/network-request-failed": "Connexion reseau impossible. Verifie internet puis reessaie.",
+    "auth/network-request-failed": "Connexion réseau impossible. Vérifie internet puis réessaie.",
   };
 
   return errorMessages[error?.code] || `Connexion Google impossible: ${error?.code || "erreur inconnue"}.`;
@@ -1811,7 +1862,7 @@ async function signInWithGoogle() {
     const client = await loadFirebaseAuthClient();
 
     if (isEmbeddedAppBrowser()) {
-      setStatus(quickSignupStatus, "Google s'ouvre dans le navigateur securise...", "success");
+      setStatus(quickSignupStatus, "Google s'ouvre dans le navigateur sécurisé...", "success");
       openGoogleLoginInSystemBrowser();
       return;
     }
@@ -1899,7 +1950,7 @@ function showRestaurantLogin(show) {
 
 function getFirebaseAuthErrorMessage(error) {
   const messages = {
-    "auth/email-already-in-use": "Ce compte existe deja. Utilise Se connecter.",
+    "auth/email-already-in-use": "Ce compte existe déjà. Utilise Se connecter.",
     "auth/invalid-email": "Email invalide.",
     "auth/invalid-credential": "Email ou mot de passe incorrect.",
     "auth/missing-password": "Entre ton mot de passe.",
@@ -1907,7 +1958,7 @@ function getFirebaseAuthErrorMessage(error) {
     "auth/user-not-found": "Aucun compte trouve avec cet email.",
     "auth/wrong-password": "Mot de passe incorrect.",
     "auth/weak-password": "Mot de passe trop faible. Mets au moins 6 caracteres.",
-    "auth/network-request-failed": "Connexion reseau impossible. Verifie internet puis reessaie.",
+    "auth/network-request-failed": "Connexion réseau impossible. Vérifie internet puis réessaie.",
   };
 
   return messages[error.code] || `Erreur Firebase: ${error.code || "inconnue"}.`;
@@ -1962,7 +2013,7 @@ async function createClientAccountWithEmail(profile) {
     setStatus(signupStatus, "");
   } catch (error) {
     if (error.message === "firebase-config-missing") {
-      setStatus(signupStatus, "Firebase n'est pas configure. Ajoute les cles dans firebase-config.js.", "error");
+      setStatus(signupStatus, "Firebase n'est pas configuré. Ajoute les clés dans firebase-config.js.", "error");
       return;
     }
 
@@ -1996,7 +2047,7 @@ async function loginClientWithEmail(email, password) {
     setStatus(loginStatus, "");
   } catch (error) {
     if (error.message === "firebase-config-missing") {
-      setStatus(loginStatus, "Firebase n'est pas configure. Ajoute les cles dans firebase-config.js.", "error");
+      setStatus(loginStatus, "Firebase n'est pas configuré. Ajoute les clés dans firebase-config.js.", "error");
       return;
     }
 
@@ -2129,10 +2180,10 @@ function getStatusLabel(status) {
 }
 
 function normalizeRestaurantOrderStatus(status) {
-  if (!status || status === ORDER_STEPS[0].label || status === "Commande recue") return "pending";
-  if (status === ORDER_STEPS[1].label || status === "En preparation") return "preparing";
+  if (!status || status === ORDER_STEPS[0].label || status === "Commande reçue" || status === "Commande recue") return "pending";
+  if (status === ORDER_STEPS[1].label || status === "En préparation") return "preparing";
   if (status === ORDER_STEPS[2].label || status === "En route") return "delivering";
-  if (status === ORDER_STEPS[3].label || status === "Livree") return "completed";
+  if (status === ORDER_STEPS[3].label || status === "Livrée") return "completed";
   const statusFromLabel = RESTAURANT_ORDER_STATUSES.find(([, label]) => label === status);
   if (statusFromLabel) return statusFromLabel[0];
   return RESTAURANT_ORDER_STATUSES.some(([value]) => value === status) ? status : "pending";
@@ -2303,7 +2354,7 @@ function showBrowserRestaurantNotification(order, count = 1) {
   const title = count > 1 ? `${count} nouvelles commandes` : "Nouvelle commande Bko Eats";
   const body =
     count > 1
-      ? `${state.restaurantProfile?.name || "Restaurant"} a recu plusieurs commandes.`
+      ? `${state.restaurantProfile?.name || "Restaurant"} a reçu plusieurs commandes.`
       : `${order.clientName || "Client"} - ${money.format(total)} - ${order.items?.length || 0} article(s)`;
 
   const notification = new Notification(title, {
@@ -2409,9 +2460,9 @@ async function requestClientNotificationPermission(options = {}) {
     const permission = await Notification.requestPermission();
     if (!quiet) {
       showClientNotificationToast(
-        permission === "granted" ? "Notifications activees" : "Notifications bloquees",
+        permission === "granted" ? "Notifications activées" : "Notifications bloquées",
         permission === "granted"
-          ? "Tu recevras une alerte a chaque etape de ta commande."
+          ? "Tu recevras une alerte à chaque étape de ta commande."
           : "Autorise les notifications dans le navigateur pour recevoir le suivi.",
       );
     }
@@ -2420,10 +2471,10 @@ async function requestClientNotificationPermission(options = {}) {
 
   if (!quiet) {
     showClientNotificationToast(
-      Notification.permission === "granted" ? "Notifications actives" : "Notifications bloquees",
+      Notification.permission === "granted" ? "Notifications actives" : "Notifications bloquées",
       Notification.permission === "granted"
         ? "Le suivi de commande peut t'envoyer des alertes."
-        : "Va dans les reglages du navigateur pour les reactiver.",
+        : "Va dans les réglages du navigateur pour les réactiver.",
     );
   }
 
@@ -2565,7 +2616,7 @@ function syncRestaurantOrders(nextOrders, options = {}) {
 function getNotificationPermissionLabel() {
   if (!("Notification" in window)) return "Notifications indisponibles";
   if (Notification.permission === "granted") return "Notifications actives";
-  if (Notification.permission === "denied") return "Notifications bloquees";
+  if (Notification.permission === "denied") return "Notifications bloquées";
   return "Activer notifications";
 }
 
@@ -2580,12 +2631,12 @@ async function requestRestaurantNotificationPermission() {
     if (permission === "granted") {
       showRestaurantNotificationToast("Notifications actives", "Le restaurant recevra une alerte quand une commande arrive.");
     } else {
-      showRestaurantNotificationToast("Notifications bloquees", "Autorise les notifications dans le navigateur pour recevoir les alertes.");
+      showRestaurantNotificationToast("Notifications bloquées", "Autorise les notifications dans le navigateur pour recevoir les alertes.");
     }
   } else if (Notification.permission === "granted") {
-    showRestaurantNotificationToast("Notifications actives", "Les alertes restaurant sont deja activees.");
+    showRestaurantNotificationToast("Notifications actives", "Les alertes restaurant sont déjà activées.");
   } else {
-    showRestaurantNotificationToast("Notifications bloquees", "Va dans les reglages du navigateur pour les reactiver.");
+    showRestaurantNotificationToast("Notifications bloquées", "Va dans les réglages du navigateur pour les réactiver.");
   }
 
   if (state.restaurantMode) renderRestaurantDashboard();
@@ -2752,7 +2803,7 @@ async function getFirebaseAdminProfile(firebaseUser) {
 
 async function requireFirebaseAdminSession() {
   if (!getFirebaseConfig()) {
-    renderAdminLogin("Firebase doit etre configure pour securiser l'admin.");
+    renderAdminLogin("Firebase doit être configuré pour sécuriser l'admin.");
     return false;
   }
 
@@ -2763,7 +2814,7 @@ async function requireFirebaseAdminSession() {
 
     if (!adminProfile) {
       state.adminUser = null;
-      renderAdminLogin("Connecte-toi avec un compte qui a le role admin.");
+      renderAdminLogin("Connecte-toi avec un compte qui a le rôle admin.");
       return false;
     }
 
@@ -2771,14 +2822,14 @@ async function requireFirebaseAdminSession() {
     return true;
   } catch {
     state.adminUser = null;
-    renderAdminLogin("Verification admin impossible. Verifie Firebase et les regles.");
+    renderAdminLogin("Vérification admin impossible. Vérifie Firebase et les règles.");
     return false;
   }
 }
 
 async function loginAdminWithEmail(email, password) {
   if (!getFirebaseConfig()) {
-    renderAdminLogin("Firebase doit etre configure avant d'ouvrir l'admin securise.");
+    renderAdminLogin("Firebase doit être configuré avant d'ouvrir l'admin sécurisé.");
     return;
   }
 
@@ -2790,7 +2841,7 @@ async function loginAdminWithEmail(email, password) {
     if (!adminProfile) {
       await client.signOut(client.auth);
       state.adminUser = null;
-      renderAdminLogin("Acces refuse: ce compte n'a pas le role admin.");
+      renderAdminLogin("Accès refusé : ce compte n'a pas le rôle admin.");
       return;
     }
 
@@ -2833,7 +2884,7 @@ function renderAdminLogin(errorMessage = "") {
       <div class="admin-login-card">
         <p class="eyebrow">Bko Eats Admin</p>
         <h1>Connexion admin</h1>
-        <p>Acces securise par Firebase Auth. Seuls les comptes avec le role admin peuvent entrer.</p>
+        <p>Accès sécurisé par Firebase Auth. Seuls les comptes avec le rôle admin peuvent entrer.</p>
         <form class="admin-login-form" id="adminLoginForm">
           <label>
             Email admin
@@ -2946,7 +2997,7 @@ async function renderAdminDashboard() {
   setAdminMode(true);
   adminDashboard.innerHTML = `
     <div class="admin-shell">
-      <p class="dashboard-empty">Chargement securise des donnees admin...</p>
+      <p class="dashboard-empty">Chargement sécurisé des données admin...</p>
     </div>
   `;
 
@@ -2960,7 +3011,7 @@ async function renderAdminDashboard() {
         <div>
           <p class="eyebrow">Bko Eats Admin</p>
           <h1>Portefeuilles</h1>
-          <p>Connecte: ${escapeHtml(state.adminUser?.email || "admin")}. Donnees ${state.adminDataLoaded ? "Firebase securisees" : "locales de demo"}. Commission plateforme ${commissionLabel}.</p>
+          <p>Connecté : ${escapeHtml(state.adminUser?.email || "admin")}. Données ${state.adminDataLoaded ? "Firebase sécurisées" : "locales de démo"}. Commission plateforme ${commissionLabel}.</p>
         </div>
         <div class="admin-actions">
           <button class="text-button" type="button" data-admin-refresh>Actualiser</button>
@@ -3354,7 +3405,7 @@ function renderRestaurantDashboard() {
         <div>
           <p class="eyebrow">Bko Eats Restaurant</p>
           <h1>${escapeHtml(restaurant?.name || "Restaurant")}</h1>
-          <p>${restaurant?.isOpen ? "Ouvert" : "Ferme"} - Preparation ${Number(restaurant?.preparationTime || 25)} min</p>
+          <p>${restaurant?.isOpen ? "Ouvert" : "Fermé"} - Préparation ${Number(restaurant?.preparationTime || 25)} min</p>
         </div>
         <div class="restaurant-dashboard-actions">
           <button class="text-button" type="button" data-enable-notifications>${notificationLabel}</button>
@@ -3439,7 +3490,7 @@ function renderRestaurantOrdersTab() {
 
 function renderRestaurantOrderCard(order) {
   const items = Array.isArray(order.items) ? order.items : [];
-  const deliveryAddressText = order.deliveryAddress || order.clientAddress || "Adresse non precisee";
+  const deliveryAddressText = order.deliveryAddress || order.clientAddress || "Adresse non précisée";
   const location = order.deliveryLocation;
   const locationLink =
     location?.lat && location?.lng
@@ -3458,7 +3509,7 @@ function renderRestaurantOrderCard(order) {
       ${
         locationLink
           ? `<p class="live-location">Localisation client en direct: <a href="${locationLink}" target="_blank" rel="noreferrer">${Number(location.lat).toFixed(5)}, ${Number(location.lng).toFixed(5)}</a></p>`
-          : `<p class="live-location muted">Localisation client non activee</p>`
+          : `<p class="live-location muted">Localisation client non activée</p>`
       }
       <ul>
         ${items
@@ -3480,10 +3531,10 @@ function renderOrderActionButtons(order) {
       ["accepted", "Accepter"],
       ["refused", "Refuser"],
     ],
-    accepted: [["preparing", "En preparation"]],
-    preparing: [["ready", "Prete"]],
+    accepted: [["preparing", "En préparation"]],
+    preparing: [["ready", "Prête"]],
     ready: [["delivering", "Livreur en route"]],
-    delivering: [["completed", "Livree"]],
+    delivering: [["completed", "Livrée"]],
   }[status];
 
   if (!actions) return "";
@@ -3569,8 +3620,8 @@ function renderRestaurantSettingsTab() {
         <label>Nom du restaurant<input name="name" type="text" value="${escapeHtml(restaurant.name || "")}" required /></label>
         <label>Image URL<input name="image" type="url" value="${escapeHtml(restaurant.image || "")}" /></label>
         <label>Adresse<input name="address" type="text" value="${escapeHtml(restaurant.address || "")}" required /></label>
-        <label>Telephone<input name="phone" type="tel" value="${escapeHtml(restaurant.phone || "")}" /></label>
-        <label>Temps moyen de preparation<input name="preparationTime" type="number" min="1" value="${Number(restaurant.preparationTime || 25)}" /></label>
+        <label>Téléphone<input name="phone" type="tel" value="${escapeHtml(restaurant.phone || "")}" /></label>
+        <label>Temps moyen de préparation<input name="preparationTime" type="number" min="1" value="${Number(restaurant.preparationTime || 25)}" /></label>
         <label class="switch-line"><input name="isOpen" type="checkbox" ${restaurant.isOpen === false ? "" : "checked"} /> Restaurant ouvert</label>
         <button class="primary-button" type="submit">Enregistrer les parametres</button>
       </form>
@@ -3617,7 +3668,7 @@ async function updateRestaurantOrderStatus(orderId, status) {
   const result = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    showRestaurantNotificationToast("Statut bloque", result.message || "Le serveur n'a pas accepte la mise a jour.");
+    showRestaurantNotificationToast("Statut bloqué", result.message || "Le serveur n'a pas accepté la mise à jour.");
     return;
   }
 
@@ -3626,7 +3677,7 @@ async function updateRestaurantOrderStatus(orderId, status) {
   showRestaurantNotificationToast(
     "Statut envoye",
     result.clientNotified
-      ? `${getStatusLabel(normalizedStatus)} - notification client creee.`
+      ? `${getStatusLabel(normalizedStatus)} - notification client cr??e.`
       : `${getStatusLabel(normalizedStatus)} - statut enregistre.`,
   );
 }
@@ -3874,7 +3925,7 @@ function formatCoordinateLabel(location) {
 
 function updateLocationLabel() {
   if (!state.userLocation) {
-    locationLabel.textContent = "Bamako, Mali";
+    locationLabel.textContent = "Position actuelle";
     locationLabel.title = "Utiliser ma localisation";
     return;
   }
@@ -3888,15 +3939,31 @@ function getReadableLocationFromApi(data) {
     data.locality,
     data.city,
     data.principalSubdivision,
-    data.countryName,
   ]
     .filter(Boolean)
     .filter((part, index, list) => list.indexOf(part) === index);
 
   if (!parts.length) return "";
 
-  const conciseParts = parts.filter((part) => !/^mali$/i.test(part)).slice(0, 2);
+  const conciseParts = parts.filter((part) => !/^bamako$/i.test(part)).slice(0, 2);
   return conciseParts.length ? conciseParts.join(", ") : parts.slice(0, 2).join(", ");
+}
+
+function getReadableLocationFromOpenStreetMap(data) {
+  const address = data?.address || {};
+  const parts = [
+    address.road,
+    address.neighbourhood,
+    address.suburb || address.quarter,
+    address.town || address.city_district || address.city,
+  ]
+    .filter(Boolean)
+    .map((part) => String(part).trim())
+    .filter((part, index, list) => part && list.indexOf(part) === index)
+    .filter((part) => !/^bamako$/i.test(part));
+
+  if (parts.length) return parts.slice(0, 3).join(", ");
+  return data?.display_name ? String(data.display_name).split(",").slice(0, 2).join(",").trim() : "";
 }
 
 async function resolveUserLocationLabel(location) {
@@ -3914,7 +3981,21 @@ async function resolveUserLocationLabel(location) {
     if (!response.ok) throw new Error("reverse-geocode-failed");
 
     const data = await response.json();
-    const label = getReadableLocationFromApi(data);
+    let label = getReadableLocationFromApi(data);
+    if (!label || /^bamako$/i.test(label)) {
+      const osmParams = new URLSearchParams({
+        format: "jsonv2",
+        lat: String(location.lat),
+        lon: String(location.lng),
+        zoom: "18",
+        addressdetails: "1",
+        "accept-language": "fr",
+      });
+      const osmResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?${osmParams.toString()}`);
+      if (osmResponse.ok) {
+        label = getReadableLocationFromOpenStreetMap(await osmResponse.json()) || label;
+      }
+    }
     if (!label || requestId !== locationLabelRequestId || !state.userLocation) return;
 
     state.userLocation = {
@@ -4040,7 +4121,7 @@ function requestUserLocation() {
     },
     () => {
       useLocationButton.classList.remove("is-loading");
-      locationLabel.textContent = "Position refusee";
+      locationLabel.textContent = "Position refusée";
       setTimeout(updateLocationLabel, 1800);
     },
     {
@@ -4087,7 +4168,7 @@ function renderOrderTracking(order, options = {}) {
         <span>Suivi de commande</span>
         <strong>${getOrderStatus(order)}</strong>
       </div>
-      <p class="tracking-estimate">Livraison estimee: ${formatDeliveryEstimate(estimate)}</p>
+      <p class="tracking-estimate">Livraison estimée : ${formatDeliveryEstimate(estimate)}</p>
       ${
         ["refused", "cancelled"].includes(normalizeRestaurantOrderStatus(order.status))
           ? `<p class="tracking-estimate alert">${getOrderStatus(order)}</p>`
@@ -4109,16 +4190,16 @@ function renderOrderTracking(order, options = {}) {
 
 function renderOrderModal(order) {
   state.activeOrder = order;
-  orderMessage.textContent = `Commande ${order.reference} sauvegardee. Mode de paiement: ${order.paymentLabel}. Livraison estimee: ${formatDeliveryEstimate(getOrderEstimate(order))}.`;
+  orderMessage.textContent = `Commande ${order.reference} sauvegardée. Mode de paiement : ${order.paymentLabel}. Livraison estimée : ${formatDeliveryEstimate(getOrderEstimate(order))}.`;
   orderTracking.innerHTML = renderOrderTracking(order);
 }
 
 function renderProductVisualContent(item) {
-  if (item.visualKind === "menu") {
+  if (item.visualKind === "menu" || item.visualKind === "text") {
     return `
       <div class="menu-photo-text-content">
-        <span>MENU</span>
-        <small>Formule</small>
+        <span>${item.visualLabel || "MENU"}</span>
+        <small>${item.visualSubLabel || "Formule"}</small>
       </div>
     `;
   }
@@ -4205,11 +4286,11 @@ function renderAccount() {
   authAddress.value = state.currentUser?.address || "";
 
   authStatus.textContent = state.currentUser
-    ? `Connecte: ${state.currentUser.name}. Tes donnees sont sauvegardees sur cet appareil.`
+    ? `Connecté : ${state.currentUser.name}. Tes données sont sauvegardées sur cet appareil.`
     : "Connecte-toi pour sauvegarder tes commandes, ton panier et tes avis.";
 
   if (!state.orders.length) {
-    orderHistory.innerHTML = `<p class="restaurant-meta">Aucune commande sauvegardee pour le moment.</p>`;
+    orderHistory.innerHTML = `<p class="restaurant-meta">Aucune commande sauvegardée pour le moment.</p>`;
     return;
   }
 
@@ -4339,7 +4420,7 @@ function wait(ms) {
 async function startStripeCheckout(order) {
   localStorage.setItem(STRIPE_PENDING_ORDER_KEY, JSON.stringify(order));
   saveState();
-  showCartNotice("Ouverture du paiement securise Stripe...");
+  showCartNotice("Ouverture du paiement sécurisé Stripe...");
 
   const response = await fetch("/api/stripe-create-checkout", {
     method: "POST",
@@ -4352,7 +4433,7 @@ async function startStripeCheckout(order) {
     localStorage.removeItem(STRIPE_PENDING_ORDER_KEY);
     const message =
       payload.error === "stripe_not_configured"
-        ? "Stripe n'est pas encore configure dans Vercel."
+        ? "Stripe n'est pas encore configuré dans Vercel."
         : payload.message || "Paiement par carte indisponible pour le moment.";
     throw new Error(message);
   }
@@ -4361,7 +4442,7 @@ async function startStripeCheckout(order) {
 }
 
 async function startOrangeMoneyPayment(order) {
-  showCartNotice("Preparation du paiement Orange Money...");
+  showCartNotice("Préparation du paiement Orange Money...");
 
   const response = await fetch("/api/orange-create-payment", {
     method: "POST",
@@ -4373,7 +4454,7 @@ async function startOrangeMoneyPayment(order) {
   if (!response.ok || !payload.url) {
     throw new Error(
       payload.message ||
-        "Orange Money n'est pas encore configure. La commande ne sera creee qu'apres confirmation du paiement.",
+        "Orange Money n'est pas encore configuré. La commande ne sera créée qu'après confirmation du paiement.",
     );
   }
 
@@ -4385,7 +4466,7 @@ async function verifyStripeSession(sessionId) {
   const payload = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    throw new Error(payload.message || "Verification du paiement impossible.");
+    throw new Error(payload.message || "Vérification du paiement impossible.");
   }
 
   return payload;
@@ -4425,12 +4506,12 @@ async function handleStripeReturn() {
 
   if (!sessionId || !pendingOrder) {
     cartPanel.classList.add("open");
-    showCartNotice("Paiement recu, mais commande locale introuvable. Contacte le support Bko Eats.");
+    showCartNotice("Paiement reçu, mais commande locale introuvable. Contacte le support Bko Eats.");
     return;
   }
 
   try {
-    showCartNotice("Verification du paiement carte et creation securisee de la commande...");
+    showCartNotice("Vérification du paiement carte et création sécurisée de la commande...");
     const session = await waitForStripeWebhookOrder(sessionId);
     if (session.payment_status !== "paid") {
       cartPanel.classList.add("open");
@@ -4440,7 +4521,7 @@ async function handleStripeReturn() {
 
     if (!session.serverOrderCreated) {
       cartPanel.classList.add("open");
-      showCartNotice("Paiement recu. Le serveur finalise la commande, actualise dans quelques secondes.");
+      showCartNotice("Paiement reçu. Le serveur finalise la commande, actualise dans quelques secondes.");
       return;
     }
 
@@ -4457,7 +4538,7 @@ async function handleStripeReturn() {
     });
   } catch (error) {
     cartPanel.classList.add("open");
-    showCartNotice(error.message || "Verification Stripe impossible pour le moment.");
+    showCartNotice(error.message || "Vérification Stripe impossible pour le moment.");
   }
 }
 
@@ -4511,7 +4592,7 @@ function renderRestaurants() {
 
   restaurantList.innerHTML = filtered.length
     ? filtered.map(renderRestaurantCard).join("")
-    : `<div class="restaurant-card"><div class="restaurant-body"><h3>Aucun resultat</h3><p class="restaurant-meta">${state.category === "Favoris" ? "Ajoute un restaurant ou un plat en favori pour le retrouver ici." : "Essaie une autre recherche."}</p></div></div>`;
+    : `<div class="restaurant-card"><div class="restaurant-body"><h3>Aucun résultat</h3><p class="restaurant-meta">${state.category === "Favoris" ? "Ajoute un restaurant ou un plat en favori pour le retrouver ici." : "Essaie une autre recherche."}</p></div></div>`;
 }
 
 function renderRestaurantCard(restaurant) {
@@ -4632,7 +4713,7 @@ function renderRestaurantDetail(restaurantId) {
           <span>${restaurant.address}</span>
         </div>
         <div>
-          <strong>Telephone</strong>
+          <strong>Téléphone</strong>
           <span>${restaurant.phone}</span>
         </div>
         ${
@@ -4719,12 +4800,12 @@ function renderRestaurantDetail(restaurantId) {
         <section class="detail-panel" data-detail-panel="infos" ${activeDetailTab !== "infos" ? "hidden" : ""}>
           <section class="delivery-card">
             <div>
-              <p class="eyebrow">Livraison estimee</p>
+              <p class="eyebrow">Livraison estimée</p>
               <h3>${formatDeliveryEstimate(estimate)}</h3>
               <p>${
                 estimate.basedOnLocation
                   ? "Calcule avec ta position actuelle et la localisation du restaurant."
-                  : "Appuie sur Bamako, Mali en haut pour utiliser ta position reelle."
+                  : "Appuie sur Position actuelle en haut pour utiliser ta position réelle."
               }</p>
             </div>
             <button class="text-button" type="button" data-use-location>Utiliser ma position</button>
@@ -4756,7 +4837,7 @@ function renderRestaurantDetail(restaurantId) {
           </div>
           <form class="review-form" id="reviewForm">
             <label for="reviewInput">Ajouter ton avis</label>
-            <textarea id="reviewInput" name="review" rows="3" placeholder="Exemple: Burger tres bon, livraison rapide..."></textarea>
+            <textarea id="reviewInput" name="review" rows="3" placeholder="Exemple : burger très bon, livraison rapide..."></textarea>
             <button class="primary-button" type="submit">Publier l'avis</button>
           </form>
           <div class="review-list">
@@ -5072,7 +5153,7 @@ async function cancelClientOrder(reference) {
           ),
       );
     } catch {
-      showClientNotificationToast("Commande annulee localement", "Firebase n'a pas pu etre mis a jour.");
+      showClientNotificationToast("Commande annulée localement", "Firebase n'a pas pu être mis à jour.");
     }
   }
 
@@ -5100,11 +5181,11 @@ function createRestaurantTestOrder() {
       phone: "+223 70 00 00 00",
     },
     delivery: {
-      address: "Adresse test a Bamako",
+      address: "Adresse test à Bamako",
       phone: "+223 70 00 00 00",
       location: state.userLocation || null,
     },
-    deliveryAddress: "Adresse test a Bamako",
+    deliveryAddress: "Adresse test à Bamako",
     deliveryLocation: state.userLocation || null,
     paymentLabel: "Orange Money",
     paymentMethod: "orange-money",
@@ -5169,7 +5250,7 @@ async function saveOrderToFirestore(order) {
       }),
     );
   } catch {
-    showCartNotice("Commande sauvegardee localement. Firestore n'a pas pu enregistrer la commande.");
+    showCartNotice("Commande sauvegardée localement. Firestore n'a pas pu enregistrer la commande.");
   }
 }
 
@@ -5612,7 +5693,7 @@ checkoutButton.addEventListener("click", async () => {
 
   if (!state.payment.address || !state.payment.phone) {
     cartPanel.classList.add("open");
-    showCartNotice("Ajoute ton adresse et ton telephone avant de valider.");
+    showCartNotice("Ajoute ton adresse et ton téléphone avant de valider.");
     deliveryAddress.focus();
     return;
   }

@@ -8,7 +8,7 @@
     <link rel="manifest" href="manifest.json" />
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="icon.svg" />
-    <link rel="stylesheet" href="styles.css?v=35" />
+    <link rel="stylesheet" href="styles.css?v=36" />
   </head>
   <body class="launch-open">
     <section class="launch-screen open" id="launchScreen" aria-label="Bko Eats">
@@ -25,7 +25,7 @@
     <section class="onboarding-screen" id="onboardingScreen" aria-labelledby="onboardingTitle">
       <div class="onboarding-card">
         <div class="onboarding-panel quick-panel" id="quickSignupPanel">
-          <h1 id="onboardingTitle">Connecte-toi a Bko Eats</h1>
+          <h1 id="onboardingTitle">Connecte-toi à Bko Eats</h1>
           <div class="provider-grid">
             <button class="provider-button google" type="button" id="googleSignup">
               <span class="google-icon" aria-hidden="true">
@@ -43,7 +43,7 @@
           <div class="divider"><span>ou</span></div>
           <p class="signup-status" id="quickSignupStatus"></p>
           <button class="manual-link-button" type="button" id="clientLoginButton">Se connecter</button>
-          <button class="manual-link-button secondary" type="button" id="manualSignupButton">Creer un compte</button>
+          <button class="manual-link-button secondary" type="button" id="manualSignupButton">Créer un compte</button>
           <button class="restaurant-login-button" type="button" id="restaurantLoginButton">Espace restaurant</button>
           <button class="text-button skip-onboarding" type="button" id="skipOnboarding">Continuer sans compte</button>
         </div>
@@ -88,7 +88,7 @@
           <form class="signup-form" id="onboardingForm">
             <div class="form-grid two">
               <label>
-                Prenom
+                Prénom
                 <input id="signupFirstName" name="firstName" type="text" autocomplete="given-name" required />
               </label>
               <label>
@@ -102,7 +102,7 @@
             </label>
             <div class="form-grid two">
               <label>
-                Telephone
+                Téléphone
                 <input id="signupPhone" name="phone" type="tel" autocomplete="tel" placeholder="+223 ..." required />
               </label>
               <label>
@@ -112,14 +112,14 @@
             </div>
             <label>
               Adresse
-              <input id="signupAddress" name="address" type="text" autocomplete="street-address" placeholder="Quartier, rue, repere" required />
+              <input id="signupAddress" name="address" type="text" autocomplete="street-address" placeholder="Quartier, rue, repère" required />
             </label>
             <label>
               Mot de passe
               <input id="signupPassword" name="password" type="password" autocomplete="new-password" minlength="6" required />
             </label>
             <p class="signup-status" id="signupStatus"></p>
-            <button class="primary-button" type="submit">Creer mon compte</button>
+            <button class="primary-button" type="submit">Créer mon compte</button>
           </form>
         </div>
       </div>
@@ -130,7 +130,7 @@
         <span class="catalog-transition-logo" aria-hidden="true">BE</span>
         <p class="eyebrow">Bko Eats</p>
         <h2 id="catalogTransitionTitle">Bienvenue</h2>
-        <p id="catalogTransitionSubtitle">Preparation des restaurants autour de toi.</p>
+        <p id="catalogTransitionSubtitle">Préparation des restaurants autour de toi.</p>
         <div class="catalog-transition-loader" aria-hidden="true"><span></span></div>
       </div>
     </section>
@@ -142,7 +142,7 @@
           <div class="brand-copy">
             <p class="brand-name">Bko Eats</p>
             <button class="location-button" type="button" id="useLocationButton" aria-label="Utiliser ma localisation">
-              <span id="locationLabel">Bamako, Mali</span>
+              <span id="locationLabel">Position actuelle</span>
               <span aria-hidden="true">v</span>
             </button>
             <p class="eyebrow">Livraison maintenant</p>
@@ -164,15 +164,15 @@
       <section class="hero">
         <div>
           <p class="eyebrow">Bko Eats</p>
-          <h1>Commande simplement a Bamako.</h1>
-          <p>Restaurants, menus, panier et suivi au meme endroit.</p>
+          <h1>Commande simplement à Bamako.</h1>
+          <p>Restaurants, menus, panier et suivi au même endroit.</p>
         </div>
       </section>
 
       <section class="section-heading">
         <div>
-          <p class="eyebrow">Selection</p>
-          <h2>Restaurants a Bamako</h2>
+          <p class="eyebrow">Sélection</p>
+          <h2>Restaurants à Bamako</h2>
         </div>
         <button class="text-button" type="button" id="resetButton">Tout voir</button>
       </section>
@@ -197,10 +197,10 @@
         <form class="payment-form" id="paymentForm">
           <label>
             Adresse de livraison
-            <input id="deliveryAddress" name="address" type="text" placeholder="Quartier, rue, repere" />
+            <input id="deliveryAddress" name="address" type="text" placeholder="Quartier, rue, repère" />
           </label>
           <label>
-            Telephone
+            Téléphone
             <input id="deliveryPhone" name="phone" type="tel" placeholder="+223 ..." />
           </label>
           <label>
@@ -229,8 +229,8 @@
       <div class="modal-card">
         <button class="icon-button modal-close" type="button" id="closeModal" aria-label="Fermer">x</button>
         <div class="success-mark">OK</div>
-        <h2 id="orderTitle">Commande confirmee</h2>
-        <p id="orderMessage">Ton restaurant prepare la commande. Livraison estimee dans 28 minutes.</p>
+        <h2 id="orderTitle">Commande confirmée</h2>
+        <p id="orderMessage">Ton restaurant prépare la commande. Livraison estimée dans 28 minutes.</p>
         <div id="orderTracking"></div>
       </div>
     </div>
@@ -261,12 +261,12 @@
             <input id="authName" name="name" type="text" placeholder="Ton nom" required />
           </label>
           <label>
-            Telephone
+            Téléphone
             <input id="authPhone" name="phone" type="tel" placeholder="+223 ..." required />
           </label>
           <label>
             Adresse
-            <input id="authAddress" name="address" type="text" placeholder="Quartier, rue, repere" required />
+            <input id="authAddress" name="address" type="text" placeholder="Quartier, rue, repère" required />
           </label>
           <button class="primary-button" type="submit">Enregistrer le compte</button>
           <button class="text-button" type="button" id="logoutButton">Changer de compte</button>
@@ -276,7 +276,7 @@
     </div>
 
     <script src="firebase-config.js?v=18"></script>
-    <script src="app.js?v=52"></script>
+    <script src="app.js?v=56"></script>
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("sw.js");
